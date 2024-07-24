@@ -1,5 +1,5 @@
 import React from 'react'
-import img1 from '@/app/(Assets)/img1.png'
+import img1 from '/assets/home/img1.png'
 import Image from 'next/image';
 
 interface CategoryItemProps {

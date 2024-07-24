@@ -311,7 +311,7 @@ const OTHERSCategories: {
               <div>
                 
                  <Image className='border px-1'  width={80}
-      height={120} src={require('@/app/(Assets)/logo.png')} alt='the logo'/>
+      height={120} src={'/assets/home/logo.png'} alt='the logo'/>
               </div>
               <div >
                     

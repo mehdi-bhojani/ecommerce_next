@@ -8,14 +8,18 @@ const DealZone = () => {
         </span>
 
         <div className='flex flex-row justify-between flex-wrap  '>
-        <Image className='border px-1 w-64'  
-       src={require('@/app/(Assets)/circle1.png')}  alt='the logo'/>
-        <Image className='border px-1 w-64'  
-       src={require('@/app/(Assets)/circle2.png')} alt='the logo'/>
-        <Image className='border px-1 w-64 '  
-       src={require('@/app/(Assets)/circle3.png')} alt='the logo'/>
-        <Image className='border px-1 w-64'  
-       src={require('@/app/(Assets)/circle4.png')} alt='the logo'/>
+        <Image className='border px-1 w-64'width={100}  
+        height={100}
+       src={'/assets/home/circle1.png'}  alt='the logo'/>
+        <Image className='border px-1 w-64'  width={100}
+        height={100}
+       src={'/assets/home/circle2.png'} alt='the logo'/>
+        <Image className='border px-1 w-64 '  width={100}
+        height={100}
+       src={'/assets/home/circle3.png'} alt='the logo'/>
+        <Image className='border px-1 w-64'  width={100}
+        height={100}
+       src={'/assets/home/circle4.png'} alt='the logo'/>
          
 
        
