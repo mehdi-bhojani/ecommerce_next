@@ -15,7 +15,7 @@ const TabCategories = () => {
 
 
   function SettingCateg(chr:string) {
-    console.log(chr);
+   
     setCateg(chr);
   }
   return (

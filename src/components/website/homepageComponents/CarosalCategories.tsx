@@ -1,5 +1,5 @@
 'use client'
-
+import { useEffect } from "react"
 import * as React from "react"
 import Image from "next/image"
 import { useState } from "react"
@@ -23,6 +23,7 @@ const categories: {
       name: "BE",
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Face', href: '#' },
         { name: 'lips', href: '#' },
         { name: 'eyes', href: '#' },
@@ -36,6 +37,7 @@ const categories: {
       name: "B",
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Boys Shirt', href: '#' },
         { name: 'T-shirts', href: '#' },
         { name: 'Festive Wear', href: '#' },
@@ -48,6 +50,7 @@ const categories: {
       name: 'G',
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Dresses', href: '#' },
         { name: 'Tops & Tees', href: '#' },
         { name: 'TumpSuit', href: '#' },
@@ -63,6 +66,7 @@ const categories: {
       name: 'H',
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Home Decon', href: '#' },
 
 
@@ -72,6 +76,7 @@ const categories: {
       name: 'W',
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Shalwar Kameez', href: '#' },
         { name: 'heels', href: '#' },
         { name: 'kurtas', href: '#' },
@@ -101,6 +106,7 @@ const categories: {
       name: 'M',
 
       subcategories: [
+        { name: 'All', href: '#' },
         { name: 'Sports Shoes', href: '#' },
         { name: 'Sneakers', href: '#' },
         { name: 'Casual Shoes', href: '#' },
@@ -136,7 +142,14 @@ interface CarosalCategoriesProps {
 
 
 export function CarosalCategories({ Categ }: CarosalCategoriesProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+
+  useEffect(() => {
+   
+    setSelectedIndex(0);
+  }, [Categ]); 
+
+
 
   // Function to handle click and set the selected index
   const handleItemClick = (index: number) => {
