@@ -134,14 +134,16 @@ const categories: {
   ];
 
 
-interface CarosalCategoriesProps {
+
+interface CarosalCategoriesProps  {
   Categ: string;
-}
+  onCategoryClick: (categoryName: string) => void; // Define the callback prop
+};
 
 
 
 
-export function CarosalCategories({ Categ }: CarosalCategoriesProps) {
+export function CarosalCategories({ Categ,onCategoryClick }: CarosalCategoriesProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
 
   useEffect(() => {
@@ -152,8 +154,10 @@ export function CarosalCategories({ Categ }: CarosalCategoriesProps) {
 
 
   // Function to handle click and set the selected index
-  const handleItemClick = (index: number) => {
+  const handleItemClick = (index: number, categoryName: string) => {
     setSelectedIndex(index);
+    console.log(`Clicked category: ${categoryName}`);
+    onCategoryClick(categoryName); // Call the callback with the category name
   };
   
   const categoryW = categories.find(category => category.name === Categ);
@@ -164,7 +168,7 @@ export function CarosalCategories({ Categ }: CarosalCategoriesProps) {
         <CarouselItem
           key={index}
           className={`pl-1 basis-1/9 hover:cursor-pointer  `}
-          onClick={() => handleItemClick(index)}
+          onClick={() => handleItemClick(index, items.name)}
           tabIndex={0} // Make the item focusable
         >
           <div className="px-1 py-3">

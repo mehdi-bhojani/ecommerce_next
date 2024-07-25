@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-width {
+  width: calc(20% - 16px);
+}

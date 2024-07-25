@@ -78,6 +78,7 @@ const config = {
       height: {
         '1/9': 'calc(100% / 9)',
       },
+      
     },
   },
   plugins: [require("tailwindcss-animate")],
