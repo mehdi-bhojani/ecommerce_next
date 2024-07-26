@@ -103,8 +103,9 @@ const categories: {
 
 const TabCategories = () => {
   const [Categ, setCateg] = useState<string>('W')
+  
+  const [items, setItems] = useState<ShopItem[]>([]); 
   const [shopItems, setShopItems] = useState<{ name: string; image: string; price: string }[]>([]);
-  const [items, setItems] = useState<ShopItem[]>([]); // Initialize with the first 10 items
   const [currentIndex, setCurrentIndex] = useState<number>(10);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
@@ -123,9 +124,29 @@ const TabCategories = () => {
       );
 
     setShopItems(ShopImages);
+    setCurrentIndex(10);
    
-   
+    if(shopItems.length<=currentIndex){
+      setHasMore(false)
+    }
+    else{
+      setHasMore(true)
+    }
   };
+
+  useEffect(() => {
+    console.log(hasMore, 'is the boolean for hasMore');
+    console.log(currentIndex, 'is the current index');
+    console.log(shopItems.length, 'is the total');
+
+    if (shopItems.length <= currentIndex) {
+      setHasMore(false);
+    } else {
+      setHasMore(true);
+    }
+  }, [shopItems, currentIndex]);
+
+
 
 
   interface ShopItem {
@@ -164,13 +185,11 @@ const TabCategories = () => {
     // Fake async API call to fetch more items
     console.log("lets fetch more")
     setTimeout(() => {
-      console.log("lets fetch more")
+      
       const newIndex = currentIndex + 10;
       setItems((prevItems) => prevItems.concat(shopItems.slice(currentIndex, newIndex)));
       setCurrentIndex(newIndex);
-      if(shopItems.length<=newIndex){
-        setHasMore(false)
-      }
+     
     }, 1500);
   };
 
@@ -197,7 +216,9 @@ const TabCategories = () => {
               dataLength={items.length} // This is important field to render the next data
               next={fetchMoreData}
               hasMore={hasMore}
-              loader={<ReactLoading type={"bars"} color="black" />}
+              loader={ <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <ReactLoading type={"bars"} color="black" />
+            </div>}
              
               
 
