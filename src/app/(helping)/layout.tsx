@@ -1,6 +1,6 @@
 import Header from "@/components/website/header/Header";
 import Footer from "@/components/website/footer/Footer";
-
+import MinHeader from "@/components/website/header/MinHeader";
 
 export default function RootLayout({
   children,
@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
+       <MinHeader/>
         {children}
         <Footer/>
         </body>

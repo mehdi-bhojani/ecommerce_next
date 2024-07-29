@@ -18,12 +18,18 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        outfit: ['Outfit', 'Arial', 'sans-serif'], // Add custom font family
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        colors: {
+          customGray: '#eee', // Add your custom color here
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -81,9 +87,12 @@ const config = {
       
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+
+  ],
 } satisfies Config
 
 export default config
+
 
 
