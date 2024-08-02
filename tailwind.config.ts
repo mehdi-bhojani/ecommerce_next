@@ -86,8 +86,14 @@ const config = {
       },
       
     },
+    variants: {
+      extend: {
+        backgroundImage: ['hover'],
+      },
+    },
   },
   plugins: [require("tailwindcss-animate"),
+    
 
   ],
 } satisfies Config

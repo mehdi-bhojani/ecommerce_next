@@ -357,7 +357,9 @@ function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem className='font-semibold text-sm'>
+                <Link href="/MEN" >
                   <NavigationMenuTrigger >MEN</NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul key={1} className="flex flex-row flex-nowrap w-[1000px] ">
 
@@ -366,7 +368,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={component.href}
+                            href={`/${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -375,7 +377,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={subcategory.href}
+                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -384,7 +386,9 @@ function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className='font-semibold text-sm'>
+                <Link href="/WOMEN" >
                   <NavigationMenuTrigger>WOMEN</NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul key={2} className="flex flex-row flex-nowrap w-[1000px] ">
 
@@ -393,7 +397,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={component.href}
+                            href={`/${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -402,7 +406,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={subcategory.href}
+                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -411,7 +415,9 @@ function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className='font-semibold text-sm'>
+                <Link href="/KIDS" >
                   <NavigationMenuTrigger>KIDS</NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul key={3} className="flex flex-row flex-nowrap w-[1000px] ">
 
@@ -420,7 +426,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={component.href}
+                            href={`/${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -429,7 +435,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={subcategory.href}
+                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -438,7 +444,9 @@ function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className='font-semibold text-sm'>
+                <Link href="/BEAUTY" >
                   <NavigationMenuTrigger>BEAUTY</NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul key={4} className="flex flex-row flex-nowrap w-[1000px] ">
 
@@ -447,7 +455,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={component.href}
+                            href={`/${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -456,7 +464,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={subcategory.href}
+                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -465,7 +473,9 @@ function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className='font-semibold text-sm'>
-                  <NavigationMenuTrigger>OTHERS</NavigationMenuTrigger>
+                  <Link href="/OTHERS" >
+                    <NavigationMenuTrigger>OTHERS</NavigationMenuTrigger>
+                  </Link>
                   <NavigationMenuContent>
                     <ul key={5} className="flex flex-row flex-nowrap w-[1000px] ">
 
@@ -474,7 +484,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={component.href}
+                            href={`/${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -483,7 +493,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={subcategory.href}
+                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -492,18 +502,18 @@ function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem className='font-semibold text-sm'>
-                  <Link href="/docs" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      NEWARRIVALS
-                    </NavigationMenuLink>
+
+                  <Link href="/NEWARRIVALS" className={navigationMenuTriggerStyle()}>
+                    NEW ARRIVALS
                   </Link>
+
                 </NavigationMenuItem>
                 <NavigationMenuItem className='text-red-700 font-semibold text-sm'>
-                  <Link href="/docs" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      SALE
-                    </NavigationMenuLink>
+
+                  <Link href="/SALES" className={navigationMenuTriggerStyle()}>
+                    SALES
                   </Link>
+
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -521,10 +531,10 @@ function Header() {
           <nav>
             <ul className='flex '>
               <li className='px-4'>
-                <Link  href="/help-center">
-                <HeadsetIcon />
-                  </Link>
-              
+                <Link href="/help-center">
+                  <HeadsetIcon />
+                </Link>
+
               </li>
               <li className='px-4'>
                 <HoverCard>
@@ -698,26 +708,28 @@ function Header() {
   )
 }
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-
-          {...props}
-        >
-          <div className={cn("text-sm font-medium leading-none", className)}>{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
+      <NavigationMenuLink href={props.href as string} asChild>
+        <Link href={props.href as string}>
+          <div
+            ref={ref}
+            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+            {...props}
+          >
+            <div className={cn("text-sm font-medium leading-none", className)}>{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {children}
+            </p>
+          </div>
+        </Link>
       </NavigationMenuLink>
     </li>
-  )
-})
-ListItem.displayName = "ListItem"
+  );
+});
+
+ListItem.displayName = "ListItem";
 export default Header

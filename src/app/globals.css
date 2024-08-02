@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+  /* Add this to styles/globals.css */
+.icon-wrapper:hover .icon {
+  fill: black;
+}
+
+
+
+.slider-thumb {
+  background-color: #007BFF; /* Blue color for the thumb */
+  border-radius: 50%; /* Rounded thumb */
+}
+
+.slider-track {
+  background-color: #ccc; /* Gray color for inactive track */
+}
+
+.slider-active-track {
+  background-color: #007BFF; /* Blue color for active track */
+}
+
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;

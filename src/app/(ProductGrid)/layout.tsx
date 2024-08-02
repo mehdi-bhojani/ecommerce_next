@@ -1,5 +1,5 @@
+
 import Header from "@/components/website/header/Header";
-import MinHeader from "@/components/website/header/MinHeader";
 import HelpFooter from "@/components/website/footer/HelpFooter";
 import HelpText from "@/components/website/HelpPageComponents/HelpText";
 export default function RootLayout({
@@ -10,8 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-       <MinHeader/>
-       <HelpText />
+       <Header/>
        <div className="bg-gray-100 w-full">
        {children}
        </div>

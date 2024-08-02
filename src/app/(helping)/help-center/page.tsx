@@ -1,64 +1,104 @@
 import React from 'react'
+import HelpText from '@/components/website/HelpPageComponents/HelpText'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
+import HelpObj from "@/shared/json/help.json"
 export default function Page() {
+
+ 
+
+
   return (
-    <div>
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold text-center text-pink-600 mb-8">Hi. How can we help?</h1>
-        <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M3 4a1 1 0 000 2h14a1 1 0 100-2H3zm0 4a1 1 0 000 2h14a1 1 0 100-2H3zm0 4a1 1 0 000 2h14a1 1 0 100-2H3zm0 4a1 1 0 000 2h14a1 1 0 100-2H3z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Shipping & Delivery</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9 4.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5V7H9V4.5zM6.5 7h-2V4.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5V7zm8 0h-2V4.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5V7zm.5 1h-13v7.5c0 .828.672 1.5 1.5 1.5H6v-3.5c0-.828.672-1.5 1.5-1.5h5c.828 0 1.5.672 1.5 1.5V16h2.5c.828 0 1.5-.672 1.5-1.5V8zm-6.5 2.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5V10h3v.5zM7 15.5h3V14H7v1.5zm4.5 0H15V14h-3.5v1.5z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Returns & Replacements</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M8 7a4 4 0 100-8 4 4 0 000 8zm7 2h-2v-.5c0-.828-.672-1.5-1.5-1.5h-7c-.828 0-1.5.672-1.5 1.5V9H5a1 1 0 000 2h1v6.5C6 18.328 6.672 19 7.5 19h5c.828 0 1.5-.672 1.5-1.5V11h1a1 1 0 100-2zm-2 6H7v-5h6v5zm-1.5 1h-3a.5.5 0 110-1h3a.5.5 0 110 1z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Cancellations</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M4 4a1 1 0 000 2h12a1 1 0 100-2H4zm0 4a1 1 0 000 2h12a1 1 0 100-2H4zm0 4a1 1 0 000 2h12a1 1 0 100-2H4zm0 4a1 1 0 000 2h12a1 1 0 100-2H4z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Payments & Refunds</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M3 3a1 1 0 011-1h10a1 1 0 011 1v4h1V3a2 2 0 00-2-2H4a2 2 0 00-2 2v14a2 2 0 002 2h8v-2H4V3zm15 8a1 1 0 00-1-1h-1v-1a3 3 0 00-3-3H8a3 3 0 00-3 3v1H4a1 1 0 000 2h10a1 1 0 000-2zm-6 0H8v-1a1 1 0 012 0v1zm7 4v1h-4v2h4v1a1 1 0 001 1h1v-1h-1v-2h1v-1h-1a1 1 0 00-1-1zm-2 1h-1v1h1v-1z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Business Inquiry & Bulk Orders</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gradient-to-r from-pink-500 to-orange-400 p-4 rounded-full">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M8 2a4 4 0 100 8 4 4 0 000-8zm0 7A3 3 0 118 3a3 3 0 010 6zm5-5a1 1 0 011 1v5.586L11.707 7.293a1 1 0 00-1.414 1.414L11.586 10H8a1 1 0 100 2h4a1 1 0 000-2h-2.586l2.293-2.293a1 1 0 001.414 1.414L14 10.586V5a1 1 0 00-1-1zm-5 8a3 3 0 00-3 3v2a1 1 0 001 1h8a1 1 0 001-1v-2a3 3 0 00-3-3H8zm-1 2h6v1H7v-1z" />
-              </svg>
-            </div>
-            <p className="mt-4 text-center">Account Settings</p>
-          </div>
-        </div>
-        <h2 className="text-xl font-bold text-center text-gray-700">Frequently Asked Questions</h2>
+    <div >
+    
+
+
+
+
+      <div className='p-5 w-full' >
+      <span className="text-2xl font-bold text-center p-3  mb-8">Help topics</span>
       </div>
-    </div>
+    
+      <div className=" mx-16 mt-5 bg-white p-8 rounded-lg shadow">
+
+
+        <div className="grid grid-cols-3 gap-12 mb-8  w-full">
+          {HelpObj.map((comp, index) => (
+            <Link href={comp.url} key={index} className="flex flex-row items-center justify-start cursor-pointer  hover:text-cyan-500  transition-colors  flex-wrap">
+              <Image src={comp.images} height={100} width={100} alt='the icon' />
+              <span className=" text-center font-semibold  px-8 w-56">{comp.title}</span>
+            </Link>
+          ))}
+        </div>
+
+      </div>
+      <div className=' p-5'>
+        <span className="text-3xl font-bold text-center text-gray-700  ">Frequently Asked Questions</span>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-5 bg-white p-8 rounded-lg shadow">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>How can I keep track of the status of my orders?</AccordionTrigger>
+            <AccordionContent>
+            The ‘My Account’ section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number’.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Will I get a confirmation call from Clicky after placing order?</AccordionTrigger>
+            <AccordionContent>
+            No we dont call customers for order confirmation. All new customers are logged in to clicky app via OTP(one time password) so we take this as order confirmation and ship you the order right away.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>How can I cancel my order?</AccordionTrigger>
+            <AccordionContent>
+            In order to cancel your order, please login to clicky app in your my account section. Open the order you want to cancel and you will see an option to cancel the order. Your order can only be cancelled before it reaches the ‘Dispatched’ status in your my account on Clicky app.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>What is the procedure for Returns or Exchange?</AccordionTrigger>
+            <AccordionContent>
+            You can return your product easily through clicky app in few seconds. Just follow these steps:
+            <ul className='ml-12  list-disc'>
+              <li>You can Sign in to your Clicky Account From Here.</li>
+              <li>Go to my order section.</li>
+              <li>Click on the View order for the specific order you want to place replacement/refund Request</li>
+              <li>Select refund/replace option from the top and then click one or all items that you want return or replaced.</li>
+              <li>Select the quantities and reason for replacement/refund</li>
+              <li>Click on the SAVE button to submit the request</li>
+            </ul>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5">
+            <AccordionTrigger>I wish to become a seller on Clicky</AccordionTrigger>
+            <AccordionContent>
+            Fill <Link className='text-red-900' href='#'>this form</Link> and our team will reach you as soon as possible.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-6">
+            <AccordionTrigger>I can’t sign in to my account.</AccordionTrigger>
+            <AccordionContent>
+            Go to <Link className='text-red-900' href='#'>Reset password page. </Link> Fill in your registered phone or email id and tap Rest Password. An otp will be sent to your medium either phone or email. Enter the otp and set a new password.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-7">
+            <AccordionTrigger>What are the delivery charges?</AccordionTrigger>
+            <AccordionContent>
+            Delivery charge is the fee that has to be paid for the on-time delivery of a purchased product. Our standard shipping charges are Rs 150 but it keeps on changing based on the number of products purchased. For the best understanding please see the total shipping fee added to your order at checkout page.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+
+      </div>
 
 
     </div>

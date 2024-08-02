@@ -1,13 +1,15 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
 import {CircleChevronLeft} from 'lucide-react'
 import Link from 'next/link'
+import Sidebar from '@/components/website/homepageComponents/Sidebar'
 const MinHeader = () => {
     return (
-        <div className='flex flex-row items-center justify-between px-12 bg-slate-400'>
+        <div className='flex flex-row items-center justify-between px-12 '>
                  <Link href="/">
                 <div>
-                    <Image className=' ' width={80}
+                    <Image className=' ' width={110}
                         height={30} src={'/assets/home/logo.png'} alt='the logo' />
                 </div>
                 </Link>
@@ -19,8 +21,11 @@ const MinHeader = () => {
                 <span>BACK TO SHOPPING</span>
                 </div>
                 </Link>
-                
+                <Sidebar>
                 <span>SIGN IN</span>
+
+                </Sidebar>
+               
             </div>
 
         </div>

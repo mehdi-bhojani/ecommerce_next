@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -77,7 +78,23 @@ const NavigationMenuContent = React.forwardRef<
 ))
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
-const NavigationMenuLink = NavigationMenuPrimitive.Link
+const NavigationMenuLink = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitive.Link>,
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Link> & { href: string }
+>(({ className, href, children, ...props }, ref) => (
+
+    <NavigationMenuPrimitive.Link
+      ref={ref}
+      className={cn(
+        "text-current no-underline hover:underline focus:underline active:underline",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </NavigationMenuPrimitive.Link>
+ 
+));
 
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,

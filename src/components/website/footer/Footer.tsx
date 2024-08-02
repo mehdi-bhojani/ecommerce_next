@@ -6,7 +6,7 @@ const Footer = () => {
         
 
 
-<div className='flex flex-row justify-around items-start border-b border-gray-400  mt-32 pb-12 pt-8 bg-gray-200'>
+<div className='flex flex-row justify-around items-start border-b bg-gray-100   pb-12 pt-8 '>
 
 
        <div className='flex flex-col gap-3 font-outfit font-bold'>
@@ -100,7 +100,7 @@ src={`/assets/home/Social-medias/twitter.png`}  alt='the banner'/>
 
 
 
-       <div  className=' px-5 flex flex-row  items-start   pb-12 pt-8 bg-gray-200'>
+       <div  className=' px-5 flex flex-row  items-start   pb-12 pt-8 bg-gray-100'>
 
 
        <div className='flex flex-col gap-3 font-outfit font-bold text-sm w-1/4 px-3 '>

@@ -1,0 +1,335 @@
+
+    [
+      { "id":1,
+        "brandName": "Urban Essentials",
+        "name": "Classic White T-Shirt",
+        "subCategory": "T-shirts",
+        "Category": "TOPWEAR",
+        "Type": "men",
+        "originalPrice": 25.00,
+        "discountedPrice": 20.00,
+        "discount": "20%",
+        "sizes": ["S", "M", "L", "XL"],
+        "slots": [
+          {
+            "size": "S",
+            "quantity": 50
+          },
+          {
+            "size": "M",
+            "quantity": 40
+          },
+          {
+            "size": "L",
+            "quantity": 30
+          },
+          {
+            "size": "XL",
+            "quantity": 20
+          }
+        ],
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
+      },
+      {"id":2,
+        "brandName": "Urban Essentials",
+        "name": "Black Hoodie",
+        "subCategory": "Hoodies",
+        "Category": "TOPWEAR",
+        "Type": "men",
+        "originalPrice": 45.00,
+        "discountedPrice": 38.00,
+        "discount": "16%",
+        "sizes": ["M", "L", "XL"],
+        "slots": [
+          {
+            "size": "M",
+            "quantity": 40
+          },
+          {
+            "size": "L",
+            "quantity": 35
+          },
+          {
+            "size": "XL",
+            "quantity": 25
+          }
+        ],
+        "images": ["/assets/home/Women/heels2.png", "/assets/home/Women/heels2.png"]
+      },
+      {"id":3,
+        "brandName": "High Fashion",
+        "name": "Red Wool Sweater",
+        "subCategory": "Sweaters",
+        "Category": "WESTERN WEAR",
+        "Type": "women",
+        "originalPrice": 80.00,
+        "discountedPrice": 64.00,
+        "discount": "20%",
+        "sizes": ["S", "M"],
+        "slots": [
+          {
+            "size": "S",
+            "quantity": 15
+          },
+          {
+            "size": "M",
+            "quantity": 10
+          }
+        ],
+        "images": ["red_sweater1.jpg", "red_sweater2.jpg"]
+      },
+      {"id":4,
+        "brandName": "Kids Fun",
+        "name": "Boys Casual T-shirt",
+        "subCategory": "T-shirts",
+        "Category": "BOY'S",
+        "Type": "kids",
+        "originalPrice": 15.00,
+        "discountedPrice": 12.00,
+        "discount": "20%",
+        "sizes": ["XS", "S"],
+        "slots": [
+          {
+            "size": "XS",
+            "quantity": 60
+          },
+          {
+            "size": "S",
+            "quantity": 50
+          }
+        ],
+        "images": ["boys_tshirt1.jpg", "boys_tshirt2.jpg"]
+      },
+      {"id":5,
+        "brandName": "Beautify",
+        "name": "Lip Gloss",
+        "subCategory": "Lips",
+        "Category": "MAKE UP",
+        "Type": "beauty",
+        "originalPrice": 12.00,
+        "discountedPrice": 10.00,
+        "discount": "17%",
+        "sizes": ["One Size"],
+        "slots": [
+          {
+            "size": "One Size",
+            "quantity": 100
+          }
+        ],
+        "images": ["lip_gloss1.jpg", "lip_gloss2.jpg"]
+      },
+      {"id":6,
+        "brandName": "Step Ahead",
+        "name": "Formal Leather Shoes",
+        "subCategory": "Formal Shoes",
+        "Category": "FOOTWEAR",
+        "Type": "men",
+        "originalPrice": 95.00,
+        "discountedPrice": 80.00,
+        "discount": "16%",
+        "sizes": ["9", "10", "11"],
+        "slots": [
+          {
+            "size": "9",
+            "quantity": 25
+          },
+          {
+            "size": "10",
+            "quantity": 25
+          },
+          {
+            "size": "11",
+            "quantity": 25
+          }
+        ],
+        "images": ["formal_shoes1.jpg", "formal_shoes2.jpg"]
+      },
+      {"id":7,
+        "brandName": "Gadget Pro",
+        "name": "Smart Watch Series 5",
+        "subCategory": "Smart Watches",
+        "Category": "GADGETS",
+        "Type": "others",
+        "originalPrice": 300.00,
+        "discountedPrice": 270.00,
+        "discount": "10%",
+        "sizes": ["One Size"],
+        "slots": [
+          {
+            "size": "One Size",
+            "quantity": 75
+          }
+        ],
+        "images": ["smart_watch1.jpg", "smart_watch2.jpg"]
+      },
+      {"id":8,
+        "brandName": "Cozy Homes",
+        "name": "Luxury Bed Sheets",
+        "subCategory": "Bedsheets",
+        "Category": "BEDDING",
+        "Type": "others",
+        "originalPrice": 50.00,
+        "discountedPrice": 45.00,
+        "discount": "10%",
+        "sizes": ["Queen", "King"],
+        "slots": [
+          {
+            "size": "Queen",
+            "quantity": 30
+          },
+          {
+            "size": "King",
+            "quantity": 20
+          }
+        ],
+        "images": ["bed_sheets1.jpg", "bed_sheets2.jpg"]
+      },
+      {"id":9,
+        "brandName": "SportStar",
+        "name": "Performance Running Shoes",
+        "subCategory": "Sports Shoes",
+        "Category": "FOOTWEAR",
+        "Type": "women",
+        "originalPrice": 120.00,
+        "discountedPrice": 96.00,
+        "discount": "20%",
+        "sizes": ["6", "7", "8"],
+        "slots": [
+          {
+            "size": "6",
+            "quantity": 50
+          },
+          {
+            "size": "7",
+            "quantity": 50
+          },
+          {
+            "size": "8",
+            "quantity": 50
+          }
+        ],
+        "images": ["running_shoes1.jpg", "running_shoes2.jpg"]
+      },
+      {"id":10,
+        "brandName": "NightComfort",
+        "name": "Silk Sleepwear",
+        "subCategory": "Sleepwear",
+        "Category": "LINGERIE & NIGHTWEAR",
+        "Type": "women",
+        "originalPrice": 30.00,
+        "discountedPrice": 25.00,
+        "discount": "17%",
+        "sizes": ["S", "M"],
+        "slots": [
+          {
+            "size": "S",
+            "quantity": 40
+          },
+          {
+            "size": "M",
+            "quantity": 30
+          }
+        ],
+        "images": ["sleepwear1.jpg", "sleepwear2.jpg"]
+      },
+      {"id":11,
+        "brandName": "Elegant Wear",
+        "name": "Festive Kurti",
+        "subCategory": "Kurtas",
+        "Category": "ETHNIC WEAR",
+        "Type": "women",
+        "originalPrice": 70.00,
+        "discountedPrice": 56.00,
+        "discount": "20%",
+        "sizes": ["M", "L"],
+        "slots": [
+          {
+            "size": "M",
+            "quantity": 40
+          },
+          {
+            "size": "L",
+            "quantity": 30
+          }
+        ],
+        "images": ["festive_kurti1.jpg", "festive_kurti2.jpg"]
+      },
+      {"id":12,
+        "brandName": "Adventure Gear",
+        "name": "Camping Backpack",
+        "subCategory": "Bags",
+        "Category": "ACCESSORIES",
+        "Type": "men",
+        "originalPrice": 60.00,
+        "discountedPrice": 50.00,
+        "discount": "17%",
+        "sizes": ["One Size"],
+        "slots": [
+          {
+            "size": "One Size",
+            "quantity": 70
+          }
+        ],
+        "images": ["backpack1.jpg", "backpack2.jpg"]
+      },
+      {"id":13,
+        "brandName": "Kids Adventure",
+        "name": "Girl's Floral Dress",
+        "subCategory": "Dresses",
+        "Category": "GIRL'S",
+        "Type": "kids",
+        "originalPrice": 40.00,
+        "discountedPrice": 32.00,
+        "discount": "20%",
+        "sizes": ["3T", "4T"],
+        "slots": [
+          {
+            "size": "3T",
+            "quantity": 50
+          },
+          {
+            "size": "4T",
+            "quantity": 40
+          }
+        ],
+        "images": ["floral_dress1.jpg", "floral_dress2.jpg"]
+      },
+      {"id":14,
+        "brandName": "Modern Look",
+        "name": "Stylish Sunglasses",
+        "subCategory": "Eyewear",
+        "Category": "ACCESSORIES",
+        "Type": "women",
+        "originalPrice": 35.00,
+        "discountedPrice": 28.00,
+        "discount": "20%",
+        "sizes": ["One Size"],
+        "slots": [
+          {
+            "size": "One Size",
+            "quantity": 100
+          }
+        ],
+        "images": ["sunglasses1.jpg", "sunglasses2.jpg"]
+      },
+      {"id":15,
+        "brandName": "Office Essentials",
+        "name": "Men's Leather Wallet",
+        "subCategory": "Wallets",
+        "Category": "ACCESSORIES",
+        "Type": "men",
+        "originalPrice": 50.00,
+        "discountedPrice": 45.00,
+        "discount": "10%",
+        "sizes": ["One Size"],
+        "slots": [
+          {
+            "size": "One Size",
+            "quantity": 100
+          }
+        ],
+        "images": ["leather_wallet1.jpg", "leather_wallet2.jpg"]
+      }
+    ]
+  
+  
