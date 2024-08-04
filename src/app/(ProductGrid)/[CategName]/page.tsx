@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import Products from '@/components/website/header/ProductGridComponent/Products';
@@ -8,37 +8,64 @@ import ProductHeading from '@/components/website/header/ProductGridComponent/Pro
 import Filtering from '@/components/website/header/ProductGridComponent/Filtering';
 
 import ProductItems from '@/shared/json/products.json'
-const products = [
 
- 
-
-  { id: 1, brand: 'BRACKETS', name: 'Crinkle Satin Full Sleeve Shirt', price: '2,450', discount: '50%', originalPrice: '4,900', image: '/assets/home/Women/heels1.png' },
-  { id: 2, brand: 'WEST LINE', name: 'West Line Women Black Western Top', price: '1,049', discount: '43%', originalPrice: '1,850', image: '/assets/home/Women/heels1.png' },
-  { id: 3, brand: 'WEST LINE', name: 'West Line-Women Chiffon Button Down Crop Shirt', price: '1,490', discount: '34%', originalPrice: '2,250', image: '/assets/home/Women/heels1.png' },
-  { id: 4, brand: 'WEST LINE', name: 'West Line-Women Chiffon Button Down Crop Shirt', price: '1,490', discount: '34%', originalPrice: '2,250', image: '/assets/home/Women/heels1.png' },
-  { id: 5, brand: 'WEST LINE', name: 'West Line-Women Chiffon Button Down Crop Shirt', price: '1,490', discount: '34%', originalPrice: '2,250', image: '/assets/home/Women/heels1.png' },
-  { id: 6, brand: 'WEST LINE', name: 'West Line-Women Chiffon Button Down Crop Shirt', price: '1,490', discount: '34%', originalPrice: '2,250', image: '/assets/home/Women/heels1.png' },
-];
 
 
 const Page = ({ params }: { params: { CategName: string } }) => {
- const TempProd=ProductItems.find(item => item.Category === params.CategName ||item.subCategory === params.CategName)
-  const Prod=ProductItems.filter(item => item.Category === params.CategName ||item.subCategory === params.CategName)
+  const test=params.CategName.split('-');
+  console.log(test)
+ const TempProd=ProductItems.find(item => item.Category.replace(/-/g, ' ') ===decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ')  &&item.Type===test[0] ||item.subCategory.replace(/-/g, ' ') === decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ') &&item.Type===test[0])
+  const Prod=ProductItems.filter(item => item.Category.replace(/-/g, ' ') === decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ') &&item.Type===test[0] ||item.subCategory.replace(/-/g, ' ') === decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ') &&item.Type===test[0])
+  const Prod2=ProductItems.filter(item => item.Category.replace(/-/g, ' ') === decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ') &&item.Type===test[0] ||item.subCategory.replace(/-/g, ' ') === decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ') &&item.Type===test[0])
   console.log(Prod)
+
+
+  interface Product {
+    id: number;
+    brandName: string;
+    name: string;
+    subCategory: string;
+    Category: string;
+    Type: string;
+    originalPrice: number;
+    discountedPrice: number;
+    discount: string;
+    sizes: string[];
+    slots: { size: string; quantity: number; }[];
+    images: string[];
+  }
+
+
+
+  const [Prods, setProd] = useState<Product[]>(Prod);
+
+  // Function to sort products in ascending order based on discountedPrice
+ 
+
+
+
+
+
+
+
+
+
+
+
   return (
 
     <div className="bg-white">
       <div className="bg-gray-100 border-b border-gray-300">
         <div className="container mx-auto px-4 py-4">
-          <BreadCrumb Temp={TempProd} CategName={params.CategName} />
-          <ProductHeading title={params.CategName as string} />
-          <Filtering />
+          <BreadCrumb Temp={TempProd} CategName={decodeURIComponent(test.slice(1).join('-')).replace(/-/g, ' ')} />
+          <ProductHeading title={decodeURIComponent(test.slice(1).join('-').replace(/-/g, ' ')) as string} />
+          <Filtering Prods={Prods} setProd={setProd} TempProd={Prod2}  />
         </div>
       </div>
 
       <div className="container mx-auto px-4">
         <div className="grid py-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
+          {Prods.map((product) => (
             <Products key={product.id} product={product} />
           ))}
         </div>

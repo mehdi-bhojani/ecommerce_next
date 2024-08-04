@@ -75,11 +75,12 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 const MenCategories: {
+  type:string;
   Category: string;
   href: string;
   subcategories?: { name: string; href: string; }[];
 }[] = [
-    {
+    { type:'men',
       Category: 'TOPWEAR',
       href: '#',
       subcategories: [
@@ -92,7 +93,7 @@ const MenCategories: {
         { name: 'Sleep & Lounge', href: '#' },
       ]
     },
-    {
+    { type:'men',
       Category: 'BOTTOMWEAR',
       href: '#',
       subcategories: [
@@ -104,7 +105,7 @@ const MenCategories: {
 
       ]
     },
-    {
+    { type:'men',
       Category: 'FOOTWEAR',
       href: '#',
       subcategories: [
@@ -119,7 +120,7 @@ const MenCategories: {
 
       ]
     },
-    {
+    { type:'men',
       Category: 'ACCESSORIES',
       href: '#',
       subcategories: [
@@ -137,11 +138,12 @@ const MenCategories: {
 
 
 const WOMENCategories: {
+  type:string;
   Category: string;
   href: string;
   subcategories?: { name: string; href: string; }[];
 }[] = [
-    {
+    { type:'women',
       Category: 'WESTERN WEAR',
       href: '#',
       subcategories: [
@@ -155,7 +157,7 @@ const WOMENCategories: {
         { name: 'Sweaters', href: '#' },
       ]
     },
-    {
+    { type:'women',
       Category: 'ETHNIC WEAR',
       href: '#',
       subcategories: [
@@ -169,7 +171,7 @@ const WOMENCategories: {
 
       ]
     },
-    {
+    { type:'women',
       Category: 'FOOTWEAR',
       href: '#',
       subcategories: [
@@ -187,7 +189,7 @@ const WOMENCategories: {
 
       ]
     },
-    {
+    { type:'women',
       Category: 'ACCESSORIES',
       href: '#',
       subcategories: [
@@ -196,7 +198,7 @@ const WOMENCategories: {
         { name: 'Bags', href: '#' },
       ]
     },
-    {
+    { type:'women',
       Category: 'LINGERIE & NIGHTWEAR',
       href: '#',
       subcategories: [
@@ -209,11 +211,12 @@ const WOMENCategories: {
 
 
 const KIDSCategories: {
+  type:string;
   Category: string;
   href: string;
   subcategories?: { name: string; href: string; }[];
 }[] = [
-    {
+    {type:'kids',
       Category: "GIRL'S",
       href: '#',
       subcategories: [
@@ -226,7 +229,7 @@ const KIDSCategories: {
 
       ]
     },
-    {
+    {type:'kids',
       Category: "BOY'S",
       href: '#',
       subcategories: [
@@ -237,7 +240,7 @@ const KIDSCategories: {
 
       ]
     },
-    {
+    {type:'kids',
       Category: 'KIDS ACCESSORIES',
       href: '#',
       subcategories: [
@@ -250,11 +253,12 @@ const KIDSCategories: {
 
 
 const BEAUTYCategories: {
+  type:string;
   Category: string;
   href: string;
   subcategories?: { name: string; href: string; }[];
 }[] = [
-    {
+    {type:'beauty',
       Category: "MAKE UP",
       href: '#',
       subcategories: [
@@ -265,7 +269,7 @@ const BEAUTYCategories: {
 
       ]
     },
-    {
+    {type:'beauty',
       Category: "SKIN CARE",
       href: '#',
       subcategories: [
@@ -281,11 +285,12 @@ const BEAUTYCategories: {
 
 
 const OTHERSCategories: {
+  type:string;
   Category: string;
   href: string;
   subcategories?: { name: string; href: string; }[];
 }[] = [
-    {
+    {type:'others',
       Category: "HOME",
       href: '#',
       subcategories: [
@@ -294,7 +299,7 @@ const OTHERSCategories: {
 
       ]
     },
-    {
+    {type:'others',
       Category: "BEDDING",
       href: '#',
       subcategories: [
@@ -308,7 +313,7 @@ const OTHERSCategories: {
 
       ]
     },
-    {
+    {type:'others',
       Category: "GADGETS",
       href: '#',
       subcategories: [
@@ -368,7 +373,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={`/${component.Category.replace(/\s+/g, '-')}`}
+                            href={`/${component.type}-${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -377,7 +382,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
+                              href={`/${component.type}-${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -397,7 +402,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={`/${component.Category.replace(/\s+/g, '-')}`}
+                            href={`/${component.type}-${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -406,7 +411,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
+                              href={`/${component.type}-${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -426,7 +431,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={`/${component.Category.replace(/\s+/g, '-')}`}
+                            href={`/${component.type}-${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -435,7 +440,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
+                              href={`/${component.type}-${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -455,7 +460,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={`/${component.Category.replace(/\s+/g, '-')}`}
+                            href={`/${component.type}-${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -464,7 +469,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
+                              href={`/${component.type}-${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>
@@ -484,7 +489,7 @@ function Header() {
                           <ListItem
                             key={component.Category}
                             title={component.Category}
-                            href={`/${component.Category.replace(/\s+/g, '-')}`}
+                            href={`/${component.type}-${component.Category.replace(/\s+/g, '-')}`}
                             className='text-xl underline py-4'
                           >
 
@@ -493,7 +498,7 @@ function Header() {
                             <ListItem
                               key={subcategory.name}
                               title={subcategory.name}
-                              href={`/${subcategory.name.replace(/\s+/g, '-')}`}
+                              href={`/${component.type}-${subcategory.name.replace(/\s+/g, '-')}`}
                             />
                           ))}
                         </div>

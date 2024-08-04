@@ -1,5 +1,7 @@
 "use client"
 import React, { ReactNode } from 'react'
+import { Input } from "@/components/ui/input"
+
 import { useState } from 'react';
 import {
     Sheet,
@@ -68,10 +70,10 @@ import {
 
             <div className="max-w-sm mx-auto p-4">
 
-              <input type="email" placeholder="Email" className="w-full p-2 mb-4 border border-black" />
+              <Input type="email" placeholder="Email" className="w-full p-2 mb-4 border border-black" />
 
 
-              <input type="password" placeholder="Password" className="w-full p-2 mb-2 border border-gray-300" />
+              <Input type="password" placeholder="Password" className="w-full p-2 mb-2 border border-gray-300" />
 
 
               <a href="#" className="text-gray-600 mb-4 block" onClick={showResetPassword}>Forgot Password?</a>
@@ -101,9 +103,9 @@ import {
 
         ) : CreateAccount ? (
           <div>
-            <input type="email" placeholder="Email" className="w-full p-2 mt-8 mb-2 border border-black" />
-            <input type="phone" placeholder="Phone" className="w-full p-2 my-2 border border-black" />
-            <input type="password" placeholder="Password" className="w-full p-2 my-2 border border-black" />
+            <Input type="email" placeholder="Email" className="w-full p-2 mt-8 mb-2 border border-black" />
+            <Input type="phone" placeholder="Phone" className="w-full p-2 my-2 border border-black" />
+            <Input type="password" placeholder="Password" className="w-full p-2 my-2 border border-black" />
             <button className="w-full py-2 mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold">
               SIGN UP WITH EMAIL
             </button>
@@ -114,7 +116,7 @@ import {
 
         ) : isResetPassword ? (
           <div>
-            <input type="email" placeholder="Email" className="w-full p-2 my-8 border border-black" />
+            <Input type="email" placeholder="Email" className="w-full p-2 my-8 border border-black" />
             <button className="w-full py-2 mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold">
               RESET PASSWORD
             </button>

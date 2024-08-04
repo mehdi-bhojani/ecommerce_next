@@ -76,7 +76,7 @@
             "quantity": 10
           }
         ],
-        "images": ["red_sweater1.jpg", "red_sweater2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":4,
         "brandName": "Kids Fun",
@@ -98,7 +98,7 @@
             "quantity": 50
           }
         ],
-        "images": ["boys_tshirt1.jpg", "boys_tshirt2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":5,
         "brandName": "Beautify",
@@ -116,7 +116,7 @@
             "quantity": 100
           }
         ],
-        "images": ["lip_gloss1.jpg", "lip_gloss2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":6,
         "brandName": "Step Ahead",
@@ -142,7 +142,7 @@
             "quantity": 25
           }
         ],
-        "images": ["formal_shoes1.jpg", "formal_shoes2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":7,
         "brandName": "Gadget Pro",
@@ -160,7 +160,7 @@
             "quantity": 75
           }
         ],
-        "images": ["smart_watch1.jpg", "smart_watch2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":8,
         "brandName": "Cozy Homes",
@@ -182,7 +182,7 @@
             "quantity": 20
           }
         ],
-        "images": ["bed_sheets1.jpg", "bed_sheets2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":9,
         "brandName": "SportStar",
@@ -208,7 +208,7 @@
             "quantity": 50
           }
         ],
-        "images": ["running_shoes1.jpg", "running_shoes2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":10,
         "brandName": "NightComfort",
@@ -230,7 +230,7 @@
             "quantity": 30
           }
         ],
-        "images": ["sleepwear1.jpg", "sleepwear2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":11,
         "brandName": "Elegant Wear",
@@ -252,7 +252,7 @@
             "quantity": 30
           }
         ],
-        "images": ["festive_kurti1.jpg", "festive_kurti2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":12,
         "brandName": "Adventure Gear",
@@ -270,7 +270,7 @@
             "quantity": 70
           }
         ],
-        "images": ["backpack1.jpg", "backpack2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":13,
         "brandName": "Kids Adventure",
@@ -292,7 +292,7 @@
             "quantity": 40
           }
         ],
-        "images": ["floral_dress1.jpg", "floral_dress2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":14,
         "brandName": "Modern Look",
@@ -310,7 +310,7 @@
             "quantity": 100
           }
         ],
-        "images": ["sunglasses1.jpg", "sunglasses2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       },
       {"id":15,
         "brandName": "Office Essentials",
@@ -328,8 +328,64 @@
             "quantity": 100
           }
         ],
-        "images": ["leather_wallet1.jpg", "leather_wallet2.jpg"]
+        "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
       }
+      , {"id":16,
+      "brandName": "MurtaazStar",
+      "name": "Performance Run Shoes",
+      "subCategory": "Sports Shoes",
+      "Category": "FOOTWEAR",
+      "Type": "men",
+      "originalPrice": 120.00,
+      "discountedPrice": 96.00,
+      "discount": "20%",
+      "sizes": ["6", "7", "8"],
+      "slots": [
+        {
+          "size": "6",
+          "quantity": 50
+        },
+        {
+          "size": "7",
+          "quantity": 50
+        },
+        {
+          "size": "8",
+          "quantity": 50
+        }
+      ],
+      "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
+    },
+    { "id":17,
+    "brandName": "Urban Essentials",
+    "name": "Classic White T-Shirt",
+    "subCategory": "T-shirts",
+    "Category": "TOPWEAR",
+    "Type": "men",
+    "originalPrice": 235.00,
+    "discountedPrice": 120.00,
+    "discount": "20%",
+    "sizes": ["S", "M", "L", "XL"],
+    "slots": [
+      {
+        "size": "S",
+        "quantity": 50
+      },
+      {
+        "size": "M",
+        "quantity": 40
+      },
+      {
+        "size": "L",
+        "quantity": 30
+      },
+      {
+        "size": "XL",
+        "quantity": 20
+      }
+    ],
+    "images": ["/assets/home/Women/heels1.png", "/assets/home/Women/heels1.png"]
+  }
     ]
   
   
