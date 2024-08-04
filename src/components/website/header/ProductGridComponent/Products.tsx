@@ -50,8 +50,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, key }) => {
       <Image width={100} height={100} src={product?.images[0] ?? 'fallbackImage.jpg'} alt={product?.name ?? ''} className="mb-2 w-full h-64 object-cover" />
       <div className="absolute top-2 right-2">
 
-        <div className="relative w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md icon-wrapper">
-          <Heart key={key} onClick={() => toggleHeart(key)} id={product?.id?.toString()} size={19} className={`text-gray-500 icon ${activeHearts.has(key) ? 'active' : 'text-gray-500'}`} />
+        <div className="relative w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md icon-wrapper cursor-pointer">
+          <Heart  key={key} onClick={() => toggleHeart(key)} id={product?.id?.toString()} size={19} className={`text-gray-500 icon ${activeHearts.has(key) ? 'active' : 'text-gray-500'}`} />
         </div>
 
       </div>

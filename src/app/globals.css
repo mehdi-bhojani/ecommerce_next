@@ -4,7 +4,7 @@
 
 @layer base {
   /* Add this to styles/globals.css */
-  .icon-wrapper:hover .icon, .icon.active {
+    .icon.active {
     fill: black;
   }
   
