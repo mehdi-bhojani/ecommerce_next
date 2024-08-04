@@ -52,6 +52,8 @@ const Filtering: FC<ProductCardProps> = ({ Prods, setProd ,TempProd}) => {
   const MAX = 10000;
 
 
+  
+
   const handleChange = (newValues:number[]) => {
     setValues(newValues);
     console.log('Hooray');
@@ -169,7 +171,7 @@ const Filtering: FC<ProductCardProps> = ({ Prods, setProd ,TempProd}) => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Sidebar2>
+        <Sidebar2 Prods={Prods} TempProd={TempProd} setProd={setProd} >
           <Button variant="outline">Filters<ChevronDown size={14} /></Button>
         </Sidebar2>
       </div>

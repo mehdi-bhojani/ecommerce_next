@@ -39,7 +39,7 @@
         "originalPrice": 45.00,
         "discountedPrice": 38.00,
         "discount": "16%",
-        "sizes": ["M", "L", "XL"],
+        "sizes": ["M", "L", "XL","s"],
         "slots": [
           {
             "size": "M",

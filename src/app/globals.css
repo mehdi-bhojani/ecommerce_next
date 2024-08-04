@@ -4,10 +4,10 @@
 
 @layer base {
   /* Add this to styles/globals.css */
-.icon-wrapper:hover .icon {
-  fill: black;
-}
-
+  .icon-wrapper:hover .icon, .icon.active {
+    fill: black;
+  }
+  
 
 
 .slider-thumb {
