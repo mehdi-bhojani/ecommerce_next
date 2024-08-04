@@ -51,7 +51,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, key }) => {
       <div className="absolute top-2 right-2">
 
         <div className="relative w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md icon-wrapper">
-          <Heart key={key} onClick={() => toggleHeart(key)} id={key.toString()} size={19} className={`text-gray-500 icon ${activeHearts.has(key) ? 'active' : 'text-gray-500'}`} />
+          <Heart key={key} onClick={() => toggleHeart(key)} id={product?.id?.toString()} size={19} className={`text-gray-500 icon ${activeHearts.has(key) ? 'active' : 'text-gray-500'}`} />
         </div>
 
       </div>
