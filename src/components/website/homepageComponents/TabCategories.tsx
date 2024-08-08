@@ -1,256 +1,175 @@
-'use client'
-import { useEffect } from 'react';
-import React from 'react';
-import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CarosalCategories } from './CarosalCategories'
+"use client";
+import { useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CarosalCategories } from "./CarosalCategories";
 import InfiniteScroll from "react-infinite-scroll-component";
-import ReactLoading from 'react-loading';
-
-
-const categories: {
-  name: string;
-  subcategories?: { name: string; image: string; price: string }[];
-}[] = [
-    {
-      name: 'W',
-
-      subcategories: [
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar1.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar2.png', price: '2889' },
-        { name: 'Shalwar Kameez', image: '/assets/home/Women/shalwar3.png', price: '2889' },
-        { name: 'heels', image: '/assets/home/Women/heels1.png', price: '3889' },
-        { name: 'heels', image: '/assets/home/Women/heels2.png', price: '3889' },
-        { name: 'heels', image: '/assets/home/Women/heels3.png', price: '3889' },
-      ]
-    },
-    {
-      name: 'M',
-
-      subcategories: [
-        { name: 'Casual Shoes', image: '/assets/home/Men/CasualShoes1.png', price: '5889' },
-        { name: 'Casual Shoes', image: '/assets/home/Men/CasualShoes2.png', price: '5389' },
-        { name: 'Casual Shoes', image: '/assets/home/Men/CasualShoes3.png', price: '1889' },
-      ]
-    },
-  ];
-
-
-
+import { CategoryType, CollectionType } from "@/lib/types";
+import { ShopItem } from "@/constants/data";
+import ProductLoading from "@/components/myUi/productLoading";
+import Image from "next/image";
+import { getProductsFiltered } from "@/lib/actions/actions";
 
 const TabCategories = () => {
-  const [Categ, setCateg] = useState<string>('W')
-  
-  const [items, setItems] = useState<ShopItem[]>([]); 
-  const [shopItems, setShopItems] = useState<{ name: string; image: string; price: string }[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(10);
+  const [collection, setCollection] = useState<CollectionType[]>([]);
+  const [Categ, setCateg] = useState<CategoryType[]>([]);
+  const [items, setItems] = useState<ShopItem[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [offset, setOffset] = useState<number>(0);
+  const [categoryId, setCategoryId] = useState<string[]>([]);
+  const limit = 10;
 
-  const handleCategoryClick =  (categoryName: string) => {
-    console.log(`Category clicked outside component: ${categoryName} and tab ${Categ}`);
-
-    const  ShopImages =  categories
-      .filter((category) => category.name === Categ)
-      .flatMap((category) =>
-        category.subcategories
-          ? categoryName === 'All'
-            ? category.subcategories
-            : category.subcategories
-              .filter((subcategory) => subcategory.name === categoryName)
-          : []
+  const handleCategoryClick = async (categoryID: string[]) => {
+    setCategoryId(categoryID);
+    setOffset(0);
+    try {
+      const { products, hasMoreProducts } = await getProductsFiltered(
+        limit,
+        0,
+        categoryID
       );
-
-    setShopItems(ShopImages);
-    setCurrentIndex(10);
-   
-    if(shopItems.length<=currentIndex){
-      setHasMore(false)
+      setItems(products);
+      setHasMore(hasMoreProducts);
+      setOffset(limit);
+    } catch (error) {
+      console.error("Failed to fetch products for category:", error);
     }
-    else{
-      setHasMore(true)
+  };
+
+  const getCollections = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/collection");
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data: CollectionType[] = await response.json();
+      setCollection(data);
+      const subCategories = data[0]?.categories || [];
+      setCateg(subCategories);
+    } catch (error) {
+      console.error("Failed to fetch collections:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log(hasMore, 'is the boolean for hasMore');
-    console.log(currentIndex, 'is the current index');
-    console.log(shopItems.length, 'is the total');
+    const fetchData = async () => {
+      try {
+        await getCollections();
+        if (collection.length > 0) {
+          const initialCategories = collection[0].categories.map(
+            (item) => item._id
+          );
+          const { products, hasMoreProducts } = await getProductsFiltered(
+            limit,
+            0,
+            initialCategories
+          );
+          setItems(products);
+          setHasMore(hasMoreProducts);
+          setCategoryId(initialCategories);
+          setOffset(limit);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-    if (shopItems.length <= currentIndex) {
-      setHasMore(false);
+  const fetchMoreData = async () => {
+    try {
+      const { products, hasMoreProducts } = await getProductsFiltered(
+        limit,
+        offset,
+        categoryId
+      );
+      setItems((prevItems) => [...prevItems, ...products]);
+      setHasMore(hasMoreProducts);
+      setOffset((prevOffset) => prevOffset + limit);
+    } catch (error) {
+      console.error("Failed to fetch more products:", error);
+    }
+  };
+
+  const handleCollection = (collectionName: string) => {
+    const collectionToShow = collection.find(
+      (item) => item.name === collectionName
+    );
+    if (collectionToShow) {
+      setCateg(collectionToShow.categories);
     } else {
-      setHasMore(true);
+      console.warn(`Collection with name "${collectionName}" not found`);
+      setCateg([]);
     }
-  }, [shopItems, currentIndex]);
-
-
-
-
-  interface ShopItem {
-    image: string;
-    name: string;
-    price: string;
-  }
-
-
-
-  function SettingCateg(chr: string) {
-
-    setCateg(chr);
-  }
-
- 
-
-  useEffect(() => {
-    // Call the function with SettingCateg('W') on initial render and when Categ changes
-
-
-    handleCategoryClick('All');
-   
-   
-
-  }, [Categ]);
-
-  useEffect(()=>{
-    console.log("console loging...",shopItems)
-    setItems(shopItems.slice(0,10))
-      },[shopItems]);
-
-  // Keep track of the current index
-
-  const fetchMoreData = () => {
-    // Fake async API call to fetch more items
-    console.log("lets fetch more")
-    setTimeout(() => {
-      
-      const newIndex = currentIndex + 10;
-      setItems((prevItems) => prevItems.concat(shopItems.slice(currentIndex, newIndex)));
-      setCurrentIndex(newIndex);
-     
-    }, 1500);
   };
-
-
 
   return (
-    <div className='m-auto max-w-7xl'>
-      <div className='flex justify-around ' >
-        <Tabs defaultValue="Women" className=" w-full flex items-center flex-col">
-          <TabsList className='w-full'>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('W')} value="Women">WOMEN</TabsTrigger>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('M')} value="Men">MEN</TabsTrigger>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('G')} value="Girls">GIRLS</TabsTrigger>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('B')} value="Boys">BOYS</TabsTrigger>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('BE')} value="Beauty">BEAUTY</TabsTrigger>
-            <TabsTrigger className='hover:text-black hover:underline focus:underline ' onClick={() => SettingCateg('H')} value="Home">HOME</TabsTrigger>
-          </TabsList>
+    !loading && (
+      <div className="m-auto max-w-7xl">
+        <div className="flex justify-around">
+          <Tabs
+            defaultValue={collection[0]?.name}
+            className="w-full flex items-center flex-col"
+          >
+            <TabsList className="w-full">
+              {collection.map((item) => (
+                <TabsTrigger
+                  key={item._id}
+                  className="hover:text-black hover:underline focus:underline"
+                  onClick={() => handleCollection(item.name)}
+                  value={item.name}
+                >
+                  {item.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-          <CarosalCategories Categ={Categ} onCategoryClick={handleCategoryClick} />
-        
+            <CarosalCategories
+              Categ={Categ}
+              onCategoryClick={handleCategoryClick}
+            />
 
-          <div  >
-            <InfiniteScroll
-              dataLength={items.length} // This is important field to render the next data
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={ <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <ReactLoading type={"bars"} color="black" />
-            </div>}
-             
-              
-
-            >
-              <div    className="flex max-w-6xl flex-wrap ">
-            
-                {items.map((item, index) => (
-                  <div
-                    key={index}
-                    style={{ width: 'calc(19.3% - 16px)' }}
-                    className="py-4 mx-3 flex flex-col items-center justify-center"
-                  >
-                    <div>
-                      <img src={item.image} alt={item.name} />
+            <div>
+              <InfiniteScroll
+                dataLength={items.length}
+                next={fetchMoreData}
+                hasMore={hasMore}
+                loader={<ProductLoading />}
+              >
+                <div className="flex max-w-6xl flex-wrap gap-x-4 gap-y-2">
+                  {items.map((item, index) => (
+                    <div
+                      key={index}
+                      style={{ width: "calc(19.3% - 16px)" }}
+                      className="flex flex-col items-center justify-center"
+                    >
+                      <div className="border border-slate-300 py-3">
+                        <Image
+                          src={
+                            item.img[0] || "/assets/home/Men/CasualShoes1.png"
+                          }
+                          alt={item.name}
+                          width={1000}
+                          height={1000}
+                          className="object-contain"
+                        />
+                      </div>
+                      <div className="p-5 font-semibold">
+                        <span>Rs {item.price}</span>
+                      </div>
                     </div>
-                    <div className="p-5">
-                      <span>Rs{item.price}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </InfiniteScroll>
-          </div>
-
-        </Tabs>
-
-
-
-
+                  ))}
+                </div>
+              </InfiniteScroll>
+            </div>
+          </Tabs>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  );
+};
 
-export default TabCategories
+export default TabCategories;

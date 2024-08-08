@@ -156,13 +156,17 @@ console.log(Prods)
 
 
 
+  const [sheetOpen,setSheetOpen] = useState(true);
 
-
-
+  const handleClickOnApply = () => {
+    Apply();
+    setSheetOpen(false);
+  };
 
 
   return (
-    <div > <Sheet  >
+    <div >
+       <Sheet open={sheetOpen} onOpenChange={()=>sheetOpen} >
       <SheetTrigger asChild className='cursor-pointer'>
         {children}
       </SheetTrigger>
@@ -262,7 +266,7 @@ console.log(Prods)
           <button
             className="text-red-500 font-medium w-1/2  h-full pb-14  transition duration-300 ease-in-out
                    hover:bg-gradient-to-r hover:from-orange-500 hover:to-pink-500 hover:text-white"
-            onClick={() => Apply()}
+            onClick={() => handleClickOnApply()}
           >
             APPLY
           </button>

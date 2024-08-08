@@ -3,27 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  /* Add this to styles/globals.css */
-    .icon.active {
-    fill: black;
-  }
-  
-
-
-.slider-thumb {
-  background-color: #007BFF; /* Blue color for the thumb */
-  border-radius: 50%; /* Rounded thumb */
-}
-
-.slider-track {
-  background-color: #ccc; /* Gray color for inactive track */
-}
-
-.slider-active-track {
-  background-color: #007BFF; /* Blue color for active track */
-}
-
-
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -89,6 +68,30 @@
   }
 }
 
-.custom-width {
-  width: calc(20% - 16px);
+
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
+@media print {
+  html, body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 5mm;
 }

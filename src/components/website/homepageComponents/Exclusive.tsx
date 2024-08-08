@@ -1,49 +1,62 @@
-import React from 'react'
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+
+const imageData = [
+  {
+    src: "/assets/home/banner1.png",
+    width: 1000,
+    height: 1000,
+    className: "col-span-1 md:col-span-2 bg-purple-200 flex items-center justify-center w-full",
+    alt: "Banner 1",
+    type: "vertical",
+  },
+  {
+    src: "/assets/home/banner2.png",
+    width: 1000,
+    height: 1000,
+    className: "col-span-1 md:col-span-2 bg-pink-200 flex items-center justify-center w-full",
+    alt: "Banner 2",
+    type: "vertical",
+  },
+  {
+    src: "/assets/home/box1.png",
+    width: 1000,
+    height: 1000,
+    className: "col-span-1 bg-blue-200 flex items-center justify-center w-full",
+    alt: "Banner 3",
+    type: "horizontal",
+  },
+  {
+    src: "/assets/home/box2.png",
+    width: 1000,
+    height: 1000,
+    className: "col-span-1 bg-yellow-200 flex items-center justify-center w-full",
+    alt: "Banner 4",
+    type: "horizontal",
+  },
+];
+
 const Exclusive = () => {
   return (
-    <div className='text-center'>
-      <span className='font-sans font-bold text-center text-3xl py-10' >
+    <div className="text-center">
+      <h1 className="font-semibold text-center text-2xl py-10">
         EXCLUSIVE FOR YOU
-      </span>
-      <div className='flex flex-row flex-wrap justify-between '>
-
-
-        <Image
-          src={'/assets/home/banner1.png'}
-          width={1000}
-          height={1000}
-          className='w-full'
-          alt="Picture of the author" />
-
-
-
-
-        <Image
-          src={'/assets/home/banner2.png'}
-          width={1000}
-          height={1000}
-          className='w-full'
-          alt="Picture of the author" />
-
-
-        <Image
-          src={'/assets/home/box1.png'}
-          width={1000}
-          height={1000}
-          className='w-6/12'
-          alt="Picture of the author" />
-        <Image
-          src={'/assets/home/box2.png'}
-          width={1000}
-          height={1000}
-          className='w-6/12'
-          alt="Picture of the author" />
-
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {imageData.map((image, index) => (
+          <Image
+            key={index}
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            className={image.className}
+            alt={image.alt}
+          />
+        ))}
       </div>
-
+    
     </div>
-  )
-}
+  );
+};
 
-export default Exclusive
+export default Exclusive;
