@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import orderItemSchema from './OrderItem';
 import { isValidElement } from 'react';
+import Customer from './Customer';
 
 // Define Order Interface
 interface IOrder extends Document {
@@ -37,7 +38,7 @@ interface IOrder extends Document {
 
 // Define Order Schema
 const orderSchema: Schema = new Schema({
-  customerId: { type: Schema.Types.ObjectId, ref: 'Customer'},
+  customerId: { type: Schema.Types.ObjectId, ref: Customer},
   isGuest: { type: Boolean, required: true },
   customerDetails: {
     firstName: { type: String, required: true },

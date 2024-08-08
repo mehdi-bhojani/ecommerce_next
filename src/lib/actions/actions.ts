@@ -8,7 +8,7 @@ import Order from "../models/Order";
 
 export const getTotalSales = async () => {
   await connectToDB();
-  const orders = await Order.find()
+  const orders = await Order.find();
   const totalOrders = orders.length;
   const totalRevenue = orders.reduce((acc, order) => acc + order.totalAmount, 0)
   return { totalOrders, totalRevenue }
@@ -16,7 +16,7 @@ export const getTotalSales = async () => {
 
 export const getTotalCustomers = async () => {
   await connectToDB();
-  const customers = await Customer.find()
+  const customers = await Customer.find();
   const totalCustomers = customers.length
   return totalCustomers
 }

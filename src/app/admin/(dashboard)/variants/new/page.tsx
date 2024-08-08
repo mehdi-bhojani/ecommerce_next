@@ -1,13 +1,13 @@
-"use client";
 
-import VariantForm from "@/components/admin/products/variants/VariantForm";
-import { useSearchParams } from "next/navigation";
+// In the page file, e.g., src/app/admin/(dashboard)/variants/new/page.tsx
 
-const CreateVariant = () => {
-  const searchParams = useSearchParams();
-  const productId = searchParams.get('productId');
-  
-  return <VariantForm productId={productId?.toString()} />;
-};
+import CreateVariant from '@/components/admin/products/variants/newVariant';
+import React, { Suspense } from 'react';
 
-export default CreateVariant;
+const CreateVariantPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <CreateVariant />
+  </Suspense>
+);
+
+export default CreateVariantPage;
