@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { Badge } from "../ui/badge";
 import { X } from "lucide-react";
+import { CategoryType } from "@/lib/types";
 
 interface MultiSelectProps {
   placeholder: string;

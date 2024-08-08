@@ -4,7 +4,6 @@ import { getSession } from "next-auth/react";
 import { connectToDB } from "@/lib/mongoDB";
 import Collection from "@/lib/models/Collection";
 import { getToken } from "next-auth/jwt";
-import Product from "@/lib/models/old/Product";
 
 export const GET = async (
   req: NextRequest,

@@ -6,6 +6,7 @@ import Loader from "@/components/admin/customUi/Loader";
 import CollectionForm from "@/components/admin/collections/CollectionForm";
 import Category from "@/lib/models/Category";
 import CategoryForm from "@/components/admin/categories/CategoryForm";
+import { CategoryType } from "@/lib/types";
 
 const CategoryDetails = ({ params }: { params: { categoryId: string } }) => {
   const [loading, setLoading] = useState(true);

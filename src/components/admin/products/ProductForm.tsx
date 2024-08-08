@@ -37,6 +37,7 @@ import { DataTable } from "../customUi/DataTable";
 import { columns } from "./variants/variantColumns";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { CategoryType, ProductType } from "@/lib/types";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -104,6 +105,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       ? {
           ...initialData,
           categories: initialData.categories.map((category) => category._id),
+          similarProducts: initialData.similarProducts?.map((product) =>
+            typeof product === "string" ? product : product._id
+          ),
+          variants: initialData.variants.map((variant) => variant._id),
         }
       : {
           name: "",

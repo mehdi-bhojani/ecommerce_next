@@ -15,6 +15,7 @@ import {
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import { VariantType } from "@/lib/types";
 
 const deleteVariant = async (id: string,productId: string) => {
   

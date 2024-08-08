@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/admin/ui/separator";
 import { DataTable } from "@/components/admin/customUi/DataTable";
 import { columns } from "@/components/admin/products/ProductColumns";
+import { ProductType } from "@/lib/types";
 
 const Products = () => {
   const router = useRouter();

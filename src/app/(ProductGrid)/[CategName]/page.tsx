@@ -65,7 +65,7 @@ const Page = ({ params }: { params: { CategName: string } }) => {
       <div className="bg-gray-100 border-b border-gray-300">
         <div className="container mx-auto px-4 py-4">
           <BreadCrumb
-            Temp={TempProd}
+            // Temp={TempProd}
             CategName={decodeURIComponent(test.slice(1).join("-")).replace(
               /-/g,
               " "

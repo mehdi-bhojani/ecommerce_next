@@ -19,7 +19,7 @@ const removeVariantFromProduct = async ({ productId, variantIdToRemove }: Remove
       throw new Error("Variant not found in this product");
     }
 
-    product.variants = product.variants.filter(variantId => variantId !== variantIdToRemove);
+    product.variants = product.variants.filter((variantId: string) => variantId !== variantIdToRemove);
 
     const updatedProduct = await product.save();
 

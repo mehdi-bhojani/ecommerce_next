@@ -16,6 +16,7 @@ import {
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { ProductType } from "@/lib/types";
 
 const deleteproduct = async (id: string) => {
   try {

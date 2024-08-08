@@ -78,7 +78,7 @@ src={`/assets/home/Social-medias/twitter.png`}  alt='the banner'/>
        <div className='flex flex-col gap-3 font-outfit font-bold'>
         <span>SHOPPING FROM</span>
         <div className='flex flex-col gap-2 font-outfit  text-sm text-stone-600 '>
-        <span>You're in Pakistan</span>
+        <span>You&aposre in Pakistan</span>
         </div>
        </div>
 
@@ -122,7 +122,7 @@ src={`/assets/home/Social-medias/twitter.png`}  alt='the banner'/>
        <div className='flex flex-col gap-3 font-outfit font-bold  text-sm w-1/4 px-3 '>
         <span>LATEST ONLINE FASHION JOURNEY</span>
         <div className=' text-stone-600  flex flex-col gap-2 font-outfit  text-xs '>
-        <span>Clicky, the smart choice. A classy never goes out of the style. Explore the latest collection of top brands like Adidas,Reebok, Puma, Skechers, Asics, Gucci, Dolce & Gabbana, J.junaid jamshed, Khaadi, Maria. B, Sapphire, Bonanza, Satrangi, Beechtree, Nishat, Ethnic, Ego, Generation, Lala Textiles, Kyseria, Sana Safinaz, Alkaram, Urbansole, Calvin Klein, Espico, Victoria Secret and many other. We are one of the best top 10 online branded shopping sites in pakistan To keep your wardrobe latest in fashion, shop here from best and famous online store. Clicky.pk provides you 24/7 services for best online shopping. Shopping is always fun and fashion is always a class for everyone. Now you don’t need to wait for right time or markets to get open. You can buy at any time from your home at affordable prices easily.</span>
+        <span>Clicky, the smart choice. A classy never goes out of the style. Explore the latest collection of top brands like Adidas,Reebok, Puma, Skechers, Asics, Gucci, Dolce & Gabbana, J.junaid jamshed, Khaadi, Maria. B, Sapphire, Bonanza, Satrangi, Beechtree, Nishat, Ethnic, Ego, Generation, Lala Textiles, Kyseria, Sana Safinaz, Alkaram, Urbansole, Calvin Klein, Espico, Victoria Secret and many other. We are one of the best top 10 online branded shopping sites in pakistan To keep your wardrobe latest in fashion, shop here from best and famous online store. Clicky.pk provides you 24/7 services for best online shopping. Shopping is always fun and fashion is always a class for everyone. Now you don&apost need to wait for right time or markets to get open. You can buy at any time from your home at affordable prices easily.</span>
        
         </div>
        </div>
@@ -130,7 +130,7 @@ src={`/assets/home/Social-medias/twitter.png`}  alt='the banner'/>
        <div className='flex flex-col gap-3 font-outfit font-bold  text-sm w-1/4 px-3 '>
         <span>LATEST ONLINE FASHION JOURNEY</span>
         <div className=' text-stone-600  flex flex-col gap-2 font-outfit  text-xs '>
-        <span>We brings you all latest and seasonal collections for your fashion and wearing needs. Whether it's shopping for the chilling winter season or sweating summers, you will find all the latest collections from original brands in Pakistan. Clicky.pk will meet your requirements in every season. Buy shalwar kameez, trousers, kurtas, Kurtis, shawls, sleeves, t-shirts, sweaters, hoodies, caps, coats, shrugs, jackets, boots, sneakers, flats, high heels, khussa, shoes, high-end shoes to stylish accessories like jewelry, watch, scarf, hijabs, perfume and much more.</span>
+        <span>We brings you all latest and seasonal collections for your fashion and wearing needs. Whether it&aposs shopping for the chilling winter season or sweating summers, you will find all the latest collections from original brands in Pakistan. Clicky.pk will meet your requirements in every season. Buy shalwar kameez, trousers, kurtas, Kurtis, shawls, sleeves, t-shirts, sweaters, hoodies, caps, coats, shrugs, jackets, boots, sneakers, flats, high heels, khussa, shoes, high-end shoes to stylish accessories like jewelry, watch, scarf, hijabs, perfume and much more.</span>
        
         </div>
        </div>

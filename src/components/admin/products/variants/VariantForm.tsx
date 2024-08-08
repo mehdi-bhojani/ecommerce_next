@@ -40,6 +40,7 @@ import ImageUpload from "../../customUi/ImageUpload";
 import { Plus } from "lucide-react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import addVariantToProduct from "@/lib/actions/addVariantInProduct";
+import { CategoryType, VariantType } from "@/lib/types";
 
 const formSchema = z.object({
   isActive: z.boolean().default(true),

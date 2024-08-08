@@ -2,8 +2,8 @@
 
 import { DataTable } from "@/components/admin/customUi/DataTable";
 import Loader from "@/components/admin/customUi/Loader";
-import { columns } from "@/components/admin/orderItems/OrderItemsColums";
 import OrderDetails from "@/components/admin/orders/OrderDetails";
+import { OrderType } from "@/lib/types";
 import { useEffect, useState } from "react";
 
 

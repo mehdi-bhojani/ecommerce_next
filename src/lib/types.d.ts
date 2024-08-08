@@ -47,7 +47,7 @@ type ProductType = {
   seo: SeoType;
   sizeChart: SizeChartEntryType[];
   categories: CategoryType[];
-  similarProducts: ProductType[];
+  similarProducts?: ProductType[] | string[];
   variants: VariantType[];
   stock: number;
   remainingStock: number;

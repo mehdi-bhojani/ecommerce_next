@@ -54,7 +54,7 @@ const page = () => {
           <AccordionItem value="item-6">
             <AccordionTrigger>How can I keep track of the status of my orders?</AccordionTrigger>
             <AccordionContent>
-            The ‘My Account’ section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number’.
+            The ‘My Account&apos section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number&apos.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-7">

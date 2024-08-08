@@ -3,6 +3,7 @@
 import Loader from '@/components/admin/customUi/Loader'
 import ProductForm from '@/components/admin/products/ProductForm'
 import VariantForm from '@/components/admin/products/variants/VariantForm'
+import { VariantType } from '@/lib/types'
 import { useEffect, useState } from 'react'
 
 const VariantDetails = ({ params }: { params: { variantId: string }}) => {

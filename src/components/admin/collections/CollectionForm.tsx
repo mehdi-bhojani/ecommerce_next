@@ -23,6 +23,7 @@ import Delete from "../customUi/Delete";
 import MultiSelect from "./MultiSelect";
 import Loader from "../customUi/Loader";
 import ImageUpload from "../customUi/ImageUpload";
+import { CategoryType, CollectionType } from "@/lib/types";
 
 const formSchema = z.object({
   name: z.string().min(2).max(20),

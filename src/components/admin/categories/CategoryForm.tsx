@@ -23,6 +23,7 @@ import Delete from "../customUi/Delete";
 import Loader from "../customUi/Loader";
 import ImageUpload from "../customUi/ImageUpload";
 import { Combobox } from "../customUi/comboBox";
+import { CategoryType } from "@/lib/types";
 
 const formSchema = z.object({
   name: z.string().min(2).max(20),

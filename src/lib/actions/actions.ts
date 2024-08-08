@@ -2,9 +2,9 @@
 
 import mongoose from "mongoose";
 import Customer from "../models/Customer";
-import Order from "../models/old/oldOrder";
 import Product from "../models/Product";
 import { connectToDB } from "../mongoDB"
+import Order from "../models/Order";
 
 export const getTotalSales = async () => {
   await connectToDB();

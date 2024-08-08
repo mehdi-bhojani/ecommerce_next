@@ -21,6 +21,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import toast from "react-hot-toast";
+import { CategoryType } from "@/lib/types";
 
 const deleteCategories = async (id: string) => {
   try {

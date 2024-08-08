@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/avatar";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { CollectionType } from "@/lib/types";
 
 const deleteCollection = async (id: string) => {
   try {

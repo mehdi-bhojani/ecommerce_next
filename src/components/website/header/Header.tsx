@@ -402,29 +402,27 @@ function Header() {
   );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink href={props.href as string} asChild>
-        <Link href={props.href as string}>
-          <div
-            ref={ref}
-            className="block select-none space-y-1 rounded-md px-3 leading-none no-underline outline-none transition-colors "
-            {...props}
-          >
-            <div className={cn("text-sm leading-none", className)}>{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-              {children}
-            </p>
-          </div>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});
+const ListItem = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'a'>>(
+  ({ className, title, children, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <Link href={props.href as string}>
+            <a
+              ref={ref as React.Ref<HTMLAnchorElement>}
+              className={cn("block select-none space-y-1 rounded-md px-3 leading-none no-underline outline-none transition-colors", className)}
+              {...props}
+            ></a>
+              <div className="text-sm leading-none">{title}</div>
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                {children}
+              </p>          </Link>
+        </NavigationMenuLink>
+      </li>
+    );
+  }
+);
 
 ListItem.displayName = "ListItem";
+
 export default Header;

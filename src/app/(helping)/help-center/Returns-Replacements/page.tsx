@@ -75,13 +75,13 @@ const page = () => {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-7">
-            <AccordionTrigger>When i'll be refunded?</AccordionTrigger>
+            <AccordionTrigger>When i&aposll be refunded?</AccordionTrigger>
             <AccordionContent>
             Once your return is approved, we will initiate a refund to your preferred payment method within 48 hours.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-8">
-            <AccordionTrigger>When i'll get my exchanged item?</AccordionTrigger>
+            <AccordionTrigger>When i&aposll get my exchanged item?</AccordionTrigger>
             <AccordionContent>
             Transit time for the Exchange shipment is same as our standard delivery time (3 to 5 Business days) from the time exchange is shipped. You will be entitled to get an exchange of an equal value as your original order.
             </AccordionContent>

@@ -75,7 +75,7 @@ src={`/assets/home/Social-medias/twitter.png`}  alt='the banner'/>
     <div className='flex flex-col gap-3 font-outfit font-bold'>
      <span>SHOPPING FROM</span>
      <div className='flex flex-col gap-2 font-outfit  text-sm text-stone-600 '>
-     <span>You're in Pakistan</span>
+     <span>You&aposre in Pakistan</span>
      </div>
     </div>
 

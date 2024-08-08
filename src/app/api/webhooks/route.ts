@@ -1,8 +1,8 @@
 import Customer from "@/lib/models/Customer";
-import Order from "@/lib/models/old/oldOrder";
 import { connectToDB } from "@/lib/mongoDB";
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import Order from "@/lib/models/Order";
 
 export const POST = async (req: NextRequest) => {
   try {

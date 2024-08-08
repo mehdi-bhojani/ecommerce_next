@@ -48,7 +48,7 @@ export default function Page() {
           <AccordionItem value="item-1">
             <AccordionTrigger>How can I keep track of the status of my orders?</AccordionTrigger>
             <AccordionContent>
-            The ‘My Account’ section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number’.
+            The ‘My Account&apos section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number&apos.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
@@ -60,7 +60,7 @@ export default function Page() {
           <AccordionItem value="item-3">
             <AccordionTrigger>How can I cancel my order?</AccordionTrigger>
             <AccordionContent>
-            In order to cancel your order, please login to clicky app in your my account section. Open the order you want to cancel and you will see an option to cancel the order. Your order can only be cancelled before it reaches the ‘Dispatched’ status in your my account on Clicky app.
+            In order to cancel your order, please login to clicky app in your my account section. Open the order you want to cancel and you will see an option to cancel the order. Your order can only be cancelled before it reaches the ‘Dispatched&apos status in your my account on Clicky app.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
@@ -84,7 +84,7 @@ export default function Page() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-6">
-            <AccordionTrigger>I can’t sign in to my account.</AccordionTrigger>
+            <AccordionTrigger>I can&apost sign in to my account.</AccordionTrigger>
             <AccordionContent>
             Go to <Link className='text-red-900' href='#'>Reset password page. </Link> Fill in your registered phone or email id and tap Rest Password. An otp will be sent to your medium either phone or email. Enter the otp and set a new password.
             </AccordionContent>

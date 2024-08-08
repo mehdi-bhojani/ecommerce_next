@@ -78,23 +78,7 @@ const NavigationMenuContent = React.forwardRef<
 ))
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
-const NavigationMenuLink = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.Link>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Link> & { href: string }
->(({ className, href, children, ...props }, ref) => (
-
-    <NavigationMenuPrimitive.Link
-      ref={ref}
-      className={cn(
-        "text-current no-underline",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </NavigationMenuPrimitive.Link>
- 
-));
+const NavigationMenuLink = NavigationMenuPrimitive.Link;
 
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
