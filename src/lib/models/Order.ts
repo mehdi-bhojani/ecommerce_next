@@ -31,14 +31,14 @@ interface IOrder extends Document {
   orderDate: Date;
   deliveryDate?: Date;
   trackingNumber?: string;
-  orderNumber: string; 
+  orderNumber: string;
   isActive: boolean;
   isDeleted: boolean;
 }
 
 // Define Order Schema
 const orderSchema: Schema = new Schema({
-  customerId: { type: Schema.Types.ObjectId, ref: Customer},
+  customerId: { type: Schema.Types.ObjectId, ref: Customer },
   isGuest: { type: Boolean, required: true },
   customerDetails: {
     firstName: { type: String, required: true },

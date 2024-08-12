@@ -15,6 +15,7 @@ const TabCategories = () => {
   const [items, setItems] = useState<ShopItem[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [categoryLoading, setCategoryLoading] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<string[]>([]);
   const limit = 10;
@@ -23,6 +24,7 @@ const TabCategories = () => {
     setCategoryId(categoryID);
     setOffset(0);
     try {
+      setCategoryLoading(true);
       const { products, hasMoreProducts } = await getProductsFiltered(
         limit,
         0,
@@ -33,6 +35,8 @@ const TabCategories = () => {
       setOffset(limit);
     } catch (error) {
       console.error("Failed to fetch products for category:", error);
+    } finally {
+      setCategoryLoading(false);
     }
   };
 
@@ -58,22 +62,25 @@ const TabCategories = () => {
     const fetchData = async () => {
       try {
         await getCollections();
-        if (collection.length > 0) {
-          const initialCategories = collection[0].categories.map(
-            (item) => item._id
-          );
-          const { products, hasMoreProducts } = await getProductsFiltered(
-            limit,
-            0,
-            initialCategories
-          );
-          setItems(products);
-          setHasMore(hasMoreProducts);
-          setCategoryId(initialCategories);
-          setOffset(limit);
-        }
+        // setCategoryLoading(true);
+        // if (collection.length > 0) {
+        //   const initialCategories = collection[0].categories.map(
+        //     (item) => item._id
+        //   );
+        //   const { products, hasMoreProducts } = await getProductsFiltered(
+        //     limit,
+        //     0,
+        //     initialCategories
+        //   );
+        //   setItems(products);
+        //   setHasMore(hasMoreProducts);
+        //   setCategoryId(initialCategories);
+        //   setOffset(limit);
+        // }
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setCategoryLoading(false);
       }
     };
     fetchData();
@@ -132,39 +139,41 @@ const TabCategories = () => {
               onCategoryClick={handleCategoryClick}
             />
 
-            <div>
-              <InfiniteScroll
-                dataLength={items.length}
-                next={fetchMoreData}
-                hasMore={hasMore}
-                loader={<ProductLoading />}
-              >
-                <div className="flex max-w-6xl flex-wrap gap-x-4 gap-y-2">
-                  {items.map((item, index) => (
-                    <div
-                      key={index}
-                      style={{ width: "calc(19.3% - 16px)" }}
-                      className="flex flex-col items-center justify-center"
-                    >
-                      <div className="border border-slate-300 py-3">
-                        <Image
-                          src={
-                            item.img[0] || "/assets/home/Men/CasualShoes1.png"
-                          }
-                          alt={item.name}
-                          width={1000}
-                          height={1000}
-                          className="object-contain"
-                        />
+            {!categoryLoading && (
+              <div>
+                <InfiniteScroll
+                  dataLength={items.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={<ProductLoading />}
+                >
+                  <div className="flex max-w-6xl flex-wrap gap-x-4 gap-y-2">
+                    {items.map((item, index) => (
+                      <div
+                        key={index}
+                        style={{ width: "calc(19.3% - 16px)" }}
+                        className="flex flex-col items-center justify-center"
+                      >
+                        <div className="border border-slate-300 py-3">
+                          <Image
+                            src={
+                              item.img[0] || "/assets/home/Men/CasualShoes1.png"
+                            }
+                            alt={item.name}
+                            width={1000}
+                            height={1000}
+                            className="object-contain"
+                          />
+                        </div>
+                        <div className="p-5 font-semibold">
+                          <span>Rs {item.price}</span>
+                        </div>
                       </div>
-                      <div className="p-5 font-semibold">
-                        <span>Rs {item.price}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </InfiniteScroll>
-            </div>
+                    ))}
+                  </div>
+                </InfiniteScroll>
+              </div>
+            )}
           </Tabs>
         </div>
       </div>

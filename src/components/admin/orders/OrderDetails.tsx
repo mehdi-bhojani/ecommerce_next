@@ -126,7 +126,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
       discount: 20,
     },
     items: order!.orderItems.map((item: OrderItemType) => ({
-      name: item.productId.name,
+      name: item.productId?.name || "NA",
       description: item.variantId?.name + ", " + item.variantId?.size || "NA",
       quantity: item.quantity,
       unitCost: item.unitPrice,
@@ -474,7 +474,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
           <TableBody>
             {order!.orderItems.map((item: OrderItemType, index: number) => (
               <TableRow key={index}>
-                <TableCell>{item.productId.name}</TableCell>
+                <TableCell>{item.productId?.name || "NA"}</TableCell>
                 <TableCell>
                   {item.variantId?.name + ", " + item.variantId?.size || "NA"}
                 </TableCell>

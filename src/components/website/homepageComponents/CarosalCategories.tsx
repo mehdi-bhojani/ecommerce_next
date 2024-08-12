@@ -13,38 +13,54 @@ import {
 } from "@/components/ui/carousel";
 import { CategoryType } from "@/lib/types";
 
-
 interface CarosalCategoriesProps {
   Categ: CategoryType[];
-  onCategoryClick: (categoryID: string[]) => void; // Define the callback prop
+  onCategoryClick: (categoryID: string[]) => void;
 }
 
 export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
   Categ,
   onCategoryClick,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
-
-  // Function to handle click and set the selected index
-  // const handleItemClick = (index: number, categoryID: string) => {
-  //   setSelectedIndex(index);
-  //   console.log(`Clicked category: ${categoryID}`);
-  //   onCategoryClick(categoryID); // Call the callback with the category name
-  // };
-  const handleItemClick = (categoryID: string) => {
-    onCategoryClick([categoryID]); // Call the callback with the category name
+  const [selectedIndex, setSelectedIndex] = useState<string | null>("all");
+  const allIds = Categ.map((item) => item._id);
+  const handleItemClick = (categoryID: string[], theSelectedIndex: string) => {
+    setSelectedIndex(theSelectedIndex); 
+    onCategoryClick(categoryID); 
   };
 
+  useEffect(() => {
+    handleItemClick(allIds, "all");
+  }, [Categ]);
+
   return (
+    <div className="w-full p-5 px-10">
     <Carousel className="w-full max-w-6xl">
-      <CarouselContent className="-ml-1 items-center">
+      <CarouselContent className=" items-center">
+        <CarouselItem
+          className={`basis-1/10 hover:cursor-pointer`}
+          onClick={() => handleItemClick(allIds, "all")}
+        >
+          <div className={""}>
+            <Card className={`rounded-full w-auto max-w-max overflow-hidden 
+                 ${ selectedIndex === "all" ? "bg-blue-300 border border-blue-600" : ""
+                }`}>
+              <CardContent
+                className={`flex border-1 p-0 border-solid border-gray-500 max-w-max items-center justify-center `}
+              >
+                <div className="rounded-lg px-4">  
+                <span className="text-sm font-semibold flex-1 px-2">All</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </CarouselItem>
         {Categ.map((items, index) => (
           <CarouselItem
             key={index}
-            className={`pl-1 basis-1/9 hover:cursor-pointer  `}
-            // onClick={() => handleItemClick(index, items.name)}
-            onClick={() => handleItemClick(items._id)}
-            tabIndex={0} // Make the item focusable
+            className={`basis-1/9 hover:cursor-pointer  `}
+            onClick={() => handleItemClick([items._id], items.name)}
+            tabIndex={0}
           >
             <div className="px-1 py-3">
               <Card
@@ -52,10 +68,10 @@ export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
               >
                 <CardContent
                   className={`flex border-1 p-0 border-solid border-gray-500 max-w-max items-center justify-center ${
-                    selectedIndex === index ? "bg-blue-500" : ""
+                    selectedIndex === items?.name ? "bg-blue-300 border border-blue-600" : ""
                   }`}
                 >
-                  <div className="rounded-lg ">
+                  <div className="rounded-lg">
                     <Image
                       className="rounded-full h-10 w-10"
                       width={100}
@@ -76,5 +92,6 @@ export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
+    </div>
   );
 };

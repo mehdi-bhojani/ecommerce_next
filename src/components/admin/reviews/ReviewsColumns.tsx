@@ -30,7 +30,7 @@ export const columns: ColumnDef<ReviewType>[] = [
     header: "Name",
     cell: ({ row }) => (
       <span className="block max-w-[200px] overflow-hidden whitespace-nowrap text-ellipsis">
-        {row.original.productId.name}
+        {row.original.productId.name || ''}
       </span>
     ),
   },

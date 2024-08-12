@@ -115,7 +115,9 @@ function Header() {
               height={50}
               className="cursor-pointer"
             /> */}
-            <h1 className="text-2xl font-bold p-3"><span className="text-red-600">DFK</span> Collection</h1>
+            <h1 className="text-2xl font-bold p-3">
+              <span className="text-red-600">DFK</span> Collection
+            </h1>
           </Link>
         </div>
         <div>
@@ -401,28 +403,30 @@ function Header() {
     </div>
   );
 }
-
-const ListItem = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'a'>>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <Link href={props.href as string}>
-            <a
-              ref={ref as React.Ref<HTMLAnchorElement>}
-              className={cn("block select-none space-y-1 rounded-md px-3 leading-none no-underline outline-none transition-colors", className)}
-              {...props}
-            ></a>
-              <div className="text-sm leading-none">{title}</div>
-              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                {children}
-              </p>          </Link>
-        </NavigationMenuLink>
-      </li>
-    );
-  }
-);
-
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md px-3 leading-none no-underline outline-none transition-colors",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
 ListItem.displayName = "ListItem";
 
 export default Header;
