@@ -54,6 +54,8 @@ type ProductType = {
   isDelete: boolean;
   createdAt: Date;
   updatedAt: Date;
+  //to be add
+  brand: string;
 };
 
 

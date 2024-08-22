@@ -17,13 +17,23 @@ const UserSchema: Schema = new Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   username: {
     type: String,
     required: true,
     unique: true,
     trim: true,
+  },
+  image: {
+    type: String,
+    required: false,
+  },
+  provider: {
+    type: String,
+  },
+  role: {
+    type: String,
+    default: 'user',
   },
   // Add any other fields you need
 }, {

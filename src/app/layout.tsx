@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/shared/providers/next-auth/Provider";
-
+import { Provider } from "jotai";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,11 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <NextAuthProvider>
-        {children}
-      </NextAuthProvider>
-      </body>
+      <Provider>
+        <body className={inter.className}>
+          <NextAuthProvider>{children}</NextAuthProvider>
+        </body>
+      </Provider>
     </html>
   );
 }

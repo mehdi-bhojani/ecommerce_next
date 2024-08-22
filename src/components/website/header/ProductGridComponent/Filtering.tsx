@@ -107,7 +107,7 @@ const Filtering: FC<ProductCardProps> = ({ Prods, setProd ,TempProd}) => {
             <Button variant="outline">Sort<ChevronDown size={14} /></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>What&aposs new</DropdownMenuLabel>
+            <DropdownMenuLabel>What's new</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
               <DropdownMenuRadioItem value="top">Whats New</DropdownMenuRadioItem>
