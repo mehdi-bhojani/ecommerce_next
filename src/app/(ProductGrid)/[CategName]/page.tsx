@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Products from "@/components/website/header/ProductGridComponent/Products";
-import BreadCrumb from "@/components/website/header/ProductGridComponent/BreadCrumb";
-import ProductHeading from "@/components/website/header/ProductGridComponent/ProductHeading";
-import Filtering from "@/components/website/header/ProductGridComponent/Filtering";
+import Products from "@/components/website/ProductGridComponent/Products";
+import BreadCrumb from "@/components/website/ProductGridComponent/BreadCrumb";
+import ProductHeading from "@/components/website/ProductGridComponent/ProductHeading";
+import Filtering from "@/components/website/ProductGridComponent/Filtering";
 import { useAtom } from "jotai";
 import { subCategoryAtom } from "@/lib/store"; // Adjust the path as needed
 import ProductItems from "@/shared/json/products.json";

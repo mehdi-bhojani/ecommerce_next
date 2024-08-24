@@ -7,6 +7,8 @@ import bcrypt from "bcrypt"
 import { connectToDB } from "../mongoDB"
 import authOptions from "../auth"
 import { UserModel as User } from "../models/user"
+import mongoose from "mongoose"
+import Customer from "../models/Customer"
 export async function getUserSession() {
   const session = await getServerSession(authOptions)
   return ({ session })
@@ -25,25 +27,47 @@ export async function signInWithOauth({
   account,
   profile
 }: SignInWithOauthParams) {
-  // console.log({account, profile})
-  connectToDB()
+  await connectToDB();
 
-  const user = await User.findOne({email: profile.email})
-  
-  if (user) return true
+  const user = await User.findOne({ email: profile.email });
+  if (user) return true;
 
-  const newUser = new User({
-    username: profile.name,
-    email: profile.email,
-    image: profile.picture,
-    provider: account.provider
-  })
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
 
-  // console.log(newUser)
-  await newUser.save()
-  
-  return true
+    const newUser = new User({
+      username: profile.name,
+      email: profile.email,
+      image: profile.picture,
+      provider: account.provider
+    });
+
+    const res = await newUser.save({ session });  // Include session
+    const data = res.toJSON();
+    const userId = data._id.toString();
+
+    const newCustomer = new Customer({
+      userId,
+      email: profile.email,
+      username: profile.name,
+    });
+
+    const res2 = await newCustomer.save({ session });  // Include session
+    const data2 = res2.toJSON();
+    console.log({ data2 });
+
+    await session.commitTransaction();
+    return true;
+  } catch (error) {
+    await session.abortTransaction();  // Abort transaction on error
+    console.error("Transaction failed:", error);
+    return false;  // Indicate failure
+  } finally {
+    session.endSession();
+  }
 }
+
 
 interface GetUserByEmailParams {
   email: string
@@ -54,14 +78,14 @@ export async function getUserByEmail({
 }: GetUserByEmailParams) {
   connectToDB()
 
-  const user = await User.findOne({email}).select("-password")
+  const user = await User.findOne({ email }).select("-password")
 
   if (!user) {
-    throw new Error ("User does not exist!")
+    throw new Error("User does not exist!")
   }
 
   // console.log({user})
-  return {...user._doc, _id: user._id.toString()}
+  return { ...user._doc, _id: user._id.toString() }
 }
 
 export interface UpdateUserProfileParams {
@@ -86,7 +110,7 @@ export async function updateUserProfile({
     }, { new: true }).select("-password")
 
     if (!user) {
-      throw new Error ("User does not exist!")
+      throw new Error("User does not exist!")
     }
 
     return { success: true }
@@ -101,51 +125,74 @@ export interface SignUpWithCredentialsParams {
   password: string
 }
 
-export async function signUpWithCredentials ({
+export async function signUpWithCredentials({
   username,
   email,
   password
 }: SignUpWithCredentialsParams) {
-  connectToDB()
+  await connectToDB();  // Ensure DB connection is established
 
+  const session = await mongoose.startSession();
   try {
-    const user = await User.findOne({email})
+    session.startTransaction();
+
+    const user = await User.findOne({ email }).session(session);  // Include session
 
     if (user) {
-      throw new Error("User already exists.")
+      throw new Error("User already exists.");
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await new User({
+    const newUser = new User({
       username,
       email,
       password: hashedPassword,
       provider: "credentials",
-    })
+    });
 
-    console.log({newUser})
-    await newUser.save()
+    const res = await newUser.save({ session });  // Include session
+    const data = res.toJSON();
+    // console.log({ data });
 
-    return { success: true }
+    const userId = res._id.toString();  // Access _id directly
+
+    const newCustomer = new Customer({
+      userId,
+      email,
+      username,
+    });
+
+    const res2 = await newCustomer.save({ session });  // Include session
+    const data2 = res2.toJSON();
+    // console.log({ data2 });
+
+    await session.commitTransaction();
+    return { success: true };
   } catch (error) {
-    redirect(`/error?error=${(error as Error).message}`)
+    await session.abortTransaction();  // Ensure transaction is aborted on error
+    // console.error("Transaction failed:", error);
+    redirect(`/error?error=${(error as Error).message}`);
+    return { success: false, error: (error as Error).message };
+  } finally {
+    session.endSession();
   }
 }
+
 
 interface SignInWithCredentialsParams {
   email: string,
   password: string
 }
 
-export async function signInWithCredentials ({
+export async function signInWithCredentials({
   email,
   password
 }: SignInWithCredentialsParams) {
   connectToDB()
 
-  const user = await User.findOne({email})
+  const user = await User.findOne({ email })
 
   if (!user) {
     throw new Error("Invalid email or password!")
@@ -160,7 +207,7 @@ export async function signInWithCredentials ({
     throw new Error("Invalid email or password")
   }
 
-  return {...user._doc, _id: user._id.toString()}
+  return { ...user._doc, _id: user._id.toString() }
 }
 
 export interface ChangeUserPasswordParams {
@@ -168,7 +215,7 @@ export interface ChangeUserPasswordParams {
   newPassword: string
 }
 
-export async function changeUserPassword ({
+export async function changeUserPassword({
   oldPassword,
   newPassword
 }: ChangeUserPasswordParams) {
@@ -213,3 +260,21 @@ export async function changeUserPassword ({
     redirect(`/error?error=${(error as Error).message}`)
   }
 }
+
+export interface GetCustomerIdParams {
+  userId: string,
+}
+
+export async function getCustomerId({
+  userId
+}: GetCustomerIdParams) {
+  await connectToDB();
+  try {
+    const customer = await Customer.findOne({ userId });
+    const customerId = await customer?._id.toString();
+    return customerId;
+  } catch (error) {
+    console.error("Error getting customer ID:", error);
+  }
+}
+

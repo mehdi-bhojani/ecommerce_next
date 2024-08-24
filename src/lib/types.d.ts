@@ -43,11 +43,11 @@ type ProductType = {
   img: string[];
   mrp?: number;
   price: number;
-  reviews: string[];
+  reviews: ReviewType[];
   seo: SeoType;
   sizeChart: SizeChartEntryType[];
   categories: CategoryType[];
-  similarProducts?: ProductType[] | string[];
+  similarProducts?: ProductType[];
   variants: VariantType[];
   stock: number;
   remainingStock: number;

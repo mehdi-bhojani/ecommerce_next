@@ -10,7 +10,10 @@ export const GET = async (req: NextRequest, { params }: { params: { productId: s
 
     const product = await Product.findById(params.productId)
     .populate('categories')
-    .populate('variants');
+    .populate('variants')
+    .populate('similarProducts')
+    .populate('reviews');
+    
     if (!product) {
       return new NextResponse('Product not found', { status: 404 });
     }

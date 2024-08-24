@@ -32,7 +32,7 @@ const customerSchema: Schema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String, required: true },
-  username: { type: String, required: true },
+  username: { type: String},
   phone: { type: String },
   addresses: [addressSchema],
   gender: { type: String },

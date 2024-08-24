@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { connectToDB } from '@/lib/mongoDB';
 import Review from '@/lib/models/Review';
+import { getCustomerId } from '@/lib/actions/auth.actions';
+import mongoose from 'mongoose';
+import Product from '@/lib/models/Product';
 
 // GET all reviews (authorized)
 export const GET = async (req: NextRequest) => {
@@ -15,7 +18,7 @@ export const GET = async (req: NextRequest) => {
     await connectToDB();
 
     const reviews = await Review.find()
-    .populate('customerId').populate('productId');
+      .populate('customerId').populate('productId');
 
     return NextResponse.json(reviews, { status: 200 });
   } catch (err) {
@@ -24,8 +27,10 @@ export const GET = async (req: NextRequest) => {
   }
 };
 
-// POST create a new review (authorized)
+// POST a review (authorized)
 export const POST = async (req: NextRequest) => {
+  const session = await mongoose.startSession();
+  session.startTransaction(); // Start transaction here
   try {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
@@ -33,15 +38,16 @@ export const POST = async (req: NextRequest) => {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    await connectToDB();
+    await connectToDB(); // Ensure database connection
 
-    const { customerId, rating, reviewText, productId, images } = await req.json();
+    const { userId, rating, reviewText, productId, images } = await req.json();
+    const customerId = await getCustomerId(userId);
 
-    if (!customerId || !rating || !reviewText || !productId || !images) {
+    if (!customerId || !rating || !reviewText || !productId ) {
       return new NextResponse('All fields are required', { status: 400 });
     }
 
-    const newReview = new Review({
+    const newReview = await new Review({
       customerId,
       rating,
       reviewText,
@@ -49,11 +55,19 @@ export const POST = async (req: NextRequest) => {
       images,
     });
 
-    await newReview.save();
+    await newReview.save({ session }); // Save review within the transaction
 
+    await Product.findByIdAndUpdate(productId, {
+      $push: { reviews: newReview._id },
+    }, { session }); // Update product within the transaction
+
+    await session.commitTransaction(); // Commit transaction
     return NextResponse.json(newReview, { status: 201 });
-  } catch (err) {
-    console.log('[POST_REVIEW]', err);
-    return new NextResponse('Internal error', { status: 500 });
+  } catch (error) {
+    await session.abortTransaction(); // Abort transaction on error
+    console.error('Transaction failed:', error);
+    return new NextResponse('Transaction failed', { status: 500 });
+  } finally {
+    session.endSession(); // End session
   }
 };

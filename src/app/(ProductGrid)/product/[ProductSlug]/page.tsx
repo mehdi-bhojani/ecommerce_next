@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import ProductItems from "@/shared/json/products.json";
-import BreadCrumb from "@/components/website/header/ProductGridComponent/BreadCrumb";
+import BreadCrumb from "@/components/website/ProductGridComponent/BreadCrumb";
 import { useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Cross, Heart, RefreshCw, SquarePen, Truck, X } from "lucide-react";
@@ -31,9 +31,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@nextui-org/react";
-import ProductCard from "@/components/website/header/ProductGridComponent/Products";
+import ProductCard from "@/components/website/ProductGridComponent/Products";
 import Loader from "@/components/admin/customUi/Loader";
 import { ProductType, VariantType } from "@/lib/types";
+import ReviewDialog from "@/components/product/reviewDialog";
+import ShowReview from "@/components/product/showReview";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -73,18 +75,6 @@ const Page = () => {
     getSizes(colors[0].name, tempProduct);
   };
 
-  // Check that test has elements before attempting to use it
-  // const tempProd = ProductItems.find((item) =>
-  //   item.subCategory.replace(/-/g, " ") ===
-  //   decodeURIComponent(CategName).replace(/-/g, " ") &&
-  //   item.id === parseInt(ProductDetail)
-  // );
-
-  // const sizes = ["SMALL", "MEDIUM", "LARGE", "X LARGE", "2X LARGE", "3X LARGE"];
-
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(null);
-  const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(true);
 
   const getProduct = async () => {
@@ -126,26 +116,6 @@ const Page = () => {
     }
   };
 
-  const handleRating = (rate) => {
-    setRating(rate);
-  };
-
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
-
-  const [imgrc, setimgrc] = useState(null);
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setimgrc(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   const handleChangeColor = (color: string) => {
     setSelectedColor(color);
     SetSelectSize("");
@@ -164,7 +134,7 @@ const Page = () => {
       </div>
 
       <div className="py-5 flex flex-row ">
-        <div className="flex flex-row flex-wrap gap-4 h-1/2 w-1/2">
+        <div className="flex flex-row flex-wrap gap-4 h-1/2 w-1/2 justify-end">
           {tempProduct?.img.map((item, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
@@ -221,14 +191,14 @@ const Page = () => {
 
         <div className="flex flex-col w-1/2">
           {
-            <div className="max-w-xl mx-auto p-4">
+            <div className="max-w-xl mx-auto py-4 px-6">
               <div className="flex flex-col gap-2">
                 <span className="text-2xl font-bold">{tempProduct?.brand}</span>
                 <span className="text-lg text-gray-500">
                   {tempProduct?.name}
                 </span>
                 <p className="text-sm text-gray-500">
-                  STYLE : {tempProduct?.sku}
+                  SKU : {tempProduct?.sku}
                 </p>
                 <p className="text-red-600 font-bold">
                   Be the first one to review
@@ -244,7 +214,7 @@ const Page = () => {
                 </span>
               </div>
               <div className="my-4">
-                <p className="font-bold mb-2">MORE COLORS</p>
+                <p className="font-bold my-2">MORE COLORS</p>
                 <div className="flex gap-2">
                   {colors.length > 0 &&
                     colors.map((color, index) => (
@@ -274,8 +244,9 @@ const Page = () => {
                     ))}
                 </div>
               </div>
+
               <div className="my-4">
-                <p className="font-bold">SELECT SIZE</p>
+                <p className="font-bold my-2">SELECT SIZE</p>
                 <div className="flex flex-wrap gap-2">
                   {sizes?.map((size, index) => {
                     // Define button classes based on stock and selected size
@@ -313,6 +284,11 @@ const Page = () => {
                   })}
                 </div>
               </div>
+
+              <ReviewDialog
+                tempProduct={tempProduct!}
+                SelectSize={SelectSize}
+              />
 
               <div className="flex flex-row gap-2 ">
                 <button className="w-1/2 bg-gradient-to-r from-red-500 to-pink-500 text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  ">
@@ -381,100 +357,19 @@ const Page = () => {
                     {tempProduct?.description}
                   </AccordionContent>
                 </AccordionItem>
+                {tempProduct?.reviews!.length! > 0 && (
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger>
+                      <span className="font-bold uppercase">
+                        Reviews ({tempProduct?.reviews.length})
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <ShowReview reviews={tempProduct?.reviews!} />
+                    </AccordionContent>
+                  </AccordionItem>
+                )}
               </Accordion>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <div className="my-4 text-center flex justify-center w-full ">
-                    <button className="flex items-center font-semibold  justify-center text-center  border-2 border-black w-1/2 p-4 hover:bg-gray-100 transition w-full">
-                      <SquarePen className="mr-2" />
-                      WRITE A REVIEW
-                    </button>
-                  </div>
-                </DialogTrigger>
-                <DialogContent className="w-2/4 ">
-                  <div className="max-w-2xl  p-6 bg-white shadow-lg rounded-lg">
-                    <div className="flex items-center gap-4">
-                      <Image
-                        src={tempProduct?.img[0]}
-                        alt="Product Image"
-                        width={40}
-                        height={40}
-                        className="border  border-1 border-black p-1 object-cover"
-                      />
-                      <div>
-                        <h2 className="text-xl font-bold">
-                          ThriveTempo Hoodie
-                        </h2>
-                        <p className="text-gray-600">Size: SMALL</p>
-                      </div>
-                    </div>
-                    <hr className="my-2" />
-                    <div className="mb-2 flex flex-col justify-center items-center">
-                      <h3 className="text-lg font-semibold">
-                        Rate the Product
-                      </h3>
-                      <div className="flex mt-1">
-                        {[...Array(5)].map((_, index) => (
-                          <FaStar
-                            key={index}
-                            className={`cursor-pointer text-3xl ${
-                              index < (hover || rating)
-                                ? "text-yellow-500"
-                                : "text-gray-300"
-                            }`}
-                            onClick={() => handleRating(index + 1)}
-                            // onMouseEnter={() => setHover(index + 1)}
-                            onMouseLeave={() => setHover(null)}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <hr className="my-2" />
-                    <div className="mb-2">
-                      <label className="block text-gray-700 mb-2">
-                        Write a Comment
-                      </label>
-                      <textarea
-                        className="w-full h-32 p-1 border rounded"
-                        placeholder="Write your review about this product (optional)"
-                        value={comment}
-                        onChange={handleCommentChange}
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label className="block text-gray-700 mb-2">
-                        Upload Photos
-                      </label>
-                      <div className="flex items-center justify-start">
-                        <label className="flex flex-col items-center justify-center w-14 h-14 border-2 border-dashed border-gray-300 rounded cursor-pointer">
-                          <span className="text-gray-500">+</span>
-                          <input
-                            type="file"
-                            className="hidden"
-                            onChange={handleImageUpload}
-                          />
-                        </label>
-                      </div>
-                      {imgrc && (
-                        <div className="mt-4">
-                          <Image
-                            src={imgrc}
-                            width={200}
-                            height={200}
-                            alt="Uploaded"
-                            className="max-w-full h-auto border border-1 border-gray-600"
-                          />
-                        </div>
-                      )}
-                    </div>
-
-                    <button className="w-full py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-3xl hover:from-pink-500 hover:to-red-500">
-                      Submit
-                    </button>
-                  </div>
-                </DialogContent>
-              </Dialog>
             </div>
           }
         </div>
@@ -488,18 +383,9 @@ const Page = () => {
             <div className="p-1">
               <Card className="border-none">
                 <div className="flex flex-row justify-evenly">
-                  <CardContent className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
+                  <CardContent className="flex  items-center justify-start w-3/12 p-2 border-red-300 shadow-md">
                     {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
-                    <ProductCard product={tempProduct} key={1} />
-                  </CardContent>
-                  <CardContent className="flex aspect-square items-center  justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct} key={2} />
-                  </CardContent>
-                  <CardContent className="flex aspect-square items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct} key={3} />
-                  </CardContent>
-                  <CardContent className="flex aspect-square items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct} key={4} />
+                    <ProductCard product={tempProduct!} key={1} />
                   </CardContent>
                 </div>
               </Card>
@@ -510,7 +396,7 @@ const Page = () => {
               <Card className="border-none">
                 <div className="flex flex-row justify-start">
                   <CardContent className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct} key={1} />
+                    <ProductCard product={tempProduct!} key={1} />
                   </CardContent>
                   <CardContent className="flex aspect-square items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
                     <ProductCard product={tempProduct} key={2} />
@@ -523,7 +409,7 @@ const Page = () => {
       </Carousel>
 
       <div className="mt-5">
-        <span className="text-2xl font-bold">similar products</span>
+        <span className="text-2xl font-bold uppercase">similar products</span>
       </div>
 
       <Carousel showDots={false} className="w-full my-5">
@@ -531,13 +417,14 @@ const Page = () => {
           <CarouselItem>
             <Card className="border-none">
               <div className="flex flex-row justify-start">
-                <CardContent className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                  {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
-                  <ProductCard product={tempProduct} key={1} />
-                </CardContent>
-                <CardContent className="flex aspect-square items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                  <ProductCard product={tempProduct} key={2} />
-                </CardContent>
+                {tempProduct?.similarProducts?.map((product, index) => (
+                  // <div key={index}>
+                    <CardContent key={index} className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
+                      {/* <span className="text-4xl font-semibold">{index + 1}</span> */}
+                      <ProductCard key={index} product={product} />
+                    </CardContent>
+                  // </div>
+                ))}
               </div>
             </Card>
           </CarouselItem>
