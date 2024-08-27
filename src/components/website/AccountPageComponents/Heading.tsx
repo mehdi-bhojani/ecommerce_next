@@ -4,7 +4,7 @@ const Heading = () => {
   return (
     <div className="w-full mb-8 ">
         
-          <button className="text-sm w-full bg-red-500 text-white py-3 px-4 rounded-md">
+          <button className="text-sm w-full mt-20 md:mt-0 bg-red-500 text-white py-3 px-4 rounded-md">
             Please complete your profile by verifying your phone!
           </button>
         </div>

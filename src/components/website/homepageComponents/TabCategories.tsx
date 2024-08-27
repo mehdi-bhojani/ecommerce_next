@@ -133,12 +133,14 @@ const TabCategories = () => {
                 </TabsTrigger>
               ))}
             </TabsList>
+            <div className="w-11/12 mx-auto">
 
-            <CarosalCategories
+          
+            <CarosalCategories 
               Categ={Categ}
               onCategoryClick={handleCategoryClick}
             />
-
+  </div>
             {!categoryLoading && (
               <div>
                 <InfiniteScroll
@@ -147,12 +149,12 @@ const TabCategories = () => {
                   hasMore={hasMore}
                   loader={<ProductLoading />}
                 >
-                  <div className="flex max-w-6xl flex-wrap gap-x-4 gap-y-2">
+                  <div className="md:flex  md:flex-wrap gap-1 justify-around grid grid-cols-3 ">
                     {items.map((item, index) => (
                       <div
                         key={index}
-                        style={{ width: "calc(19.3% - 16px)" }}
-                        className="flex flex-col items-center justify-center"
+                       
+                        className=" flex flex-col items-center justify-center"
                       >
                         <div className="border border-slate-300 py-3">
                           <Image
@@ -160,9 +162,9 @@ const TabCategories = () => {
                               item.img[0] || "/assets/home/Men/CasualShoes1.png"
                             }
                             alt={item.name}
-                            width={1000}
-                            height={1000}
-                            className="object-contain"
+                            width={250}
+                            height={250}
+                            className="object-contain "
                           />
                         </div>
                         <div className="p-5 font-semibold">

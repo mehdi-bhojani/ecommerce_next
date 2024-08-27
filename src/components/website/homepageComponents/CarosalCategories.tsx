@@ -58,29 +58,29 @@ export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
         {Categ.map((items, index) => (
           <CarouselItem
             key={index}
-            className={`basis-1/9 hover:cursor-pointer  `}
+            className={`basis-1/9 hover:cursor-pointer `}
             onClick={() => handleItemClick([items._id], items.name)}
             tabIndex={0}
           >
-            <div className="px-1 py-3">
+            <div className="px-1 py-3 ">
               <Card
                 className={`rounded-full w-auto max-w-max overflow-hidden `}
               >
                 <CardContent
-                  className={`flex border-1 p-0 border-solid border-gray-500 max-w-max items-center justify-center ${
-                    selectedIndex === items?.name ? "bg-blue-300 border border-blue-600" : ""
+                  className={`flex border-1 p-0 border-solid border-gray-500 max-w-max items-center justify-center flex-nowrap ${
+                    selectedIndex === items?.name ? "bg-blue-300 " : ""
                   }`}
                 >
-                  <div className="rounded-lg">
+                  <div className=" flex-shrink-0 w-10 h-10">
                     <Image
-                      className="rounded-full h-10 w-10"
-                      width={100}
-                      height={100}
+                      className="w-full  object-cover rounded-full"
+                      width={300}
+                      height={300}
                       src={items.image}
                       alt="the logo"
                     />
                   </div>
-                  <span className="text-sm font-semibold flex-1 px-2">
+                  <span className="text-sm font-semibold flex-1 text-nowrap px-2">
                     {items.name}
                   </span>
                 </CardContent>

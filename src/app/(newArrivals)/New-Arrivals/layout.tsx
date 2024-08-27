@@ -1,9 +1,7 @@
-"use client"
 import Header from "@/components/website/header/Header";
-import Footer from "@/components/website/footer/Footer";
+import HelpFooter from "@/components/website/footer/HelpFooter";
 import ResponsiveHeader from "@/components/website/header/ResponsiveHeader";
 import ResponsiveFooter from "@/components/website/footer/ResponsiveFooter";
-
 
 
 export default function RootLayout({
@@ -11,18 +9,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- 
-  
   return (
     <html lang="en">
-      <body>
+      <body className="">
         <Header />
         <ResponsiveHeader/>
-       
         {children}
-        <ResponsiveFooter />
-        <Footer />
-        
+        <ResponsiveFooter/>
+        <HelpFooter/>
         </body>
     </html>
   );

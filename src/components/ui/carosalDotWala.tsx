@@ -216,7 +216,7 @@ const CarouselDots: React.FC<{
           key={index}
           className={cn(
             "h-2 w-2 rounded-full",
-            index === selectedIndex ? "bg-black" : "bg-gray-400"
+            index === selectedIndex ? "bg-orange-500" : "bg-gray-400"
           )}
           onClick={() => api?.scrollTo(index)}
         />

@@ -9,6 +9,7 @@ import AccountName from "@/components/website/AccountPageComponents/AccountName"
 import { Separator } from "@/components/ui/separator";
 import LeftSide from "@/components/website/AccountPageComponents/LeftSide";
 import Heading from "@/components/website/AccountPageComponents/Heading";
+import ResponsiveHeader from "@/components/website/header/ResponsiveHeader";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,17 +19,18 @@ export default function RootLayout({
     <html lang="en">
       <body >
        <Header/>
+       <ResponsiveHeader/>
        <div className="bg-gray-100 w-full">
        <ToastContainer/>   
        <div className="bg-white min-h-screen flex justify-center items-center">
       <div className="w-full max-w-6xl bg-white shadow-md  p-2">
       <Heading/>
       <AccountName/>
-      <Separator className='mb-2'/>
+      <Separator className='mb-2 hidden md:block'/>
         <div className="flex">
-         <LeftSide/>
+         <LeftSide />
          <Separator className='   ' orientation="vertical" />
-         <div className="w-7/12">
+         <div className="md:w-7/12 w-full">
          {children}
          </div>
        

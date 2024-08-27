@@ -21,6 +21,7 @@ import { Textarea } from "../admin/ui/textarea";
 import ImageUpload from "../myUi/imageUploadClient";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import Autoplay from "embla-carousel-autoplay"
 interface myProps {
   // define props here
   tempProduct: ProductType;
@@ -97,6 +98,10 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
     toast.success('Review Submitted Successfully');
   }
 
+
+
+  
+   
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -108,8 +113,8 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
             </button>
           </div>
         </DialogTrigger>
-        <DialogContent className="w-2/4">
-          <div className="max-w-2xl p-6">
+        <DialogContent className=" w-3/4  md:w-2/4 ">
+          <div className="md:max-w-3xl md:p-6">
             <div className="flex items-center gap-4">
               <Image
                 src={tempProduct?.img[0]}
@@ -123,11 +128,11 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
                 <p className="text-gray-600">Size: {SelectSize}</p>
               </div>
             </div>
-            <hr className="my-2" />
+            <hr className="my-1" />
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-4"
               >
                 <FormField
                   control={form.control}

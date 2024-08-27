@@ -8,9 +8,9 @@ interface CategoryItemProps {
 }
 
 const CategoryItem: React.FC<CategoryItemProps> = ({ name, image }) => (
-  <div className="flex flex-col items-center w-2/12  my-2">
+  <div className="flex flex-col items-center m-2  my-2">
     <Image src={image} width={100} height={100} alt={name} className="w-48 h-48 object-cover mb-1" />
-    <span className="text-center p-0 m-0 font-medium text-sm ">{name}</span>
+    <span className="text-center p-0 m-0 font-medium text-sm truncate w-4/5 ">{name}</span>
   </div>
 );
 
@@ -108,7 +108,7 @@ const categories: CategoryItemProps[] = [
 ];
 
 const CategoryGrid: React.FC = () => (
-  <div className="flex-wrap justify-between flex">
+  <div className="grid-cols-3 grid items-center   md:grid-cols-5 ">
     {categories.map((category) => (
       <CategoryItem
         key={category.name}

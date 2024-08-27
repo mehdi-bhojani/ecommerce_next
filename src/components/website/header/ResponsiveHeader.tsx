@@ -36,7 +36,7 @@ import {
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 const ResponsiveHeader = () => {
     return (
-        <div className='flex  items-center flex-1 px-2 w-full justify-between md:hidden'>
+        <div className='flex fixed top-0 z-30  bg-white items-center flex-1 px-2 w-full justify-between md:hidden'>
 
 
             <Link href={'/'}>
@@ -58,7 +58,9 @@ const ResponsiveHeader = () => {
 
                         </li>
                         <li className='px-2'>
+                        <Link href="/Notifications">
                             <Bell className='hover:cursor-pointer ' />
+                            </Link>
 
 
 
@@ -73,15 +75,17 @@ const ResponsiveHeader = () => {
                         </li> */}
                         <li className='px-2'>
 
-
+                        <Link href="/wishlist">
                             <Heart className='hover:cursor-pointer ' />
-
+</Link>
 
 
 
                         </li>
                         <li className='px-2'>
+                        <Link href="/Checkout">
                             <ShoppingCart className='hover:cursor-pointer ' />
+                            </Link>
                         </li>
 
 

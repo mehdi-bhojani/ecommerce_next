@@ -13,7 +13,7 @@ const LeftSide = () => {
 
 
     return (
-        <div className="w-5/12 pr-4 text-nowrap">
+        <div className="w-5/12 pr-4 text-nowrap hidden md:block">
         
             <Link href={'/my/account'} onClick={() => setFocus('account')} className="py-4 ">
                 <span className={`transition-all duration-75 ease-in ${Focus === 'account' ? ' text-green-500 font-bold' : 'text-gray-600 font-light'} `}>Account Overview</span>

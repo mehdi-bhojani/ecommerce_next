@@ -6,6 +6,7 @@ import Trendbanner from "@/components/website/homepageComponents/Trendbanner";
 import TopCategories from "@/components/website/homepageComponents/TopCategories";
 import TabCategories from "@/components/website/homepageComponents/TabCategories";
 function Page() {
+  
   return (
     <div>
       <Carosal />
@@ -15,7 +16,10 @@ function Page() {
         <DealZone />
       </div>
       <Trendbanner />
+      <div className="w-11/12 mx-auto">
       <TabCategories />
+      </div>
+      
     </div>
   );
 }

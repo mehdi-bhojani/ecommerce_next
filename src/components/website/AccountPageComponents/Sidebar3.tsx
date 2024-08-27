@@ -37,7 +37,7 @@ import { ClipboardCopy, Ellipsis } from 'lucide-react';
     <SheetTrigger  asChild className='cursor-pointer'>
     {children}
     </SheetTrigger>
-    <SheetContent className={`pt-10 w-2/5 ${isOpen?'bg-gray-200':''}  ` } >
+    <SheetContent className={`pt-10 w-3/5 ${isOpen?'bg-gray-200':''}  ` } >
     
       <div className="p-6  shadow rounded-lg space-y-6">
       {/* Gift Section */}
@@ -77,7 +77,7 @@ import { ClipboardCopy, Ellipsis } from 'lucide-react';
 
     {isOpen && (
         <div
-        className={`fixed bottom-0 w-96 right-0 bg-white p-6 rounded-t-lg shadow-inner transform transition-all duration-300 ease-out ${
+        className={`fixed bottom-0 w-3/5 right-0 bg-white p-6 rounded-t-lg shadow-inner transform transition-all duration-300 ease-out ${
           isOpen==true ? "translate-y-0" : "translate-y-full"
         }`}
         >

@@ -3,7 +3,7 @@ import React from 'react'
 
 const HelpFooter = () => {
   return (
-    <div className='flex flex-row justify-evenly items-start border-b bg-gray-100 h-full  pb-12 pt-24 '>
+    <div className=' flex-row justify-evenly items-start border-b bg-gray-100 h-full  pb-12 pt-24 hidden md:flex '>
 
 
     <div className='flex flex-col gap-3 font-outfit font-bold'>

@@ -9,9 +9,9 @@ import {
 import Image from 'next/image'
 const Carosal = () => {
   return (
-    <Carousel>
+    <Carousel className=' '>
       <CarouselContent>
-        <CarouselItem> <Image className='border w-full' width={1000} height={1000}
+        <CarouselItem> <Image className='border pt-16 object-cover h-80 md:h-full md:object-fill md:pt-0 w-full ' width={2500} height={2500}
           src={'/assets/home/cover_web.png'} alt='the cover' />
         </CarouselItem>
       </CarouselContent>

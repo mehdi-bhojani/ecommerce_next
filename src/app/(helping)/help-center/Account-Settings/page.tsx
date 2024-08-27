@@ -13,7 +13,7 @@ const page = () => {
     <div> <BackBtn myText={HelpObj.find(item => item.title === "Account Settings")}/>
      <div className="max-w-7xl mx-auto mt-5 bg-white p-8 rounded-lg shadow">
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
+          <AccordionItem  value="item-1">
             <AccordionTrigger>How can I create an account on Clicky?</AccordionTrigger>
             <AccordionContent>
             First time shoppers can easily register with us by clicking on the ‘Register&apos link on our homepage. You will be asked to provide us with a few basic information, including your name, email address and contact details, along with a secure password. Make sure to fill in the mandatory details before submitting the form. After successful registration, you will receive an email containing your login details.
