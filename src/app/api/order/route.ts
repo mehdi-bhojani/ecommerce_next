@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { connectToDB } from '@/lib/mongoDB';
 import Order from '@/lib/models/Order';
-import { generateOrderNumber } from '@/shared/helpers/generateOrderNumber';
 
 // GET all orders (authorized)
 export const GET = async (req: NextRequest) => {
@@ -48,7 +47,7 @@ export const POST = async (req: NextRequest) => {
       orderDate,
       deliveryDate,
       trackingNumber,
-      isActive,
+      orderNumber
     } = await req.json();
 
     if (
@@ -59,12 +58,11 @@ export const POST = async (req: NextRequest) => {
       !orderStatus ||
       !orderItems ||
       !payment ||
-      !orderDate 
+      !orderDate ||
+      !orderNumber 
     ) {
       return new NextResponse('All required fields must be provided', { status: 400 });
     }
-
-    const orderNumber = await generateOrderNumber();
 
     const newOrder = new Order({
       customerId,

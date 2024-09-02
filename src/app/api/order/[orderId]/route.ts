@@ -15,16 +15,16 @@ export const GET = async (req: NextRequest, { params }: { params: { orderId: str
     await connectToDB();
 
     const order = await Order.findById(params.orderId)
-    .populate({
-      path: 'orderItems.productId',
-      select: 'name', // Fields to include from the Product model
-    })
-    .populate({
-      path: 'orderItems.variantId',
-      match: { $ne: null }, // Optionally match documents
-      select: 'name size', // Fields to include from the Variant model
-    });
-  
+      .populate({
+        path: 'orderItems.productId',
+        select: 'name img', // Fields to include from the Product model
+      })
+      .populate({
+        path: 'orderItems.variantId',
+        match: { $ne: null }, // Optionally match documents
+        select: 'name size', // Fields to include from the Variant model
+      });
+
 
     if (!order) {
       return new NextResponse('Order not found', { status: 404 });
@@ -61,20 +61,6 @@ export const PUT = async (req: NextRequest, { params }: { params: { orderId: str
       trackingNumber,
       isActive
     } = await req.json();
-
-    // if (
-    //   !customerId ||
-    //   !customerDetails ||
-    //   !address ||
-    //   !totalAmount ||
-    //   !orderStatus ||
-    //   !orderItems ||
-    //   !payment ||
-    //   !orderDate ||
-    //   !isActive
-    // ) {
-    //   return new NextResponse('All required fields must be provided', { status: 400 });
-    // }
 
     const updatedOrder = await Order.findByIdAndUpdate(
       params.orderId,

@@ -138,8 +138,8 @@ type NotificationType = {
 };
 
 type CurrentCartItemType = {
-  productId: string;
-  variantId: string;
+  productId: ProductType;
+  variantId: VariantType;
   quantity: number;
   unitPrice: number;
 };
@@ -174,3 +174,18 @@ type ReviewType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+interface CartItemType {
+  _id?:string;
+  imgSrc: string,
+  name: string,
+  price: number,
+  mrp: number,
+  offer?: number,
+  SelectSize?: string,
+  allSizes?: any[],
+  slug?: string,
+  productId: string,
+  variantId?: string,
+  quantity: number,
+}

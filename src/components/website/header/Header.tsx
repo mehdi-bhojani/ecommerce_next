@@ -24,8 +24,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-
-
 import {
   HoverCard,
   HoverCardContent,
@@ -52,6 +50,7 @@ import SignInForm from "@/components/forms/signin-form";
 import { signOut, useSession } from "next-auth/react";
 import SignOutButton from "@/components/buttons/signout-button";
 import { useRouter } from "next/navigation";
+import HoverCart from "./details/HoverCart";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -213,7 +212,7 @@ function Header() {
               </li>
               <li className="px-4">
                 <HoverCard openDelay={100} closeDelay={50}>
-                  <HoverCardTrigger asChild  >
+                  <HoverCardTrigger asChild>
                     <Bell className="hover:cursor-pointer " />
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80 HoverCardContent">
@@ -240,20 +239,39 @@ function Header() {
                           <span> Hi {sessions?.user?.name}</span>
                         ) : (
                           <>
-                            <span className="cursor-pointer" onClick={() => setIsSigninSheetOpened(true)}>Sign In</span>
-                            <span className="cursor-pointer" onClick={handleCreateAccount}>Join</span>
+                            <span
+                              className="cursor-pointer"
+                              onClick={() => setIsSigninSheetOpened(true)}
+                            >
+                              Sign In
+                            </span>
+                            <span
+                              className="cursor-pointer"
+                              onClick={handleCreateAccount}
+                            >
+                              Join
+                            </span>
                           </>
                         )}
                       </div>
-                      <div className="p-4 cursor-pointer font-semibold flex gap-2 flex-row justify-start border-b border-gray-400" onClick={() => handleLinkClick("/my/account")}>
+                      <div
+                        className="p-4 cursor-pointer font-semibold flex gap-2 flex-row justify-start border-b border-gray-400"
+                        onClick={() => handleLinkClick("/my/account")}
+                      >
                         <User className="hover:cursor-pointer  " />
                         <span>My Account</span>
                       </div>
-                      <div className="p-4 cursor-pointer  font-semibold flex gap-2 flex-row  justify-start border-b border-gray-400" onClick={() => handleLinkClick("/my/orders")}>
+                      <div
+                        className="p-4 cursor-pointer  font-semibold flex gap-2 flex-row  justify-start border-b border-gray-400"
+                        onClick={() => handleLinkClick("/my/orders")}
+                      >
                         <Package className="hover:cursor-pointer " />
                         <span>My Orders</span>
                       </div>
-                      <div className="p-4 font-semibold cursor-pointer flex gap-2 flex-row justify-start border-b border-gray-400" onClick={() => handleLinkClick("/wishlist")}>
+                      <div
+                        className="p-4 font-semibold cursor-pointer flex gap-2 flex-row justify-start border-b border-gray-400"
+                        onClick={() => handleLinkClick("/wishlist")}
+                      >
                         <Heart className="hover:cursor-pointer " />
                         <span>My WishLists</span>
                       </div>
@@ -272,62 +290,14 @@ function Header() {
                   </HoverCardContent>
                 </HoverCard>
               </li>
-              <li className="px-4 cursor-pointer" onClick={() => handleLinkClick("/wishlist")}>
+              <li
+                className="px-4 cursor-pointer"
+                onClick={() => handleLinkClick("/wishlist")}
+              >
                 <Heart className="cursor-pointer " />
               </li>
               <li className="px-4 cursor-pointer">
-
-
-
-                <HoverCard openDelay={100} closeDelay={50} >
-                  <HoverCardTrigger asChild>
-                    <Link href="/checkout">
-                      <ShoppingCart className="cursor-pointer " />
-                    </Link>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-full relative right-5">
-                   
-                      <div className="w-full max-w-md bg-white shadow-md rounded-md p-4">
-
-                        {/* Header */}
-                        <div className="flex justify-between items-center border-b pb-4">
-                          <h2 className="text-xl font-semibold">My Bag, <span className="font-normal text-gray-600">1 Item</span></h2>
-                          <button className="text-2xl">&times;</button>
-                        </div>
-
-                        {/* Item Details */}
-                        <div className="flex py-4 border-b">
-                          <img
-                            src="/path/to/your-image.jpg" // Replace with the correct image path
-                            alt="Item Image"
-                            className="w-20 h-20 object-cover rounded-md"
-                          />
-                          <div className="ml-4 flex-1">
-                            <p className="text-lg font-semibold">Rs 3,099</p>
-                            <p className="text-sm text-gray-600">S  Qty 1</p>
-                          </div>
-                          <button className="text-sm font-semibold text-black">REMOVE</button>
-                        </div>
-
-                        {/* Subtotal Section */}
-                        <div className="flex justify-between items-center py-4 border-b">
-                          <p className="text-md font-medium">Sub-total</p>
-                          <p className="text-md font-semibold">Rs 3,099</p>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex justify-between items-center mt-4 gap-2">
-                          <button className="border-2 border-black text-black font-semibold py-2 px-6 ">VIEW BAG</button>
-                          <button className="bg-black text-white font-semibold py-2 px-6 ">CHECKOUT</button>
-                        </div>
-
-                      </div>
-                  
-                  </HoverCardContent>
-                </HoverCard>
-
-
-
+                <HoverCart />
               </li>
             </ul>
           </nav>

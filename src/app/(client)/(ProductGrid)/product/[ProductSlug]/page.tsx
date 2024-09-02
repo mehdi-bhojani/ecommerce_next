@@ -11,7 +11,7 @@ import "react-medium-image-zoom/dist/styles.css";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-toastify";
-import Autoplay from "embla-carousel-autoplay"
+import Autoplay from "embla-carousel-autoplay";
 import {
   Tooltip,
   TooltipContent,
@@ -38,20 +38,22 @@ import { ProductType, VariantType } from "@/lib/types";
 import ReviewDialog from "@/components/product/reviewDialog";
 import ShowReview from "@/components/product/showReview";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import useCart from "@/shared/hooks/useCart";
+import { PriceIntoCurrency } from "@/shared/helpers/help";
 
 const Page = () => {
   const searchParams = useSearchParams();
-
   const param = useParams();
   const { CategName, ProductDetail } = param;
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [SelectSize, SetSelectSize] = useState<string>("");
   const [SelectedHeart, SetSelectedHeart] = useState<boolean>(false);
   const selectedHeartRef = useRef(SelectedHeart);
-  const [tempProduct, setTempProduct] = useState<ProductType | null>(null);
+  const [tempProduct, setTempProduct] = useState<ProductType>();
   const [colors, setColors] = useState<VariantType[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [sizes, setSizes] = useState<VariantType[]>([]);
+  const { addToCart } = useCart();
 
   const getSizes = (currentColor: string, currentProduct: ProductType) => {
     // Filter the variants based on the currentColor
@@ -124,54 +126,78 @@ const Page = () => {
     getSizes(color, tempProduct!);
   };
 
-
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: false })
-  )
+  );
 
-
-
+  const handleAddtoBag = () => {
+    if (SelectSize != null && SelectSize === "") {
+      toast.error("Please select a size", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+      });
+    } else {
+      const cartItem = {
+        imgSrc: tempProduct!.img[0],
+        name: tempProduct!.name,
+        price: tempProduct!.price,
+        mrp: tempProduct!.mrp,
+        offer: tempProduct!.offer,
+        SelectSize: SelectSize,
+        allSizes: sizes,
+        slug: tempProduct!.slug,
+        productId: tempProduct!._id,
+        variantId: getSelectedVariant?._id,
+        quantity: 1,
+      };
+      addToCart(cartItem);
+      toast.success("Added to Bag", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+      });
+    }
+  };
+  const getSelectedVariant = tempProduct?.variants.find(
+    (variant) => variant.size === SelectSize && variant.name === selectedColor
+  );
 
   return loading ? (
     <Loader />
   ) : (
     <div className="bg-white px-4 md:px-8 md:pt-8">
-     
+      <div className="py-5 md:flex-row flex-col flex">
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full max-w-xs"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+        >
+          <CarouselContent>
+            {tempProduct?.img.map((item, index) => (
+              <CarouselItem key={index + 1}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="flex aspect-square items-center justify-center p-2">
+                      <Image
+                        className=" transition-transform duration-300 ease-in-out hover:scale-110 object-cover  w-full"
+                        src={item}
+                        alt="png"
+                        height={300}
+                        width={300}
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
 
-      <div className="py-5  md:flex-row  flex-col flex">
-
-
-
-      <Carousel
-      plugins={[plugin.current]}
-      className="w-full max-w-xs"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-        {tempProduct?.img.map((item, index) => (
-          <CarouselItem key={index+1}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-2">
-                <Image
-                     
-                      className=" transition-transform duration-300 ease-in-out hover:scale-110 object-cover  w-full"
-                      src={item}
-                      alt="png"
-                      height={300}
-                      width={300}
-                    />
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-    
-    </Carousel>
-
-    {/* {tempProduct?.img.map((item, index) => (
+        {/* {tempProduct?.img.map((item, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
                 <div className="w-5/12 ">
@@ -186,11 +212,6 @@ const Page = () => {
                     />
                   </div>
                 </div> */}
-
-
-
-
-
 
         <div className="md:flex md:flex-row md:flex-wrap md:gap-4 md:h-1/2 md:w-1/2 md:justify-end  hidden">
           {tempProduct?.img.map((item, index) => (
@@ -216,10 +237,11 @@ const Page = () => {
                       <button
                         key={index}
                         onClick={() => setSelectedImage(image)}
-                        className={`border ${selectedImage === image
+                        className={`border ${
+                          selectedImage === image
                             ? "border-orange-700"
                             : "border-transparent"
-                          } p-1`}
+                        } p-1`}
                       >
                         <Image
                           src={image}
@@ -263,10 +285,10 @@ const Page = () => {
               </div>
               <div className="my-4 flex flex-row gap-2">
                 <span className="line-through text-2xl text-gray-500">
-                  Rs{tempProduct?.price}
+                  {PriceIntoCurrency(tempProduct?.mrp || 0,"PKR")}
                 </span>
                 <span className="text-2xl text-red-600 font-bold">
-                  Rs{tempProduct?.mrp}
+                  {PriceIntoCurrency(tempProduct?.price || 0,"PKR")}
                   <span className="text-sm">(-{tempProduct?.offer}%)</span>
                 </span>
               </div>
@@ -285,10 +307,11 @@ const Page = () => {
                                 alt="Product Image"
                                 width={50}
                                 height={75}
-                                className={`object-cover ${color?.name === selectedColor
+                                className={`object-cover ${
+                                  color?.name === selectedColor
                                     ? "border border-red-600"
                                     : ""
-                                  }`}
+                                }`}
                               />
                             </TooltipTrigger>
                             <TooltipContent className="bg-slate-900 text-white">
@@ -306,10 +329,11 @@ const Page = () => {
                 <div className="flex flex-wrap gap-2">
                   {sizes?.map((size, index) => {
                     // Define button classes based on stock and selected size
-                    const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize === size?.size
+                    const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${
+                      SelectSize === size?.size
                         ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
                         : ""
-                      }`;
+                    }`;
 
                     return (
                       <div className="relative" key={index}>
@@ -325,10 +349,11 @@ const Page = () => {
                             size?.remainingStock > 0 &&
                             SetSelectSize(size?.size)
                           }
-                          className={`${buttonClasses} ${size?.remainingStock > 0
+                          className={`${buttonClasses} ${
+                            size?.remainingStock > 0
                               ? "hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-pink-500"
                               : ""
-                            }`}
+                          }`}
                           disabled={size?.remainingStock <= 0}
                         >
                           {size?.size}
@@ -345,7 +370,10 @@ const Page = () => {
               />
 
               <div className="flex flex-row gap-2 ">
-                <button className="w-1/2 bg-gradient-to-r from-red-500 to-pink-500 text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  ">
+                <button
+                  onClick={handleAddtoBag}
+                  className="w-1/2 bg-gradient-to-r from-red-500 to-pink-500 text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  "
+                >
                   ADD TO BAG
                 </button>
                 <button
@@ -359,8 +387,9 @@ const Page = () => {
                       onClick={() => {
                         SetSelectedHeart(!SelectedHeart), handleAction();
                       }}
-                      className={`text-gray-500 icon ${SelectedHeart ? "active" : "text-gray-500"
-                        }  `}
+                      className={`text-gray-500 icon ${
+                        SelectedHeart ? "active" : "text-gray-500"
+                      }  `}
                     />
                   </div>
 
@@ -432,7 +461,7 @@ const Page = () => {
       <Carousel showDots={false} className="w-full max-w-sm md:hidden">
         <CarouselContent className="-ml-1">
           <CarouselItem key={1} className="pl-1   ">
-            <Card className="border-none" >
+            <Card className="border-none">
               <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
                 <ProductCard product={tempProduct} key={1} />
               </CardContent>
@@ -459,14 +488,8 @@ const Page = () => {
               </CardContent>
             </Card>
           </CarouselItem>
-
         </CarouselContent>
-
       </Carousel>
-
-
-
-
 
       <Carousel showDots={true} className="w-full hidden md:block">
         <CarouselContent className="border-none">
@@ -475,7 +498,6 @@ const Page = () => {
               <Card className="border-none">
                 <div className="flex flex-row justify-evenly">
                   <CardContent className="flex  items-center justify-start w-3/12  p-2 border-red-300 shadow-md">
-               
                     <ProductCard product={tempProduct!} key={1} />
                   </CardContent>
                 </div>
@@ -506,7 +528,7 @@ const Page = () => {
       <Carousel showDots={false} className="w-full max-w-sm md:hidden">
         <CarouselContent className="-ml-1">
           <CarouselItem key={1} className="pl-1   ">
-            <Card className="border-none" >
+            <Card className="border-none">
               <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
                 <ProductCard product={tempProduct} key={1} />
               </CardContent>
@@ -533,11 +555,8 @@ const Page = () => {
               </CardContent>
             </Card>
           </CarouselItem>
-
         </CarouselContent>
-
       </Carousel>
-
 
       <Carousel showDots={false} className="w-full my-5 hidden md:block">
         <CarouselContent className="border-none">
@@ -545,12 +564,12 @@ const Page = () => {
             <Card className="border-none">
               <div className="flex flex-row justify-start">
                 {tempProduct?.similarProducts?.map((product, index) => (
-              
-                  <CardContent key={index} className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                 
+                  <CardContent
+                    key={index}
+                    className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md"
+                  >
                     <ProductCard key={index} product={product} />
                   </CardContent>
-                
                 ))}
               </div>
             </Card>

@@ -1,5 +1,4 @@
-import CheckoutHeader from "@/components/website/header/CheckoutHeader";
-
+"use client"
 
 export default function RootLayout({
   children,
@@ -9,15 +8,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-       <CheckoutHeader/>
-   
-       <div className="bg-gray-100 w-full">
+       <div className="bg-gray-100 w-full h-full p-5">
        {children}
        </div>
-     
-     
-     
-    
         </body>
     </html>
   );
