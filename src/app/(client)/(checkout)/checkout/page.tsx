@@ -99,9 +99,14 @@ const Page = () => {
       }
       toast.success("Order created successfully.");
       clearCart();
-      // If successful, navigate to the Order Success page
       const data = await res.json();
-      router.push("/order-success?id=" + data._id);
+
+      if (values.payment === "cash_on_delivery") {
+        router.push("/order-success?id=" + data._id);
+      } else if (values.payment === "credit_card") {
+        router.push("/paymentstripe?orderid=" + data._id);
+      }
+      
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error("Failed to create order.");

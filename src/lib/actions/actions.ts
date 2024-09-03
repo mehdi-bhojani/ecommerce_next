@@ -51,7 +51,7 @@ export const getProductsFiltered = async (limit: number, offset: number, categor
   if (categoryId && categoryId.length > 0) {
     // Filter out invalid ObjectId values
     const validCategoryIds = categoryId.filter(id => mongoose.Types.ObjectId.isValid(id));
-    
+
     products = await Product.find({ categories: { $in: validCategoryIds } })
       .skip(offset)
       .limit(limit);
@@ -71,3 +71,34 @@ export const getProductsFiltered = async (limit: number, offset: number, categor
     hasMoreProducts,
   };
 };
+
+export const getTotalPriceFromDB = async (orderid: string) => {
+  try {
+    await connectToDB();
+    const order = await Order.findById(orderid);
+    return order.totalAmount;
+  } catch (error) {
+    console.error("Error getting total price from DB:", error);
+    return null;
+  }
+}
+
+export const updatePaymentStatus = async (orderId: string, transactionId: string) => {
+  try {
+    await connectToDB();
+    await Order.findByIdAndUpdate(
+      orderId,
+      {
+        $set: {
+          'payment.transactionId': transactionId,
+          'payment.status': 'paid',
+        },
+      },
+      { new: true }
+    );
+    return true;
+  } catch (error) {
+    console.error("Error updating payment status:", error);
+    return false;
+  }
+}

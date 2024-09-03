@@ -7,14 +7,17 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { convertToSubcurrency } from "@/shared/helpers/help";
+import { useSearchParams } from "next/navigation";
 
-const PaymentCheckout = ({ amount }: { amount: number }) => {
+const CheckoutPage = ({ amount }: { amount: number }) => {
+  const searchParams: URLSearchParams = useSearchParams();
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const orderId = searchParams.get("orderid");
+  
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -47,7 +50,7 @@ const PaymentCheckout = ({ amount }: { amount: number }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `/order-success?amount=${amount}`,
+        return_url: `http://www.localhost:3000/payment-success?orderid=${orderId}&amount=${amount}`,
       },
     });
 
@@ -94,4 +97,4 @@ const PaymentCheckout = ({ amount }: { amount: number }) => {
   );
 };
 
-export default PaymentCheckout;
+export default CheckoutPage;
