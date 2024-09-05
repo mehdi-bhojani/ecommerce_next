@@ -145,6 +145,7 @@ type CurrentCartItemType = {
 };
 
 type CustomerType = {
+  _id: string;
   userId: string;
   isActive: boolean;
   firstName: string;
@@ -154,7 +155,7 @@ type CustomerType = {
   phone: string;
   addresses: AddressType[];
   gender: string;
-  orderHistory: string[];
+  orderHistory:  OrderType[];
   notifications: NotificationType[];
   currentCart: CurrentCartItemType[];
   wishlist: string[];

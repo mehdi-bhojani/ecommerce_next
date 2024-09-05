@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { connectToDB } from '@/lib/mongoDB';
 import Order from '@/lib/models/Order';
+import mongoose from 'mongoose';
+import { getCustomerId } from '@/lib/actions/auth.actions';
+import Customer from '@/lib/models/Customer';
 
 // GET all orders (authorized)
 export const GET = async (req: NextRequest) => {
@@ -15,8 +18,8 @@ export const GET = async (req: NextRequest) => {
     await connectToDB();
 
     const orders = await Order.find();
-      // Uncomment and adjust the line below if you want to populate related fields
-      
+    // Uncomment and adjust the line below if you want to populate related fields
+
 
     return NextResponse.json(orders, { status: 200 });
   } catch (err) {
@@ -36,7 +39,7 @@ export const POST = async (req: NextRequest) => {
     await connectToDB();
 
     const {
-      customerId,
+      userId,
       isGuest,
       customerDetails,
       address,
@@ -51,7 +54,7 @@ export const POST = async (req: NextRequest) => {
     } = await req.json();
 
     if (
-      !customerId ||
+      !userId ||
       !customerDetails ||
       !address ||
       !totalAmount ||
@@ -59,11 +62,18 @@ export const POST = async (req: NextRequest) => {
       !orderItems ||
       !payment ||
       !orderDate ||
-      !orderNumber 
+      !orderNumber
     ) {
       return new NextResponse('All required fields must be provided', { status: 400 });
     }
 
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    // getting customer id
+    const customerId = await Customer.findOne({ userId }).select('_id');
+
+    //creating new order
     const newOrder = new Order({
       customerId,
       isGuest,
@@ -78,10 +88,17 @@ export const POST = async (req: NextRequest) => {
       trackingNumber,
       orderNumber,
     });
-
     await newOrder.save();
 
+    // updating customer order history
+    await Customer.findOneAndUpdate({userId}, {
+      $push: { orderHistory: newOrder._id }
+    });
+
+    await session.commitTransaction();
+
     return NextResponse.json(newOrder, { status: 201 });
+
   } catch (err) {
     console.log('[POST_ORDER]', err);
     return new NextResponse('Internal error', { status: 500 });

@@ -248,8 +248,8 @@ export async function changeUserPassword({
       throw new Error("Incorrect old password.")
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(newPassword, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
 
     await User.findByIdAndUpdate(user._id, {
       password: hashedPassword
@@ -257,7 +257,7 @@ export async function changeUserPassword({
 
     return { success: true }
   } catch (error) {
-    redirect(`/error?error=${(error as Error).message}`)
+    redirect(`/error?message=${(error as Error).message}`)
   }
 }
 

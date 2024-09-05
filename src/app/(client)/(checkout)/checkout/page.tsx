@@ -62,7 +62,7 @@ const Page = () => {
         postalCode: values.postalCode,
         country: values.country,
       },
-      customerId: session?.user._id,
+      userId: session?.user._id,
       isGuest: !session?.user?._id,
       totalAmount: subTotal + deliveryCharges,
       orderStatus: "pending",

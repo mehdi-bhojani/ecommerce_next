@@ -14,10 +14,6 @@ interface ExtendedUser {
   email?: string | null;
   image?: string | null;
 }
-interface ExtendedSession extends Session {
-  user: ExtendedUser;
-}
-
 
 const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -65,7 +61,6 @@ const authOptions: NextAuthOptions = {
         return await signInWithOauth({ account, profile });
       }
       return true;
-
     },
     async jwt({ token, trigger, session }) {
       if (trigger === "update") {

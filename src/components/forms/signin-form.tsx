@@ -28,7 +28,6 @@ const userSignInValidation = z.object({
   password: z
     .string()
     .min(1, "Password is required")
-    .min(8, "Password must be 8+ characters"),
 });
 
 const SignInForm = ({ setCreateAccount }: SignInFormProps) => {
