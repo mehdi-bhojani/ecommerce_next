@@ -6,20 +6,18 @@ import Trendbanner from "@/components/website/homepageComponents/Trendbanner";
 import TopCategories from "@/components/website/homepageComponents/TopCategories";
 import TabCategories from "@/components/website/homepageComponents/TabCategories";
 function Page() {
-  
   return (
-    <div>
+    <div className="mb-12">
       <Carosal />
-      <div className="w-11/12 mx-auto">
+      <div className="w-full mx-auto">
         <TopCategories />
         <Exclusive />
         <DealZone />
       </div>
       <Trendbanner />
-      <div className="w-11/12 mx-auto">
-      <TabCategories />
+      <div className="w-full mx-auto">
+        <TabCategories />
       </div>
-      
     </div>
   );
 }

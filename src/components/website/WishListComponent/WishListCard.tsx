@@ -44,13 +44,13 @@ const WishListCard: React.FC<CheckoutCardProps> = ({ ProductCheckout, onRemove }
 
 
     useEffect(() => {
-        console.log(`Selected size is now: ${selectedSize}`);
+       
         // You can add any side effects here, e.g., update a database, notify other components, etc.
     }, [selectedSize]); // This effect runs whenever selectedSize changes
 
     // useEffect to handle changes in quantity
     useEffect(() => {
-        console.log(`Quantity is now: ${quantity}`);
+       
         // You can add any side effects here, e.g., update a database, notify other components, etc.
     }, [quantity]); // This effect runs whenever quantity changes
 
@@ -70,7 +70,7 @@ const WishListCard: React.FC<CheckoutCardProps> = ({ ProductCheckout, onRemove }
     }).format(ProductCheckout.DiscountedPrice);
 
     return (
-        <div className="flex items-start p-2 bg-white  shadow-md flex-1 ">
+        <div className="flex items-start p-2  bg-white  shadow-md flex-1 ">
             <Image
                 src={`${ProductCheckout.img}`}
                 alt="Crinkle Satin Full Sleeve Shirt"
@@ -79,10 +79,10 @@ const WishListCard: React.FC<CheckoutCardProps> = ({ ProductCheckout, onRemove }
                 className="object-cover rounded-md mr-4"
             />
             <div className="flex-1">
-                <div className="flex items-center gap-2 ">
-                    <span className="text-lg font-semibold">{Price}</span>
-                    <span className="text-sm text-gray-500 line-through">{DiscountedPrice}</span>
-                    <span className="text-sm text-pink-700">{`(${ProductCheckout.Discount}%)`}</span>
+                <div className="flex md:items-center gap-2 flex-col md:flex-row ">
+                    <span className="md:text-lg font-semibold">{Price}</span>
+                    <span className="md:text-sm text-gray-500 line-through">{DiscountedPrice}</span>
+                    <span className="md:text-sm text-pink-700">{`(${ProductCheckout.Discount}%)`}</span>
                 </div>
                 <p className="text-sm font-medium  text-gray-700 max-w-[200px] truncate">{ProductCheckout.ProductName}</p>
                 <div className="flex flex-row mt-2">

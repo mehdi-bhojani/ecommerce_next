@@ -7,7 +7,68 @@
     fill: black;
   }
 
+  .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+  
+    &.circle {
+      -webkit-animation: dash 1s ease-in-out; /* Slowed down to 1 second */
+      animation: dash 1s ease-in-out; /* Slowed down to 1 second */
+    }
+  
+    &.line {
+      stroke-dashoffset: 1000;
+      -webkit-animation: dash 1s 1s ease-in-out forwards; /* Slowed down and added 1s delay */
+      animation: dash 1s 1s ease-in-out forwards; /* Slowed down and added 1s delay */
+    }
+  
+    &.check {
+      stroke-dashoffset: -100;
+      -webkit-animation: dash-check 1s 1s ease-in-out forwards; /* Slowed down and added 1s delay */
+      animation: dash-check 1s 1s ease-in-out forwards; /* Slowed down and added 1s delay */
+    }
+  }
+  
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @-webkit-keyframes dash-check {
+    0% {
+      stroke-dashoffset: -100;
+    }
+    100% {
+      stroke-dashoffset: 900;
+    }
+  }
+  
+  @keyframes dash-check {
+    0% {
+      stroke-dashoffset: -100;
+    }
+    100% {
+      stroke-dashoffset: 900;
+    }
+  }
 
+
+  
+
+  
   /* Add this CSS to your stylesheet */
 
 .sheet-content {

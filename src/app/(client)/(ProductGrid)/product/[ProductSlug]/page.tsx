@@ -10,7 +10,8 @@ import { FaStar } from "react-icons/fa";
 import "react-medium-image-zoom/dist/styles.css";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+
 import Autoplay from "embla-carousel-autoplay";
 import {
   Tooltip,
@@ -40,6 +41,7 @@ import ShowReview from "@/components/product/showReview";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import useCart from "@/shared/hooks/useCart";
 import { PriceIntoCurrency } from "@/shared/helpers/help";
+import ClientLoading from "@/components/myUi/ClientLoading";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -65,7 +67,6 @@ const Page = () => {
     setSizes(sizes);
 
     // Log sizes to the console
-    console.log("sizes", sizes);
   };
 
   const getColors = (tempProduct: ProductType) => {
@@ -104,12 +105,7 @@ const Page = () => {
 
   const handleAction = () => {
     if (SelectedHeart == false) {
-      toast.success("Added to WishList", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-      });
+      toast.success("Added to WishList", {});
     } else {
       toast.error("Removed from your Wishlist", {
         position: "top-center",
@@ -166,13 +162,13 @@ const Page = () => {
   );
 
   return loading ? (
-    <Loader />
+    <ClientLoading />
   ) : (
     <div className="bg-white px-4 md:px-8 md:pt-8">
-      <div className="py-5 md:flex-row flex-col flex">
+      <div className="py-5 md:flex-row flex-col flex justify-center items-center">
         <Carousel
           plugins={[plugin.current]}
-          className="w-full max-w-xs"
+          className="w-full  md:hidden"
           onMouseEnter={plugin.current.stop}
           onMouseLeave={plugin.current.reset}
         >
@@ -196,22 +192,6 @@ const Page = () => {
             ))}
           </CarouselContent>
         </Carousel>
-
-        {/* {tempProduct?.img.map((item, index) => (
-            <Dialog key={index}>
-              <DialogTrigger asChild>
-                <div className="w-5/12 ">
-                  <div className="overflow-hidden py-4  shadow-md w-full">
-                    <Image
-                      onClick={() => setSelectedImage(item)}
-                      className=" transition-transform duration-300 ease-in-out hover:scale-110 object-cover h-5/6 w-full"
-                      src={item}
-                      alt="png"
-                      height={300}
-                      width={300}
-                    />
-                  </div>
-                </div> */}
 
         <div className="md:flex md:flex-row md:flex-wrap md:gap-4 md:h-1/2 md:w-1/2 md:justify-end  hidden">
           {tempProduct?.img.map((item, index) => (
@@ -270,7 +250,7 @@ const Page = () => {
 
         <div className="flex flex-col md:w-1/2 w-full ">
           {
-            <div className="max-w-xl mx-auto py-4 md:px-6">
+            <div className=" mx-auto py-4 md:px-6">
               <div className="flex flex-col gap-2 ">
                 <span className="text-2xl font-bold">{tempProduct?.brand}</span>
                 <span className="text-lg text-gray-500">
@@ -285,10 +265,10 @@ const Page = () => {
               </div>
               <div className="my-4 flex flex-row gap-2">
                 <span className="line-through text-2xl text-gray-500">
-                  {PriceIntoCurrency(tempProduct?.mrp || 0,"PKR")}
+                  {PriceIntoCurrency(tempProduct?.mrp || 0, "PKR")}
                 </span>
                 <span className="text-2xl text-red-600 font-bold">
-                  {PriceIntoCurrency(tempProduct?.price || 0,"PKR")}
+                  {PriceIntoCurrency(tempProduct?.price || 0, "PKR")}
                   <span className="text-sm">(-{tempProduct?.offer}%)</span>
                 </span>
               </div>
@@ -430,7 +410,7 @@ const Page = () => {
               </div>
               <Separator className="my-4" />
 
-              <Accordion type="single" collapsible className="w-full md:w-1/2">
+              <Accordion type="single" collapsible className="w-full ">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>
                     <span className="font-bold">PRODUCT DESCRIPTION</span>
@@ -458,7 +438,7 @@ const Page = () => {
       </div>
 
       <span className="text-2xl font-bold">Recently Viewed</span>
-      <Carousel showDots={false} className="w-full max-w-sm md:hidden">
+      <Carousel showDots={false} className="w-full  md:hidden">
         <CarouselContent className="-ml-1">
           <CarouselItem key={1} className="pl-1   ">
             <Card className="border-none">
@@ -525,7 +505,7 @@ const Page = () => {
         <span className="text-2xl font-bold uppercase">similar products</span>
       </div>
 
-      <Carousel showDots={false} className="w-full max-w-sm md:hidden">
+      <Carousel showDots={false} className="w-full  md:hidden">
         <CarouselContent className="-ml-1">
           <CarouselItem key={1} className="pl-1   ">
             <Card className="border-none">

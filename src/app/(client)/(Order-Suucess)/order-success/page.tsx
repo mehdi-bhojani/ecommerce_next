@@ -1,5 +1,6 @@
 "use client";
 
+import ClientLoading from "@/components/myUi/ClientLoading";
 import { Button } from "@/components/ui/button";
 import SuccessBreadCrumb from "@/components/website/CheckoutPageComponent/SuccessBreadCrumb";
 import { OrderItemType, OrderType } from "@/lib/types";
@@ -11,17 +12,16 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [orderDetails, setOrderDetails] = useState<OrderType>();
   useEffect(() => {
     const getOrderDetails = async () => {
-    setLoading(true);
+      setLoading(true);
       try {
         const res = await fetch(`/api/order/${id}`);
         const data = await res.json();
         setOrderDetails(data);
       } catch (error) {
-        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -29,30 +29,46 @@ const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
     getOrderDetails();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <ClientLoading />
+      </div>
+    );
 
   return (
     <div>
-      <SuccessBreadCrumb />
       <div className="max-w-4xl mx-auto my-10 p-6 bg-white  ">
-        {/* Order Placed Section */}
+        <SuccessBreadCrumb />
         <div className="flex flex-col items-center justify-center">
-          <div className="text-green-500 text-5xl mb-2">
+          <div className="w-24 h-24">
             <svg
-              className="w-12 h-12"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 130.2 130.2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              ></path>
+              <circle
+                className="path circle"
+                fill="none"
+                stroke="#73AF55"
+                stroke-width="6"
+                stroke-miterlimit="10"
+                cx="65.1"
+                cy="65.1"
+                r="62.1"
+              />
+              <polyline
+                className="path check"
+                fill="none"
+                stroke="#73AF55"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                points="100.2,40.2 51.5,88.8 29.8,67.5 "
+              />
             </svg>
           </div>
+
           <h1 className="text-2xl font-semibold">Order Placed</h1>
           <p className="text-gray-600">
             Total price for {orderDetails?.orderItems.length} item is{" "}

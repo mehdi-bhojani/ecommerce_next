@@ -73,7 +73,7 @@ const ResponsiveFooter: React.FC<ResponsiveFooterProps> = () => {
         initial={{ x: isOpen == true ? '-100%' : '' }} // Start position off-screen to the left
         animate={{ x: isOpen == true ? '0%' : '-100%' }} // Animate to on-screen position or off-screen to the right
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="fixed top-0 left-0 h-full mt-16  bg-white shadow-lg w-full z-50 md:hidden"
+        className="fixed top-0 left-0 h-full mt-12  bg-white shadow-lg w-full z-50 md:hidden"
       >
         <Accordion type="single" collapsible  className="w-full h-full overflow-y-auto pb-32  ">
           {categories.map((category, index) => (
@@ -83,7 +83,7 @@ const ResponsiveFooter: React.FC<ResponsiveFooterProps> = () => {
                 className={`flex justify-between items-center ${category.bgColor} p-6 border-b-2`}
               >
                 <AccordionTrigger >
-                  <span className="text-2xl text-white w-32  font-bold">{category.title}</span>
+                  <span className="text-2xl text-white w-32  font-bold">{category.title.toUpperCase()}</span>
                  
                 </AccordionTrigger>
 
@@ -152,20 +152,20 @@ const ResponsiveFooter: React.FC<ResponsiveFooterProps> = () => {
 
   const [Flag, setFlag] = useState(false)
   const pathname = usePathname()
-  console.log(pathname)
+ 
 
   const navItems = [
     {
       id: 1,
       name: 'Home',
-      icon: <House fill={`${pathname == '/' ? 'true' : 'none'}`} stroke='gray' />,
+      icon: <House  stroke='gray' />,
       alt: 'Home Icon',
       link: '/',
     },
     {
       id: 2,
       name: 'Category',
-      icon: <Boxes fill={`${Flag == true ? 'true' : 'none'}`} stroke='gray' />,
+      icon: <Boxes  stroke='gray' />,
       alt: 'Category Icon',
       link: '#',
     },
@@ -173,14 +173,14 @@ const ResponsiveFooter: React.FC<ResponsiveFooterProps> = () => {
     {
       id: 3,
       name: 'New Arrivals',
-      icon: <Flame fill={`${pathname == '/New-Arrivals' ? 'true' : 'none'}`} stroke='gray' />,
+      icon: <Flame  stroke='gray' />,
       alt: 'New Arrivals Icon',
       link: '/New-Arrivals',
     },
     {
       id: 4,
       name: 'Account',
-      icon: <UserRound fill={`${pathname == 'my/account' ? 'true' : 'none'}`} stroke='gray' />,
+      icon: <UserRound  stroke='gray' />,
       alt: 'Account Icon',
       link: 'my/account',
     },

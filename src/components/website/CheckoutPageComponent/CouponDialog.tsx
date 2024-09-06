@@ -16,8 +16,7 @@ const CouponDialog: React.FC<SidebarProps> =({children}) => {
     const [couponCode, setCouponCode] = useState('');
 
     const handleApplyCoupon = () => {
-      // Implement coupon application logic here
-      console.log('Coupon Code:', couponCode);
+    
     };
   
   return (

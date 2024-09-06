@@ -9,7 +9,7 @@ interface CategoryItemProps {
 
 const CategoryItem: React.FC<CategoryItemProps> = ({ name, image }) => (
   <div className="flex flex-col items-center m-2  my-2">
-    <Image src={image} width={100} height={100} alt={name} className="w-48 h-48 object-cover mb-1" />
+    <Image src={image} width={100} height={100} alt={name} className="w-full h-full object-cover mb-1" />
     <span className="text-center p-0 m-0 font-medium text-sm truncate w-4/5 ">{name}</span>
   </div>
 );

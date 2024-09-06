@@ -98,8 +98,13 @@ const CheckoutDetails: React.FC<myprops> = ({ onProceed }) => {
   const router = useRouter();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    
+    if (values.payment === "cash_on_delivery") {
       onProceed(values);
+    } else {
+      router.push("/paymentstripe?amount=500&orderid=kjnqdkjnwqkjnd");
     }
+  }
 
   return (
     <div>
@@ -345,7 +350,7 @@ const CheckoutDetails: React.FC<myprops> = ({ onProceed }) => {
                         <input
                           type="radio"
                           name={field.name}
-                          value="credit_card"
+                          value="CreditCard"
                           checked={field.value === "credit_card"}
                           onChange={() => field.onChange("credit_card")}
                           className="form-radio text-blue-500"

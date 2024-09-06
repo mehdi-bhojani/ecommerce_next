@@ -18,7 +18,7 @@ function HoverCart() {
   const [subTotal, setSubTotal] = useState(0);
 
   useEffect(() => {
-    console.log(cartItems);
+   
     setSubTotal(getTotalPrice());
   }, [cartItems]);
 

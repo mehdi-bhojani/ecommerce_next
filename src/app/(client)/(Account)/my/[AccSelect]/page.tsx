@@ -15,6 +15,7 @@ import DetailSide from "@/components/website/AccountPageComponents/DetailSide";
 import Referral from "@/components/website/AccountPageComponents/Referral";
 
 import { CustomerType } from "@/lib/types";
+import ClientLoading from "@/components/myUi/ClientLoading";
 
 const Page = ({ params }: { params: { AccSelect: string } }) => {
   const { data: session } = useSession();
@@ -65,7 +66,7 @@ const Page = ({ params }: { params: { AccSelect: string } }) => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><ClientLoading /></div>;
 
   const renderContent = () => {
     switch (params.AccSelect) {
@@ -96,7 +97,7 @@ const Page = ({ params }: { params: { AccSelect: string } }) => {
   };
 
   return (
-    <div>{customerData ? renderContent() : "Loading customer details..."}</div>
+    <div>{customerData ? renderContent() : (<ClientLoading />)}</div>
   );
 };
 

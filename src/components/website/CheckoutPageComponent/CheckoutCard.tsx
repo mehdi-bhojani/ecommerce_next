@@ -49,12 +49,12 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
   }, [ProductCheckout]);
 
   useEffect(() => {
-    console.log(`Selected size is now: ${selectedSize}`);
+    
   }, [selectedSize]); // This effect runs whenever selectedSize changes
 
   // useEffect to handle changes in quantity
   useEffect(() => {
-    console.log(`Quantity is now: ${quantity}`);
+  
     // You can add any side effects here, e.g., update a database, notify other components, etc.
   }, [quantity]); // This effect runs whenever quantity changes
 

@@ -1,108 +1,152 @@
-
-"use client"
-import { Button } from '@/components/ui/button'
-import { HeadsetIcon, Bell, User, Heart, ShoppingCart, Search, Package, Facebook } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import Image from 'next/image'
-import { useState } from 'react'
-import React from 'react'
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  HeadsetIcon,
+  Bell,
+  User,
+  Heart,
+  ShoppingCart,
+  Search,
+  Package,
+  Facebook,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion
+import Image from "next/image";
+import { useState } from "react";
+import React from "react";
 
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import Link from "next/link"
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import SearchCard from "../homepageComponents/SearchCard";
 const ResponsiveHeader = () => {
-    return (
-        <div className='flex fixed top-0 z-30  bg-white items-center flex-1 px-2 w-full justify-between md:hidden'>
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleSearchCard = () => {
+    setIsOpen(!isOpen);
+  };
+  return (
+    <div>
+      <div className="flex fixed top-0 z-30  bg-white items-center flex-1 px-2 w-full justify-between md:hidden">
+        <Link href={"/"}>
+          <Image
+            className="w-12 h-12 object-cover"
+            width={80}
+            height={120}
+            src={"/assets/home/logo.png"}
+            alt="the logo"
+          />
+        </Link>
+        <div className="flex flex-row justify-center items-center ">
+          <div className="">
+            <button className="bg-yellow-300 p-2 hidden md:block ">
+              <Search />
+            </button>
+            <button
+              onClick={toggleSearchCard}
+              className="md:bg-yellow-300 p-2 md:hidden "
+            >
+              <Search size={20} />
+            </button>
+          </div>
 
-            <Link href={'/'}>
+          <nav>
+            <ul className="flex ">
+              <li className="px-2">
+                <Link href="/help-center">
+                  <div className=" hidden md:block">
+                    <HeadsetIcon />
+                  </div>
+                  <div className="md:hidden">
+                    <HeadsetIcon size={20} />
+                  </div>
+                </Link>
+              </li>
+              <li className="px-2">
+                <Link href="/Notifications">
+                  <div>
+                    <Bell className="hover:cursor-pointer hidden md:block " />
+                  </div>
+                  <div>
+                    <Bell
+                      size={20}
+                      className="hover:cursor-pointer md:hidden"
+                    />
+                  </div>
+                </Link>
+              </li>
 
-                <Image className=' px-1' width={80}
-                    height={120} src={'/assets/home/logo.png'} alt='the logo' />
-            </Link>
-            <div className='flex flex-row justify-center items-center '>
-                <div>
-                    <button className='bg-yellow-300 p-2'><Search /></button>
-                </div>
+              <li className="px-2">
+                <Link href="/wishlist">
+                  <div>
+                    <Heart className="hover:cursor-pointer hidden md:block" />
+                  </div>
 
-                <nav>
-                    <ul className='flex '>
-                        <li className='px-2'>
-                            <Link href="/help-center">
-                                <HeadsetIcon />
-                            </Link>
-
-                        </li>
-                        <li className='px-2'>
-                        <Link href="/Notifications">
-                            <Bell className='hover:cursor-pointer ' />
-                            </Link>
-
-
-
-                        </li>
-                        {/* <li className='px-2'>
-
-
-                            <User className='hover:cursor-pointer ' />
-
-
-
-                        </li> */}
-                        <li className='px-2'>
-
-                        <Link href="/wishlist">
-                            <Heart className='hover:cursor-pointer ' />
-</Link>
-
-
-
-                        </li>
-                        <li className='px-2'>
-                        <Link href="/Checkout">
-                            <ShoppingCart className='hover:cursor-pointer ' />
-                            </Link>
-                        </li>
-
-
-
-                    </ul>
-                </nav>
-            </div>
-
-
-
-
-
-
-
-
+                  <div>
+                    <Heart
+                      size={20}
+                      className="hover:cursor-pointer md:hidden "
+                    />
+                  </div>
+                </Link>
+              </li>
+              <li className="px-2">
+                <Link href="/checkout">
+                  <div>
+                    <ShoppingCart className="hover:cursor-pointer hidden md:block" />
+                  </div>
+                  <div>
+                    <ShoppingCart
+                      size={20}
+                      className="hover:cursor-pointer md:hidden"
+                    />
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-    )
-}
+      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -100 }} // Initial state (hidden)
+            animate={{ opacity: 1, y: 0 }} // Animation when appearing
+            exit={{ opacity: 0, y: -100 }} // Animation when exiting
+            transition={{ duration: 0.3 }} // Duration of the transition
+            className="z-50 fixed top-0 left-0 w-full h-full bg-white"
+          >
+            <SearchCard toggle={toggleSearchCard} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
-export default ResponsiveHeader
+export default ResponsiveHeader;

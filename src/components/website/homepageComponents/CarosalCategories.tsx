@@ -48,8 +48,8 @@ export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
               <CardContent
                 className={`flex border-1 p-0 border-solid border-gray-500 max-w-max items-center justify-center `}
               >
-                <div className="rounded-lg px-4">  
-                <span className="text-sm font-semibold flex-1 px-2">All</span>
+                <div className="rounded-lg px-4 flex justify-center items-center  w-full h-10">  
+                <span className="text-sm font-semibold   ">All</span>
                 </div>
               </CardContent>
             </Card>
@@ -73,7 +73,7 @@ export const CarosalCategories: React.FC<CarosalCategoriesProps> = ({
                 >
                   <div className=" flex-shrink-0 w-10 h-10">
                     <Image
-                      className="w-full  object-cover rounded-full"
+                      className="p-1 object-cover rounded-full"
                       width={300}
                       height={300}
                       src={items.image}

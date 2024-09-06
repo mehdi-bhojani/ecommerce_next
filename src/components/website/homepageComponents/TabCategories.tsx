@@ -8,7 +8,8 @@ import { ShopItem } from "@/constants/data";
 import ProductLoading from "@/components/myUi/productLoading";
 import Image from "next/image";
 import { getProductsFiltered } from "@/lib/actions/actions";
-
+import { PriceIntoCurrency } from "@/shared/helpers/help";
+import ClientLoading from "@/components/myUi/ClientLoading";
 const TabCategories = () => {
   const [collection, setCollection] = useState<CollectionType[]>([]);
   const [Categ, setCateg] = useState<CategoryType[]>([]);
@@ -113,6 +114,13 @@ const TabCategories = () => {
     }
   };
 
+  if (loading)
+    return (
+      <>
+        <ClientLoading />
+      </>
+    );
+
   return (
     !loading && (
       <div className="m-auto max-w-7xl">
@@ -134,13 +142,11 @@ const TabCategories = () => {
               ))}
             </TabsList>
             <div className="w-11/12 mx-auto">
-
-          
-            <CarosalCategories 
-              Categ={Categ}
-              onCategoryClick={handleCategoryClick}
-            />
-  </div>
+              <CarosalCategories
+                Categ={Categ}
+                onCategoryClick={handleCategoryClick}
+              />
+            </div>
             {!categoryLoading && (
               <div>
                 <InfiniteScroll
@@ -149,11 +155,10 @@ const TabCategories = () => {
                   hasMore={hasMore}
                   loader={<ProductLoading />}
                 >
-                  <div className="md:flex  md:flex-wrap gap-1 justify-around grid grid-cols-3 ">
+                  <div className="md:flex  md:flex-wrap gap-1 justify-start grid grid-cols-3 ">
                     {items.map((item, index) => (
                       <div
                         key={index}
-                       
                         className=" flex flex-col items-center justify-center"
                       >
                         <div className="border border-slate-300 py-3">
@@ -167,8 +172,8 @@ const TabCategories = () => {
                             className="object-contain "
                           />
                         </div>
-                        <div className="p-5 font-semibold">
-                          <span>Rs {item.price}</span>
+                        <div className="pb-5 pt-2 font-semibold">
+                          <span> {PriceIntoCurrency(+item.price, "PKR")}</span>
                         </div>
                       </div>
                     ))}

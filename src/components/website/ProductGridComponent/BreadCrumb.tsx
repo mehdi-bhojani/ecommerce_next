@@ -25,7 +25,7 @@ const BreadCrumb: React.FC<BreadCrumbProps> = ({ CategName, id }) => {
           <BreadcrumbItem>Home</BreadcrumbItem>
         </Link>
         <BreadcrumbSeparator />
-        <Link href={`/${CategName}?id=${id}`}>
+        <Link href={`/search?q=${CategName}`}>
           <BreadcrumbItem className="capitalize">{formatSlug(CategName)}</BreadcrumbItem>
         </Link>
       </BreadcrumbList>

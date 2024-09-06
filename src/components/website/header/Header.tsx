@@ -94,6 +94,7 @@ function Header() {
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [CreateAccount, setCreateAccount] = useState(false);
   const [isSigninSheetOpened, setIsSigninSheetOpened] = useState(false);
+  const [search, setSearch] = useState("");
   const router = useRouter();
   const { data: sessions } = useSession();
   const showCreateAccount = () => {
@@ -110,7 +111,6 @@ function Header() {
   };
 
   const handleLinkClick = (callbackUrl: string) => {
-    // console.log("Link clicked");
     if (sessions?.user) {
       router.push(callbackUrl);
       return;
@@ -123,27 +123,31 @@ function Header() {
     setCreateAccount(true);
   };
 
-  React.useEffect(() => {
-    // console.log(sessions);
-  }, [sessions]);
+  const handleSearch = () => {
+    if (search) {
+      router.push(`/search?q=${search}`);
+    }
+  };
+
+  React.useEffect(() => {}, [sessions]);
 
   return (
     <div>
-      <div className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex ">
+      <div className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex object-cover ">
         {/* testing animations */}
 
         <div>
           <Link href="/">
-            {/* <Image
-              src={"/assets/home/logo.png"}
+            <Image
+              src={"/assets/home/DFK_Logo.png"}
               alt="logo"
               width={150}
               height={50}
               className="cursor-pointer"
-            /> */}
-            <h1 className="text-2xl font-bold p-3">
+            />
+            {/* <h1 className="text-2xl font-bold p-3">
               <span className="text-red-600">DFK</span> Collection
-            </h1>
+            </h1> */}
           </Link>
         </div>
         <div>
@@ -193,12 +197,13 @@ function Header() {
         </div>
         <div className="flex flex-1 bg-gray-100 mx-2">
           <Input
-            className="w-72 h-10   bg-gray-100 outline-none border-none flex-1"
+            className="w-72 h-10 bg-gray-100 outline-none border-none flex-1"
             placeholder="search for items, brands and sinpirat"
+            onChange={(e) => setSearch(e.target.value)}
           />
           <div>
             <button className="bg-yellow-300 p-2">
-              <Search />
+              <Search onClick={handleSearch} />
             </button>
           </div>
         </div>

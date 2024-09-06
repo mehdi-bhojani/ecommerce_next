@@ -5,13 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import SignOut from "./SignOut";
+import { signOut } from "next-auth/react";
+import { LogOut } from "lucide-react";
 const LeftSide = () => {
   const param = useParams<{ AccSelect?: string }>();
   const { AccSelect } = param;
   const [Focus, setFocus] = useState(AccSelect);
 
   return (
-    <div className="w-5/12 pr-4 text-nowrap hidden md:block">
+    <div className="w-5/12 pr-4 text-nowrap hidden md:block p-5">
       <Link
         href={"/my/account"}
         onClick={() => setFocus("account")}
@@ -140,7 +142,9 @@ const LeftSide = () => {
           >
             Change Password
           </Link>
-          <SignOut />
+          <button className="bg-transparent text-red-600 flex gap-2" onClick={() => signOut()}>
+            <LogOut /> Signout
+          </button>
         </div>
       </div>
     </div>

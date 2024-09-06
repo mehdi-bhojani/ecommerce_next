@@ -24,6 +24,8 @@ import {
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import ClientLoading from "@/components/myUi/ClientLoading";
+import EmptyCard from "@/components/website/CheckoutPageComponent/EmptyCard"
 
 const Page = () => {
   const [value, setValue] = React.useState("");
@@ -116,11 +118,11 @@ const Page = () => {
   };
 
   if (loading) {
-    return <div>Loading ...</div>;
+    return <div><ClientLoading/></div>;
   }
 
   if (cartItems.length === 0) {
-    return <div>Cart is empty... </div>;
+    return <div><EmptyCard/></div>;
   }
 
   return (
