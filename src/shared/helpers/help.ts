@@ -33,3 +33,11 @@ export const generateOrderNumber = (): string => {
   return `ORD-${timestamp}-${randomNumber}`;
 };
 
+export const createSlug = (name: string): string => {
+  return name.toLowerCase().replace(/ /g, "-");
+}
+
+export const formatSlug = (slug: string): string => {
+  return slug.replace(/-/g, " ");
+}
+

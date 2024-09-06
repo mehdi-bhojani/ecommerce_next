@@ -1,8 +1,8 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Products from "@/components/website/ProductGridComponent/Products";
 import BreadCrumb from "@/components/website/ProductGridComponent/BreadCrumb";
 import ProductHeading from "@/components/website/ProductGridComponent/ProductHeading";
 import Filtering from "@/components/website/ProductGridComponent/Filtering";
@@ -19,7 +19,55 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import ProductCard from "@/components/website/ProductGridComponent/Products";
+
+interface Product {
+  img: string[];
+  mrp: number;
+  name: string;
+  offer: number;
+  price: number;
+  _id: string;
+  createdAt: string;
+}
+
 const Page = ({ params }: { params: { CategName: string } }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const getproducts = async (categoryId: string) => {
+        const res = await fetch(`/api/product/category/${categoryId}`);
+        if (!res.ok) {
+          // router.push("/404?message=products not found");
+        }
+        const data = await res.json();
+        return data;
+      };
+
+      const searchCategory = async () => {
+        const res = await fetch(`/api/category/${id}`);
+        if (!res.ok) {
+          // router.push("/404?message=Category not found");
+        }
+        const data = await res.json();
+        const dataProducts = await getproducts(data._id);
+        setProducts(dataProducts);
+      };
+      searchCategory();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
+
   const test = params.CategName.split("-");
 
   const TempProd = ProductItems.find(
@@ -49,38 +97,18 @@ const Page = ({ params }: { params: { CategName: string } }) => {
         decodeURIComponent(test.slice(1).join("-")).replace(/-/g, " ") &&
         item.Type === test[0])
   );
-  console.log(TempProd);
-  console.log(decodeURIComponent(test.slice(1).join("-")).replace(/-/g, " "));
-
-  interface Product {
-    id: number;
-    brandName: string;
-    name: string;
-    subCategory: string;
-    Category: string;
-    Type: string;
-    originalPrice: number;
-    discountedPrice: number;
-    discount: string;
-    sizes: string[];
-    slots: { size: string; quantity: number }[];
-    images: string[];
-  }
-
-  const [Prods, setProd] = useState<Product[]>(Prod);
 
   // Function to sort products in ascending order based on discountedPrice
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pageNumbers, setPageNumbers] = useState<string[]>([]);
   const productsPerPage = 4;
 
   // Calculate total pages
-  const totalPages = Math.ceil(Prods.length / productsPerPage);
+  // const totalPages = Math.ceil(products.length / productsPerPage);
 
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const currentProducts = Prods.slice(startIndex, endIndex);
+  // const startIndex = (currentPage - 1) * productsPerPage;
+  // const endIndex = startIndex + productsPerPage;
+  // const currentproducts = products.slice(startIndex, endIndex);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -90,77 +118,69 @@ const Page = ({ params }: { params: { CategName: string } }) => {
 
   function handleClick(product: Product) {
     setSubCategory(product.subCategory);
-    console.log(CategSub + "is here jutai");
   }
 
   useEffect(() => {
     // Assume you have a default or initial product object
     const initialProduct = { subCategory: "DefaultSubCategory" };
     setSubCategory(initialProduct.subCategory);
-    console.log(CategSub + " set on component mount");
   }, []);
 
-  useEffect(() => {
-    const generatePageNumbers = () => {
-      const pageSet = new Set<string>();
+  // useEffect(() => {
+  //   const generatePageNumbers = () => {
+  //     const pageSet = new Set<string>();
 
-      for (let i = 1; i <= totalPages; i++) {
-        if (
-          i <= 3 ||
-          i === totalPages ||
-          (i >= currentPage - 1 && i <= currentPage + 1)
-        ) {
-          pageSet.add(i.toString());
-        } else if (i > 4) {
-          pageSet.add("...");
-        }
-      }
+  //     for (let i = 1; i <= totalPages; i++) {
+  //       if (
+  //         i <= 3 ||
+  //         i === totalPages ||
+  //         (i >= currentPage - 1 && i <= currentPage + 1)
+  //       ) {
+  //         pageSet.add(i.toString());
+  //       } else if (i > 4) {
+  //         pageSet.add("...");
+  //       }
+  //     }
 
-      setPageNumbers(Array.from(pageSet));
-      console.log(pageNumbers);
-    };
+  //     setPageNumbers(Array.from(pageSet));
+  //   };
 
-    generatePageNumbers();
-  }, [currentPage, totalPages]);
+  //   generatePageNumbers();
+  // }, [currentPage, totalPages]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="bg-white">
       <div className="bg-gray-100 border-b border-gray-300">
         <div className="container mx-auto px-4 py-4">
-          <BreadCrumb
-            Temp={TempProd}
-            CategName={decodeURIComponent(test.slice(1).join("-")).replace(
-              /-/g,
-              " "
-            )}
+          <BreadCrumb id={id!} CategName={params.CategName} />
+          <ProductHeading title={params.CategName} />
+          <Filtering
+            Prods={products}
+            setProd={setProducts}
           />
-          <ProductHeading
-            title={
-              decodeURIComponent(
-                test.slice(1).join("-").replace(/-/g, " ")
-              ) as string
-            }
-          />
-          <Filtering Prods={Prods} setProd={setProd} TempProd={Prod2} />
         </div>
       </div>
 
       <div className="container mx-auto px-4">
         <div className="grid py-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {currentProducts.map((product) => (
-            <Link
-              onClick={() => handleClick(product)}
-              href={`/${product.subCategory.replace(/\s+/g, "-")}/${
-                product.id
-              }`}
-            >
-              <Products key={product.id} product={product} />
-            </Link>
+          {products.map((product, index) => (
+            <div key={index}>
+              <Link
+                onClick={() => handleClick(product)}
+                href={`/product/${"shirt"}?id=${product._id}`}
+              >
+                <ProductCard product={product} />
+              </Link>
+            </div>
           ))}
         </div>
       </div>
 
-      <Pagination>
+      {/* <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationLink
@@ -187,17 +207,18 @@ const Page = ({ params }: { params: { CategName: string } }) => {
 
           {/* const [currentPage, setCurrentPage] = useState(1);
   const [TempPageNo, setTempPageNo] = useState(1);
-  const productsPerPage = 1; */}
-          {/* const [pageNumbers, setPageNumbers] = useState([]); */}
-          {/* const pageSet = new Set<number>(); */}
+  const productsPerPage = 1; 
+        
 
           {pageNumbers.map((item) => {
             const pageNum = item;
             if (pageNum === "...") {
               return (
-                <span className="px-3 py-2 border rounded border-gray-300">
-                  ...
-                </span>
+                <>
+                  <span className="px-3 py-2 border rounded border-gray-300">
+                    ...
+                  </span>
+                </>
               );
             } else {
               return (
@@ -246,7 +267,7 @@ const Page = ({ params }: { params: { CategName: string } }) => {
             </PaginationLink>
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination> */}
     </div>
   );
 };
