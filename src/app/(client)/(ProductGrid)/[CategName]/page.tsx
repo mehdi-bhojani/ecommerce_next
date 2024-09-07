@@ -19,7 +19,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { useSearchParams } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import ProductCard from "@/components/website/ProductGridComponent/Products";
 import ClientLoading from "@/components/myUi/ClientLoading";
@@ -43,34 +43,24 @@ const Page = ({ params }: { params: { CategName: string } }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (params.CategName !== "search" || !query) {
+      notFound();
+    }
     try {
-      const getproducts = async (categoryId: string) => {
-        const res = await fetch(`/api/product/category/${categoryId}`);
-        if (!res.ok) {
-          // router.push("/404?message=products not found");
-        }
-        const data = await res.json();
-        return data;
-      };
-
       const searchProducts = async (query: string) => {
         const res = await fetch(`/api/search/${query}`);
         if (!res.ok) {
-          // router.push("/404?message=products not found");
+          notFound();
         }
         const data = await res.json();
         return data;
       };
 
       const searchCategoryorQuery = async () => {
-        // const res = await fetch(`/api/category/${id}`);
-        // if (!res.ok) {
-        //   // router.push("/404?message=Category not found");
-        // }
-
-        // const data = await res.json();
-
-        // const dataProducts = await getproducts(data._id);
+        console.log(params.CategName);
+        if (params.CategName !== "search") {
+          notFound();
+        }
         const dataProducts = await searchProducts(query!);
         setProducts(dataProducts);
       };

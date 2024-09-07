@@ -188,5 +188,13 @@ interface CartItemType {
   slug?: string,
   productId: string,
   variantId?: string,
-  quantity: number,
+  quantity?: number,
+}
+interface WishItemType {
+  _id:string;
+  imgSrc: string,
+  name: string,
+  price: number,
+  mrp: number,
+  offer: string,
 }

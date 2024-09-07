@@ -21,7 +21,7 @@ import { Textarea } from "../admin/ui/textarea";
 import ImageUpload from "../myUi/imageUploadClient";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import Autoplay from "embla-carousel-autoplay"
+import Autoplay from "embla-carousel-autoplay";
 interface myProps {
   // define props here
   tempProduct: ProductType;
@@ -45,8 +45,8 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
     setRating(rate);
   };
 
-  const {data: session} = useSession();
-  
+  const { data: session } = useSession();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -80,28 +80,24 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
       productId: tempProduct?._id,
     };
     console.log(reviewData);
-    const response = await fetch('/api/review', {
-      method: 'POST',
+    const response = await fetch("/api/review", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(reviewData),
     });
-  
+
     if (!response.ok) {
       const error = await response.text();
       throw new Error(error);
     }
-    
+
     form.reset();
     setIsDialogOpen(false);
-    toast.success('Review Submitted Successfully');
+    toast.success("Review Submitted Successfully");
   }
 
-
-
-  
-   
   return (
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

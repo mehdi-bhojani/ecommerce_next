@@ -42,6 +42,7 @@ import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import useCart from "@/shared/hooks/useCart";
 import { PriceIntoCurrency } from "@/shared/helpers/help";
 import ClientLoading from "@/components/myUi/ClientLoading";
+import useWishList from "@/shared/hooks/useWishList";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -56,6 +57,7 @@ const Page = () => {
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [sizes, setSizes] = useState<VariantType[]>([]);
   const { addToCart } = useCart();
+  const { addToWishList, removeFromWishList } = useWishList();
 
   const getSizes = (currentColor: string, currentProduct: ProductType) => {
     // Filter the variants based on the currentColor
@@ -103,16 +105,21 @@ const Page = () => {
     SetSelectedHeart(SelectedHeart);
   }, [SelectedHeart]);
 
-  const handleAction = () => {
+  const handleAction = async () => {
     if (SelectedHeart == false) {
-      toast.success("Added to WishList", {});
-    } else {
-      toast.error("Removed from your Wishlist", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
+      await addToWishList({
+        imgSrc: tempProduct!.img[0],
+        name: tempProduct!.name,
+        price: tempProduct!.price,
+        mrp: tempProduct!.mrp!,
+        offer: tempProduct!.offer!,
+        _id: tempProduct!._id,
       });
+
+      toast.success("Added to WishList");
+    } else {
+      removeFromWishList(tempProduct!._id);
+      toast.success("Removed from your Wishlist");
     }
   };
 
@@ -128,12 +135,7 @@ const Page = () => {
 
   const handleAddtoBag = () => {
     if (SelectSize != null && SelectSize === "") {
-      toast.error("Please select a size", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-      });
+      toast.error("Please select a size");
     } else {
       const cartItem = {
         imgSrc: tempProduct!.img[0],
@@ -149,12 +151,7 @@ const Page = () => {
         quantity: 1,
       };
       addToCart(cartItem);
-      toast.success("Added to Bag", {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-      });
+      toast.success("Added to Bag");
     }
   };
   const getSelectedVariant = tempProduct?.variants.find(
@@ -372,7 +369,6 @@ const Page = () => {
                       }  `}
                     />
                   </div>
-
                   <div>WISHLIST</div>
                 </button>
               </div>
