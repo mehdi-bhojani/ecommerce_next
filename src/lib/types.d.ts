@@ -198,3 +198,48 @@ interface WishItemType {
   mrp: number,
   offer: string,
 }
+
+// Currency Type
+interface CurrencyType {
+  default: string; // Default currency, e.g., "USD"
+};
+
+// Store Settings Type
+interface StoreSettingsType {
+  name: string; // Store name
+  description: string; // Store description
+  logo?: string; // URL to the store logo
+  mobileLogo?: string; // URL to the mobile version of the logo
+  favicon?: string; // URL to the favicon
+  currency: Currency; // Currency settings
+};
+
+// Payment Method Type
+interface PaymentMethodType {
+  name: string; // Name of the payment method, e.g., "Stripe"
+  enabled: boolean; // Whether the payment method is enabled
+  publicKey?: string; // Public key for the payment gateway (if applicable)
+  secretKey?: string; // Secret key for the payment gateway (if applicable)
+};
+
+// Social Media Links Type
+interface SocialMediaLinksType {
+  facebook?: string; // URL to Facebook page
+  instagram?: string; // URL to Instagram page
+  twitter?: string; // URL to Twitter page
+};
+
+// Legal Documents Type
+interface LegalType {
+  privacyPolicy?: string; // URL to privacy policy document
+  termsAndConditions?: string; // URL to terms and conditions document
+  refundPolicy?: string; // URL to refund policy document
+};
+
+// Main E-commerce Store Settings Type
+interface StoreType {
+  storeSettings: StoreSettings; // General store settings
+  paymentMethod: PaymentMethod; // Payment method settings
+  socialMediaLinks: SocialMediaLinks; // Social media links
+  legal: Legal; // Legal documents
+};

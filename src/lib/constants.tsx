@@ -1,9 +1,11 @@
 import {
   Boxes,
   LayoutDashboard,
+  Palette,
   Shapes,
   ShoppingBag,
   Star,
+  Store,
   Tag,
   UsersRound,
 } from "lucide-react";
@@ -43,6 +45,16 @@ export const navLinks = [
     url: "/admin/reviews",
     icon: <Star />,
     label: "Reviews",
+  },
+  {
+    url: "/admin/store",
+    icon: <Store />,
+    label: "Store",
+  },
+  {
+    url: "/admin/Appearence",
+    icon: <Palette /> ,
+    label: "Appearence",
   },
 ];
 
