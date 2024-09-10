@@ -12,3 +12,5 @@ export interface productType {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type StateMap = Map<string, string>;

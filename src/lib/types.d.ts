@@ -243,3 +243,5 @@ interface StoreType {
   socialMediaLinks: SocialMediaLinks; // Social media links
   legal: Legal; // Legal documents
 };
+
+

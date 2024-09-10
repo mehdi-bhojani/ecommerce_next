@@ -1,4 +1,6 @@
 import { CartItemType } from "@/lib/types";
+import { Children } from "react";
+import KeyValuePair from "../hooks/useKeyValuePair";
 
 
 export const PriceIntoCurrency = (price: number, currency:string) => {
@@ -41,3 +43,24 @@ export const formatSlug = (slug: string): string => {
   return slug.replace(/-/g, " ");
 }
 
+export const convertToNavigation = (items: any, keyValue: Map<string,string>) => {
+  const navigation = items.map((item) => {
+    return {
+      id: item.id,
+      value:item.value,
+      href: keyValue.get(item.value),
+      children: item.children ? convertToNavigation(item.children, keyValue) : [],
+    };
+  });
+  return navigation;
+}
+
+export const extractMapFromNavigation = (items: any) => {
+  const { addKeyValuePair } = KeyValuePair();
+  items.map((item: any) => {
+    addKeyValuePair(item.value, item.href);
+    if(item.children.length>1){
+      extractMapFromNavigation(item.children);
+    }
+  });
+}

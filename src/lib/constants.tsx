@@ -52,7 +52,7 @@ export const navLinks = [
     label: "Store",
   },
   {
-    url: "/admin/Appearence",
+    url: "/admin/appearence",
     icon: <Palette /> ,
     label: "Appearence",
   },
