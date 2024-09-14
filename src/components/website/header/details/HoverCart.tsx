@@ -11,12 +11,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useCart from "@/shared/hooks/useCart";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 function HoverCart() {
   const [cartItems, setCartItems] = useAtom(cartItemsAtom);
   const { getTotalPrice, removeFromCart } = useCart();
   const [subTotal, setSubTotal] = useState(0);
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   useEffect(() => {
    
     setSubTotal(getTotalPrice());
@@ -56,12 +57,12 @@ function HoverCart() {
                   />
                   <div className="ml-4 flex-1">
                     <p className="text-lg font-semibold">
-                      {PriceIntoCurrency(item.price, "PKR")}
+                      {PriceIntoCurrency(item.price, myStoreAtom?.storeSettings.currency.default || "PKR")}
                     </p>
                     <p className="text-sm text-gray-600">Qty {item.quantity}</p>
                   </div>
                   <button
-                    onClick={() => removeFromCart(item._id)}
+                    onClick={() => removeFromCart(item._id!)}
                     className="text-sm font-semibold text-red-600"
                   >
                     REMOVE
@@ -74,7 +75,7 @@ function HoverCart() {
             <div className="flex justify-between items-center py-4 border-b">
               <p className="text-md font-medium">Sub-total</p>
               <p className="text-md font-semibold">
-                {PriceIntoCurrency(subTotal, "PKR")}
+                {PriceIntoCurrency(subTotal, myStoreAtom?.storeSettings.currency.default || "PKR")}
               </p>
             </div>
 
@@ -83,7 +84,7 @@ function HoverCart() {
               <button className="border-2 border-black text-black font-semibold py-2 px-6 ">
                 <Link href={"/checkout"}>VIEW BAG</Link>
               </button>
-              <button className="bg-black text-white font-semibold py-2 px-6 ">
+              <button className="bg-primary-gradient text-white font-semibold py-2 px-6 ">
                 <Link href={"/checkout"}>CHECKOUT</Link>
               </button>
             </div>

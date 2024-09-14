@@ -44,6 +44,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { storeAtom } from "@/shared/atoms/storeAtom";
+import { useAtom } from "jotai";
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -96,14 +98,9 @@ const CheckoutDetails: React.FC<myprops> = ({ onProceed }) => {
   });
 
   const router = useRouter();
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    
-    if (values.payment === "cash_on_delivery") {
       onProceed(values);
-    } else {
-      router.push("/paymentstripe?amount=500&orderid=kjnqdkjnwqkjnd");
-    }
   }
 
   return (
@@ -294,11 +291,10 @@ const CheckoutDetails: React.FC<myprops> = ({ onProceed }) => {
                   <FormItem>
                     <div className="border border-gray-300 rounded-lg overflow-hidden">
                       <div
-                        className={`flex items-center justify-between  p-4 cursor-pointer ${
-                          field.value === "cash_on_delivery"
+                        className={`flex items-center justify-between  p-4 cursor-pointer ${field.value === "cash_on_delivery"
                             ? " border border-blue-500"
                             : "bg-white"
-                        }`}
+                          }`}
                         onClick={() => field.onChange("cash_on_delivery")}
                       >
                         <div className="flex flex-row gap-2 items-center">
@@ -324,38 +320,40 @@ const CheckoutDetails: React.FC<myprops> = ({ onProceed }) => {
                           className="form-radio text-blue-500"
                         />
                       </div>
+                      {
+                        myStoreAtom?.paymentMethod.enabled &&
 
-                      <div
-                        className={`flex items-center justify-between  p-4 cursor-pointer ${
-                          field.value === "credit_card"
-                            ? " border border-blue-500"
-                            : "bg-white"
-                        }`}
-                        onClick={() => field.onChange("credit_card")}
-                      >
-                        <div className="flex flex-row gap-2 items-center">
-                          <Image
-                            src="/assets/Checkout/visaGif.gif" // Replace with your actual icon path
-                            alt="Credit/Debit Card"
-                            className="w-10 h-10 ml-4"
-                            width={10}
-                            height={10}
+                        (<div
+                          className={`flex items-center justify-between  p-4 cursor-pointer ${field.value === "credit_card"
+                              ? " border border-blue-500"
+                              : "bg-white"
+                            }`}
+                          onClick={() => field.onChange("credit_card")}
+                        >
+                          <div className="flex flex-row gap-2 items-center">
+                            <Image
+                              src="/assets/Checkout/visaGif.gif" // Replace with your actual icon path
+                              alt="Credit/Debit Card"
+                              className="w-10 h-10 ml-4"
+                              width={10}
+                              height={10}
+                            />
+
+                            <span className="font-medium text-gray-700 justify-between">
+                              Credit/Debit Card
+                            </span>
+                          </div>
+
+                          <input
+                            type="radio"
+                            name={field.name}
+                            value="CreditCard"
+                            checked={field.value === "credit_card"}
+                            onChange={() => field.onChange("credit_card")}
+                            className="form-radio text-blue-500"
                           />
-
-                          <span className="font-medium text-gray-700 justify-between">
-                            Credit/Debit Card
-                          </span>
                         </div>
-
-                        <input
-                          type="radio"
-                          name={field.name}
-                          value="CreditCard"
-                          checked={field.value === "credit_card"}
-                          onChange={() => field.onChange("credit_card")}
-                          className="form-radio text-blue-500"
-                        />
-                      </div>
+                        )}
                     </div>
                     <FormMessage />
                   </FormItem>

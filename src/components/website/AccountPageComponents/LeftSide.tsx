@@ -7,13 +7,14 @@ import { useParams } from "next/navigation";
 import SignOut from "./SignOut";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 const LeftSide = () => {
   const param = useParams<{ AccSelect?: string }>();
   const { AccSelect } = param;
   const [Focus, setFocus] = useState(AccSelect);
-
+  const router = useRouter();
   return (
-    <div className="w-5/12 pr-4 text-nowrap hidden md:block p-5">
+    <div className="w-5/12  pr-4 text-nowrap hidden md:block p-5">
       <Link
         href={"/my/account"}
         onClick={() => setFocus("account")}
@@ -65,7 +66,7 @@ const LeftSide = () => {
       </div>
 
       <Separator className="my-4" />
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-gray-600">ORDERS</h4>
           <Link

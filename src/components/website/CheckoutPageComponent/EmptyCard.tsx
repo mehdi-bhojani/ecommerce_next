@@ -2,10 +2,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+
+
 interface myProps {
-  heading?: string;
+  heading?: string | React.ReactNode; // Allow JSX elements
   description?: string;
+  // Add other props if necessary
 }
+
 const EmptyCard: React.FC<myProps> = ({ heading, description }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
@@ -40,7 +44,7 @@ const EmptyCard: React.FC<myProps> = ({ heading, description }) => {
         </span>
         <Link
           href="/"
-          className="mt-6 bg-red-500 text-white px-4 py-2  shadow-md hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-400"
+          className="mt-6 bg-primary-gradient text-white px-6 py-4  shadow-md hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-400"
         >
           <span className="inline-block mr-2">🛒</span> RETURN TO SHOP
         </Link>

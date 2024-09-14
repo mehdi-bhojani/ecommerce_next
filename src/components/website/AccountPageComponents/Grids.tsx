@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import SignOut from "./SignOut";
 // {(AccSelect ==='account')?<AccountSide/> :(AccSelect==='orders')?<OrderSide/>:(AccSelect==='Refunds')?<RefundSide/>:(AccSelect==='vouchers')?<VoucherSide/>:(AccSelect==='earnings')?<EarningSide/>:(AccSelect==='details')?<DetailSide/>:(AccSelect==='Change_Password')?<PasswordSide/>:(AccSelect==='referrals')?<Referral/>:'error'}
 const Grids = () => {
   const actions = [
@@ -105,6 +106,11 @@ const Grids = () => {
           <p className="text-xs text-gray-500">Customer Care Center</p>
         </div>
       </Link>
+      <div className="md:hidden block">
+        <SignOut />
+      </div>
+
+
     </div>
   );
 };

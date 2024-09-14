@@ -21,10 +21,10 @@ export default function RootLayout({
       <body>
         <Header />
         <ResponsiveHeader />
-        <div className="bg-gray-100 w-full mb-16 md:mb-0">
+        <div className="bg-gray-200 w-full mb-16 md:mb-0">
           <Toaster />
-          <div className="bg-white min-h-screen flex justify-center items-center">
-            <div className="w-full max-w-6xl bg-white shadow-md  p-2">
+          <div className="bg-gray-100 min-h-screen flex justify-center items-center">
+            <div className="w-full max-w-6xl min-h-screen p-4 md:my-24 md:px-10  bg-white shadow-lg  ">
               <Heading />
               <AccountName />
               <Separator className="mb-2 hidden md:block" />

@@ -1,6 +1,7 @@
 import React from "react";
 import img1 from "/assets/home/img1.png";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CategoryItemProps {
   name: string;
@@ -109,12 +110,16 @@ const categories: CategoryItemProps[] = [
 
 const CategoryGrid: React.FC = () => (
   <div className="grid-cols-3 grid items-center   md:grid-cols-5 ">
-    {categories.map((category) => (
-      <CategoryItem
-        key={category.name}
-        name={category.name}
-        image={category.image}
-      />
+    {categories.map((category, index) => (
+      <Link key={index} href={'/product/'}>
+
+
+        <CategoryItem
+          key={category.name}
+          name={category.name}
+          image={category.image}
+        />
+      </Link>
     ))}
   </div>
 );

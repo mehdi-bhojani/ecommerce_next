@@ -1,6 +1,9 @@
-import CheckoutHeader from "@/components/website/header/CheckoutHeader";
+"use client";
 import Header from "@/components/website/header/Header";
+import Footer from "@/components/website/footer/Footer";
 import ResponsiveHeader from "@/components/website/header/ResponsiveHeader";
+import ResponsiveFooter from "@/components/website/footer/ResponsiveFooter";
+import { Provider } from "jotai";
 
 export default function RootLayout({
   children,
@@ -9,11 +12,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body>
+      <body>
         <Header />
         <ResponsiveHeader />
-          <div className="bg-gray-100 w-full">{children}</div>
-        </body>
+
+        {children}
+        <ResponsiveFooter />
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -44,13 +44,19 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import { navigations } from "@/constants/data";
 import SignUpForm from "@/components/forms/signup-form";
 import SignInForm from "@/components/forms/signin-form";
 import { signOut, useSession } from "next-auth/react";
 import SignOutButton from "@/components/buttons/signout-button";
 import { useRouter } from "next/navigation";
 import HoverCart from "./details/HoverCart";
+import useNavigation from "@/shared/hooks/useNavigation";
+import ClientLoading from "@/components/myUi/ClientLoading";
+import { navigationType } from "@/lib/types";
+import { useAtom, useStore } from "jotai";
+import useMyStore from "@/shared/hooks/useStore";
+import { storeAtom } from "@/shared/atoms/storeAtom";
+import UseMyStore from "@/shared/hooks/useStore";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -123,6 +129,7 @@ function Header() {
     setCreateAccount(true);
   };
 
+  
   const handleSearch = () => {
     if (search) {
       router.push(`/search?q=${search}`);
@@ -130,35 +137,35 @@ function Header() {
   };
 
   React.useEffect(() => {}, [sessions]);
+  const {navigation : navigations,loading} = useNavigation();
+  const {myStore , loading : storeLoading} = UseMyStore();
 
+  if (loading || storeLoading) return <div><ClientLoading /></div>;
+  
   return (
     <div>
-      <div className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex object-cover ">
-        {/* testing animations */}
-
+      <div className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex object-cover ">        
         <div>
           <Link href="/">
             <Image
-              src={"/assets/home/DFK_Logo.png"}
+              src={myStore?.storeSettings.logo || ""}
               alt="logo"
               width={150}
               height={50}
               className="cursor-pointer"
             />
-            {/* <h1 className="text-2xl font-bold p-3">
-              <span className="text-red-600">DFK</span> Collection
-            </h1> */}
+
           </Link>
         </div>
         <div>
           <ul className="flex font-mono text-sm items-center">
             <NavigationMenu>
               <NavigationMenuList>
-                {navigations.map((navigation, index) => (
+                {Array.isArray(navigations) && navigations.map((navigation: navigationType, index: number) => (
                   <NavigationMenuItem key={index}>
-                    <Link href={`/${navigation.type}`}>
+                    <Link href={`${navigation.href}`}>
                       <NavigationMenuTrigger className="uppercase text-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        {navigation.type}
+                        {navigation.value}
                       </NavigationMenuTrigger>
                     </Link>
                     <NavigationMenuContent>
@@ -166,22 +173,22 @@ function Header() {
                         key={1}
                         className="flex flex-row flex-nowrap w-[1000px] p-7"
                       >
-                        {navigation.categories.map((component) => (
+                        {navigation.children.length > 0 && navigation.children.map((component,index) => (
                           <div
-                            key={component.Category}
+                            key={index}
                             className="flex flex-col flex-nowrap gap-2"
                           >
                             <ListItem
-                              key={component.Category}
-                              title={component.Category}
+                              key={component._id}
+                              title={component.value}
                               href={component.href}
                               className="tracking-widest text-lg font-semibold text-slate-700 uppercase underline underline-offset-[10px] py-5"
                             ></ListItem>
 
-                            {component.subcategories?.map((subcategory) => (
+                            {component.children.length>0 && component.children.map((subcategory,index) => (
                               <ListItem
-                                key={subcategory.name}
-                                title={subcategory.name}
+                                key={index}
+                                title={subcategory.value}
                                 href={subcategory.href}
                               />
                             ))}
@@ -332,7 +339,7 @@ function Header() {
                   placeholder="Email"
                   className="w-full p-2 my-8 border border-black"
                 />
-                <button className="w-full py-2 mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold">
+                <button className="w-full py-2 mb-4 bg-primary-gradient text-white font-semibold">
                   RESET PASSWORD
                 </button>
                 <a

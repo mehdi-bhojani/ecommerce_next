@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import GoogleSignInButton from "../buttons/google-signin-button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface SignInFormProps {
   setCreateAccount: (value: boolean) => void;
@@ -42,12 +43,18 @@ const SignInForm = ({ setCreateAccount }: SignInFormProps) => {
   });
   const callbackUrl = "/";
   async function onSubmit(values: z.infer<typeof userSignInValidation>) {
-    console.log(values);
-    await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      callbackUrl,
-    });
+    try {
+      await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        callbackUrl,
+      });
+      toast.success("Login successful");
+      // Add your success logic here
+    } catch (error) {
+      toast.error("Login Failed");
+      // Add your error handling logic here
+    }
   }
 
   return (
@@ -91,7 +98,7 @@ const SignInForm = ({ setCreateAccount }: SignInFormProps) => {
           />
         </div>
         <Button
-          className="w-full py-2 my-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold"
+          className="w-full py-2 my-4 bg-primary-gradient text-white font-semibold"
           type="submit"
           disabled={pending}
         >

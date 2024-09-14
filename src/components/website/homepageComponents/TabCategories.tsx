@@ -8,8 +8,11 @@ import { ShopItem } from "@/constants/data";
 import ProductLoading from "@/components/myUi/productLoading";
 import Image from "next/image";
 import { getProductsFiltered } from "@/lib/actions/actions";
-import { PriceIntoCurrency } from "@/shared/helpers/help";
 import ClientLoading from "@/components/myUi/ClientLoading";
+import { createSlug, PriceIntoCurrency } from "@/shared/helpers/help";
+import { useAtom } from "jotai";
+import { storeAtom } from "@/shared/atoms/storeAtom";
+import Link from "next/link";
 const TabCategories = () => {
   const [collection, setCollection] = useState<CollectionType[]>([]);
   const [Categ, setCateg] = useState<CategoryType[]>([]);
@@ -20,7 +23,7 @@ const TabCategories = () => {
   const [offset, setOffset] = useState<number>(0);
   const [categoryId, setCategoryId] = useState<string[]>([]);
   const limit = 10;
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   const handleCategoryClick = async (categoryID: string[]) => {
     setCategoryId(categoryID);
     setOffset(0);
@@ -63,21 +66,6 @@ const TabCategories = () => {
     const fetchData = async () => {
       try {
         await getCollections();
-        // setCategoryLoading(true);
-        // if (collection.length > 0) {
-        //   const initialCategories = collection[0].categories.map(
-        //     (item) => item._id
-        //   );
-        //   const { products, hasMoreProducts } = await getProductsFiltered(
-        //     limit,
-        //     0,
-        //     initialCategories
-        //   );
-        //   setItems(products);
-        //   setHasMore(hasMoreProducts);
-        //   setCategoryId(initialCategories);
-        //   setOffset(limit);
-        // }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -162,18 +150,20 @@ const TabCategories = () => {
                         className=" flex flex-col items-center justify-center"
                       >
                         <div className="border border-slate-300 py-3">
-                          <Image
-                            src={
-                              item.img[0] || "/assets/home/Men/CasualShoes1.png"
-                            }
-                            alt={item.name}
-                            width={250}
-                            height={250}
-                            className="object-contain "
-                          />
+                          <Link href={`/product/${createSlug(item.name)}?id=${item._id}`} >
+                            <Image
+                              src={
+                                item.img[0] || "/assets/home/Men/CasualShoes1.png"
+                              }
+                              alt={item.name}
+                              width={250}
+                              height={250}
+                              className="object-contain "
+                            />
+                          </Link>
                         </div>
                         <div className="pb-5 pt-2 font-semibold">
-                          <span> {PriceIntoCurrency(+item.price, "PKR")}</span>
+                          <span> {PriceIntoCurrency(+item.price, myStoreAtom?.storeSettings.currency.default || "PKR")}</span>
                         </div>
                       </div>
                     ))}

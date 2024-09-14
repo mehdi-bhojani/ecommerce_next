@@ -44,12 +44,23 @@ import {
 } from "@/components/ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import SearchCard from "../homepageComponents/SearchCard";
+import { useStore } from "jotai";
+import UseMyStore from "@/shared/hooks/useStore";
+import useNavigation from "@/shared/hooks/useNavigation";
+import ClientLoading from "@/components/myUi/ClientLoading";
+
 const ResponsiveHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSearchCard = () => {
     setIsOpen(!isOpen);
   };
+
+
+  const { myStore, loading: storeLoading } = UseMyStore();
+
+  if (storeLoading) return <div><ClientLoading /></div>;
+
   return (
     <div>
       <div className="flex fixed top-0 z-30  bg-white items-center flex-1 px-2 w-full justify-between md:hidden">
@@ -58,7 +69,7 @@ const ResponsiveHeader = () => {
             className="w-12 h-12 object-cover"
             width={80}
             height={120}
-            src={"/assets/home/logo.png"}
+            src={myStore?.storeSettings.mobileLogo || "/assets/home/logo.png"}
             alt="the logo"
           />
         </Link>

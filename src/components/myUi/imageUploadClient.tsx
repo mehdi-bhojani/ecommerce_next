@@ -81,7 +81,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         <Button
           type="button"
           onClick={() => document.getElementById("file-upload")?.click()}
-          className="bg-pink-500 text-white"
+          className="bg-secondary text-white"
           disabled={uploading}
         >
           {uploading ? (

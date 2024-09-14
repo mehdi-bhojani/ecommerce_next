@@ -61,7 +61,6 @@ export const getProductsFiltered = async (limit: number, offset: number, categor
       .limit(limit);
   }
 
-  console.log(products, "is the products");
 
   const totalProducts = await Product.countDocuments(categoryId && categoryId.length > 0 ? { categories: { $in: categoryId } } : {});
   const hasMoreProducts = (offset + limit) < totalProducts;

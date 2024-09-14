@@ -48,7 +48,7 @@ const formSchema = z.object({
   img: z.array(z.string()),
   mrp: z.number().optional(),
   price: z.number().min(0),
-  reviews: z.array(z.string()).optional(),
+  // reviews: z.array().optional(),
   stock: z.number().optional(),
   remainingStock: z.number().optional(),
   seo: z.object({
@@ -119,7 +119,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           img: [],
           mrp: undefined,
           price: 0,
-          reviews: [],
+          // reviews: [],
           seo: {
             metaTitle: "",
             metaDescription: "",

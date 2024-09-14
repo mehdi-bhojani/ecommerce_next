@@ -40,9 +40,11 @@ import ReviewDialog from "@/components/product/reviewDialog";
 import ShowReview from "@/components/product/showReview";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import useCart from "@/shared/hooks/useCart";
-import { PriceIntoCurrency } from "@/shared/helpers/help";
+import { createSlug, PriceIntoCurrency } from "@/shared/helpers/help";
 import ClientLoading from "@/components/myUi/ClientLoading";
 import useWishList from "@/shared/hooks/useWishList";
+import { useAtom } from "jotai";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -58,7 +60,7 @@ const Page = () => {
   const [sizes, setSizes] = useState<VariantType[]>([]);
   const { addToCart } = useCart();
   const { addToWishList, removeFromWishList } = useWishList();
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   const getSizes = (currentColor: string, currentProduct: ProductType) => {
     // Filter the variants based on the currentColor
     const sizes = currentProduct?.variants
@@ -84,26 +86,27 @@ const Page = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const getProduct = async () => {
-    try {
-      const id = await searchParams.get("id");
-      const res = await fetch(`/api/product/${id}`);
-      const data = await res.json();
-      setTempProduct(data);
-      getColors(data);
-      // setSelectedColor(data?.variants[0].name);
-      // getSizes(data?.variants[0].name, data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
+  // SetSelectedHeart(SelectedHeart);
 
   useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const id = await searchParams.get("id");
+        const res = await fetch(`/api/product/${id}`);
+        const data = await res.json();
+        setTempProduct(data);
+        getColors(data);
+        // setSelectedColor(data?.variants[0].name);
+        // getSizes(data?.variants[0].name, data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
     getProduct();
-    SetSelectedHeart(SelectedHeart);
-  }, [SelectedHeart]);
+  }, []);
 
   const handleAction = async () => {
     if (SelectedHeart == false) {
@@ -141,11 +144,11 @@ const Page = () => {
         imgSrc: tempProduct!.img[0],
         name: tempProduct!.name,
         price: tempProduct!.price,
-        mrp: tempProduct!.mrp,
-        offer: tempProduct!.offer,
+        mrp: tempProduct!.mrp || 0,
+        offer: tempProduct!.offer || '0',
         SelectSize: SelectSize,
         allSizes: sizes,
-        slug: tempProduct!.slug,
+        slug: createSlug(tempProduct!.name),
         productId: tempProduct!._id,
         variantId: getSelectedVariant?._id,
         quantity: 1,
@@ -214,11 +217,10 @@ const Page = () => {
                       <button
                         key={index}
                         onClick={() => setSelectedImage(image)}
-                        className={`border ${
-                          selectedImage === image
-                            ? "border-orange-700"
-                            : "border-transparent"
-                        } p-1`}
+                        className={`border ${selectedImage === image
+                          ? "border-orange-700"
+                          : "border-transparent"
+                          } p-1`}
                       >
                         <Image
                           src={image}
@@ -262,10 +264,10 @@ const Page = () => {
               </div>
               <div className="my-4 flex flex-row gap-2">
                 <span className="line-through text-2xl text-gray-500">
-                  {PriceIntoCurrency(tempProduct?.mrp || 0, "PKR")}
+                  {PriceIntoCurrency(tempProduct?.mrp || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
                 </span>
                 <span className="text-2xl text-red-600 font-bold">
-                  {PriceIntoCurrency(tempProduct?.price || 0, "PKR")}
+                  {PriceIntoCurrency(tempProduct?.price || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
                   <span className="text-sm">(-{tempProduct?.offer}%)</span>
                 </span>
               </div>
@@ -284,11 +286,10 @@ const Page = () => {
                                 alt="Product Image"
                                 width={50}
                                 height={75}
-                                className={`object-cover ${
-                                  color?.name === selectedColor
-                                    ? "border border-red-600"
-                                    : ""
-                                }`}
+                                className={`object-cover ${color?.name === selectedColor
+                                  ? "border border-red-600"
+                                  : ""
+                                  }`}
                               />
                             </TooltipTrigger>
                             <TooltipContent className="bg-slate-900 text-white">
@@ -306,11 +307,10 @@ const Page = () => {
                 <div className="flex flex-wrap gap-2">
                   {sizes?.map((size, index) => {
                     // Define button classes based on stock and selected size
-                    const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${
-                      SelectSize === size?.size
-                        ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
-                        : ""
-                    }`;
+                    const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize === size?.size
+                      ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
+                      : ""
+                      }`;
 
                     return (
                       <div className="relative" key={index}>
@@ -326,11 +326,10 @@ const Page = () => {
                             size?.remainingStock > 0 &&
                             SetSelectSize(size?.size)
                           }
-                          className={`${buttonClasses} ${
-                            size?.remainingStock > 0
-                              ? "hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-pink-500"
-                              : ""
-                          }`}
+                          className={`${buttonClasses} ${size?.remainingStock > 0
+                            ? "hover:text-white hover-gradient"
+                            : ""
+                            }`}
                           disabled={size?.remainingStock <= 0}
                         >
                           {size?.size}
@@ -349,7 +348,7 @@ const Page = () => {
               <div className="flex flex-row gap-2 ">
                 <button
                   onClick={handleAddtoBag}
-                  className="w-1/2 bg-gradient-to-r from-red-500 to-pink-500 text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  "
+                  className="w-1/2 bg-primary-gradient text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  "
                 >
                   ADD TO BAG
                 </button>
@@ -364,9 +363,8 @@ const Page = () => {
                       onClick={() => {
                         SetSelectedHeart(!SelectedHeart), handleAction();
                       }}
-                      className={`text-gray-500 icon ${
-                        SelectedHeart ? "active" : "text-gray-500"
-                      }  `}
+                      className={`text-gray-500 icon ${SelectedHeart ? "active" : "text-gray-500"
+                        }  `}
                     />
                   </div>
                   <div>WISHLIST</div>
@@ -433,107 +431,7 @@ const Page = () => {
         </div>
       </div>
 
-      <span className="text-2xl font-bold">Recently Viewed</span>
-      <Carousel showDots={false} className="w-full  md:hidden">
-        <CarouselContent className="-ml-1">
-          <CarouselItem key={1} className="pl-1   ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={1} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={2} className="pl-1  ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={2} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={3} className="pl-1 ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={3} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={4} className="pl-1   ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={4} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-
-      <Carousel showDots={true} className="w-full hidden md:block">
-        <CarouselContent className="border-none">
-          <CarouselItem key={1}>
-            <div className="p-1">
-              <Card className="border-none">
-                <div className="flex flex-row justify-evenly">
-                  <CardContent className="flex  items-center justify-start w-3/12  p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct!} key={1} />
-                  </CardContent>
-                </div>
-              </Card>
-            </div>
-          </CarouselItem>
-          <CarouselItem key={2}>
-            <div className="p-1">
-              <Card className="border-none">
-                <div className="flex flex-row justify-start">
-                  <CardContent className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct!} key={1} />
-                  </CardContent>
-                  <CardContent className="flex aspect-square items-center justify-center w-3/12 p-2 border-red-300 shadow-md">
-                    <ProductCard product={tempProduct} key={2} />
-                  </CardContent>
-                </div>
-              </Card>
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-
-      <div className="mt-5">
-        <span className="text-2xl font-bold uppercase">similar products</span>
-      </div>
-
-      <Carousel showDots={false} className="w-full  md:hidden">
-        <CarouselContent className="-ml-1">
-          <CarouselItem key={1} className="pl-1   ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={1} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={2} className="pl-1  ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={2} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={3} className="pl-1 ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={3} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem key={4} className="pl-1   ">
-            <Card className="border-none">
-              <CardContent className="flex aspect-square items-center justify-center p-6   border-red-300 shadow-md">
-                <ProductCard product={tempProduct} key={4} />
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-
+      {/* <span className="text-2xl font-bold uppercase">Viewed By Many</span>
       <Carousel showDots={false} className="w-full my-5 hidden md:block">
         <CarouselContent className="border-none">
           <CarouselItem>
@@ -551,7 +449,34 @@ const Page = () => {
             </Card>
           </CarouselItem>
         </CarouselContent>
-      </Carousel>
+      </Carousel> */}
+      {
+        tempProduct?.similarProducts && tempProduct?.similarProducts?.length > 0 && (
+          <>
+            <div className="mt-5">
+              <span className="text-2xl font-bold uppercase">similar products</span>
+            </div>
+            <Carousel showDots={false} className="w-full my-5 hidden md:block">
+              <CarouselContent className="border-none">
+                <CarouselItem>
+                  <Card className="border-none">
+                    <div className="flex flex-row justify-start">
+                      {tempProduct?.similarProducts?.map((product, index) => (
+                        <CardContent
+                          key={index}
+                          className="flex  items-center justify-center w-3/12 p-2 border-red-300 shadow-md"
+                        >
+                          <ProductCard key={index} product={product} />
+                        </CardContent>
+                      ))}
+                    </div>
+                  </Card>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+          </>
+        )
+      }
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 "use client";
 
 import PaymentCheckout from "@/components/payment/paymentCheckout";
@@ -5,10 +6,11 @@ import { convertToSubcurrency, PriceIntoCurrency } from "@/shared/helpers/help";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import useCart from "@/shared/hooks/useCart";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { get } from "http";
 import { getTotalPriceFromDB } from "@/lib/actions/actions";
+import { useAtom } from "jotai";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
@@ -16,17 +18,18 @@ if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-export default function Page() {
+function PaymentPageContent() {
   const [amount, setAmount] = useState(0);
-  const searchParams: URLSearchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const orderId = searchParams.get("orderid");
+  const [myStoreAtom] = useAtom(storeAtom);
 
   useEffect(() => {
     const getAmount = async () => {
       setLoading(true);
-      if (orderId === null) {
+      if (!orderId) {
         router.push("/error?message=No%20order%20id%20found");
         return;
       }
@@ -39,7 +42,7 @@ export default function Page() {
       setLoading(false);
     };
     getAmount();
-  }, [router, searchParams]);
+  }, [router, orderId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -54,7 +57,10 @@ export default function Page() {
             <h2 className="text-2xl">
               has requested{" "}
               <span className="font-bold">
-                {PriceIntoCurrency(amount, "PKR")}
+                {PriceIntoCurrency(
+                  amount,
+                  myStoreAtom?.storeSettings?.currency?.default || "PKR"
+                )}
               </span>
             </h2>
           </div>
@@ -67,10 +73,18 @@ export default function Page() {
               currency: "usd",
             }}
           >
-            {orderId && <PaymentCheckout amount={amount} orderId={orderId} />}
+            {orderId && <PaymentCheckout amount={amount} />}
           </Elements>
         </main>
       </div>
     )
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading page...</div>}>
+      <PaymentPageContent />
+    </Suspense>
   );
 }

@@ -235,6 +235,7 @@ type Subcategory = {
   // }
 
   export interface ShopItem {
+    _id: string;
     img: string;
     name: string;
     price: string;

@@ -69,13 +69,13 @@ function Page() {
 
   return (
     <div className='p-10'>
-      <StoreSettingsForm onProceed={onProceed} initialData={myStore?.storeSettings} />
+      <StoreSettingsForm onProceed={onProceed} initialData={myStore?.storeSettings!} />
       <Separator className='my-10  border border-black' />
-      <PaymentMethodsForm onProceed={onProceed} initialData={myStore?.paymentMethod} />
+      <PaymentMethodsForm onProceed={onProceed} initialData={myStore?.paymentMethod!} />
       <Separator className='my-10  border border-black' />
-      <SocialMediaLinksForm onProceed={onProceed} initialData={myStore?.socialMediaLinks} />
+      <SocialMediaLinksForm onProceed={onProceed} initialData={myStore?.socialMediaLinks!} />
       <Separator  className='my-10  border border-black' />
-      <LegalForm onProceed={onProceed} initialData={myStore?.legal} />
+      <LegalForm onProceed={onProceed} initialData={myStore?.legal!} />
     </div>
   )
 }

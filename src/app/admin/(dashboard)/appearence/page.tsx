@@ -19,7 +19,7 @@ import Loader from "@/components/admin/customUi/Loader";
 import AddItemModal from "@/components/admin/appearence/AddItemModal";
 
 export default function App() {
-  const [header, setHeader] = useAtom(keyValuePair);  
+  const [header, setHeader] = useAtom(keyValuePair);
   const [items, setItems] = useState(initialViableMinimalData);
   const [loading, setLoading] = useState(true);
   const { state, convertFromNavigation } = KeyValuePair();
@@ -29,7 +29,7 @@ export default function App() {
       try {
         const res = await fetch("/api/appearence/header");
         const data = await res.json();
-        const formatData = await convertFromNavigation(data.header);
+        const formatData = convertFromNavigation(data.header);
         setItems(formatData);
       } catch (error) {
         console.log("Error Fetching Navigation");
@@ -41,16 +41,15 @@ export default function App() {
   }, []);
 
   const handleSubmit = async () => {
-    console.log("items", items);
     // ... rest of the handleSubmit function
     const result = convertToNavigation(items, state);
-    console.log("result", result);
+    // console.log("result", result);
     const replet = convertFromNavigation(result);
-    console.log("replet", replet);
+    // console.log("replet", replet);
     const newValue = {
       header: result
     }
-    console.log("new value", newValue);
+    // console.log("new value", newValue);
     try {
       const res = await fetch("/api/appearence/header", {
         method: "POST",
@@ -60,7 +59,7 @@ export default function App() {
         body: JSON.stringify(newValue),
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       toast.success("Appearence Updated");
     } catch (error) {
       toast.error("Error Updating Navigation");
@@ -77,7 +76,7 @@ export default function App() {
     setItems([...items, newItem]);
   };
 
-   const removeItem = (id: number | string) => {
+  const removeItem = (id: number | string) => {
     const removeItemRecursively = (items: TreeItems<MinimalTreeItemData>): TreeItems<MinimalTreeItemData> => {
       return items.reduce((acc, item) => {
         if (item.id === id) {
@@ -91,43 +90,43 @@ export default function App() {
     };
   };
 
-    if (loading) {
-      return <div><Loader /></div>
-    }
-
-    return (
-      <div className="p-10">
-        <div className="flex justify-between">
-          <h1 className="text-2xl my-4">Header</h1>
-          {/* <Button onClick={addItem}>Add New Item</Button> */}
-          <AddItemModal addItems={addItem} />
-        </div>
-        <div className={`bg-slate-200`}>
-          <SortableTree
-            items={items}
-            onItemsChanged={setItems}
-            TreeItemComponent={TreeItem}
-            
-          />
-        </div>
-        <Button onClick={handleSubmit} className="my-5">Submit</Button>
-      </div>
-    );
+  if (loading) {
+    return <div><Loader /></div>
   }
 
-  type MinimalTreeItemData = {
-    value: string;
-  };
+  return (
+    <div className="p-10">
+      <div className="flex justify-between">
+        <h1 className="text-2xl my-4">Header</h1>
+        {/* <Button onClick={addItem}>Add New Item</Button> */}
+        <AddItemModal addItems={addItem} />
+      </div>
+      <div className={`bg-slate-200`}>
+        <SortableTree
+          items={items}
+          onItemsChanged={setItems}
+          TreeItemComponent={TreeItem}
 
-  const initialViableMinimalData: TreeItems<MinimalTreeItemData> = [
-    {
-      id: 1,
-      value: "mehdi",
-      children: [
-        { id: 4, value: "John" },
-        { id: 5, value: "Sally" }
-      ]
-    },
-    { id: 2, value: "Fred", children: [{ id: 6, value: "Eugene" }] },
-    { id: 3, value: "Helen" }
-  ];
+        />
+      </div>
+      <Button onClick={handleSubmit} className="my-5">Submit</Button>
+    </div>
+  );
+}
+
+type MinimalTreeItemData = {
+  value: string;
+};
+
+const initialViableMinimalData: TreeItems<MinimalTreeItemData> = [
+  {
+    id: 1,
+    value: "mehdi",
+    children: [
+      { id: 4, value: "John" },
+      { id: 5, value: "Sally" }
+    ]
+  },
+  { id: 2, value: "Fred", children: [{ id: 6, value: "Eugene" }] },
+  { id: 3, value: "Helen" }
+];

@@ -26,6 +26,7 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import ClientLoading from "@/components/myUi/ClientLoading";
 import EmptyCard from "@/components/website/CheckoutPageComponent/EmptyCard"
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 const Page = () => {
   const [value, setValue] = React.useState("");
@@ -42,12 +43,14 @@ const Page = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
 
   useEffect(() => {
-    console.log("cartItems", cartItems);
+    // console.log("cartItems", cartItems);
     setSubTotal(getTotalPrice());
-  }, [cartItems]);
+  }, [cartItems, getTotalPrice]);
 
+  
   const onProceed = async (values: any) => {
     // Format the order data
     const newValues = {
@@ -82,7 +85,7 @@ const Page = () => {
       isDeleted: false,
     };
 
-    console.log("newValues", newValues);
+    // console.log("newValues", newValues);
 
     try {
       setLoading(true);
@@ -102,7 +105,7 @@ const Page = () => {
       toast.success("Order created successfully.");
       clearCart();
       const data = await res.json();
-
+      console.log("data", data);
       if (values.payment === "cash_on_delivery") {
         router.push("/order-success?id=" + data._id);
       } else if (values.payment === "credit_card") {
@@ -164,7 +167,7 @@ const Page = () => {
                   Subtotal
                 </span>
                 <span className="text-sm font-medium text-gray-700">
-                  {PriceIntoCurrency(subTotal, "PKR")}
+                  {PriceIntoCurrency(subTotal, myStoreAtom?.storeSettings.currency.default || "PKR")}
                 </span>
               </div>
               <div className="flex justify-between mb-2">
@@ -172,13 +175,13 @@ const Page = () => {
                   Delivery Charges
                 </span>
                 <span className="text-sm font-medium text-gray-700">
-                  {PriceIntoCurrency(deliveryCharges, "PKR")}
+                  {PriceIntoCurrency(deliveryCharges, myStoreAtom?.storeSettings.currency.default || "PKR")}
                 </span>
               </div>
               <div className="flex justify-between font-semibold text-lg">
                 <span>Total</span>
                 <span>
-                  {PriceIntoCurrency(deliveryCharges + subTotal, "PKR")}
+                  {PriceIntoCurrency(deliveryCharges + subTotal, myStoreAtom?.storeSettings.currency.default || "PKR")}
                 </span>
               </div>
             </div>

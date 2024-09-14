@@ -33,7 +33,7 @@ const useCart = () => {
   };
 
   // Add item to the cart
-  const addToCart = async (item: CartItemType) => {
+  const addToCart = async (item: any) => {
     setCartItems((prev) => {
       const isItemExist = prev.some(
         (i) => i.productId === item.productId && i.variantId === item.variantId
@@ -82,7 +82,7 @@ const useCart = () => {
       const updatedCartItems = prev.map((item) => {
         if (item.variantId === newVariantId) {
           itemExists = true;
-          return { ...item, quantity: item.quantity + Qty };
+          return { ...item, quantity: item.quantity! + Qty };
         } else if (item._id === _id) {
           return { ...item, variantId: newVariantId };
         }
@@ -109,7 +109,7 @@ const useCart = () => {
   const getTotalPrice = () => {
     let total = 0;
     cartItems.map((item) => {
-      let subTotal = item.price * item.quantity;
+      let subTotal = item.price * item.quantity!;
       total = total + subTotal;
     });
     return total;

@@ -4,8 +4,10 @@ import ClientLoading from "@/components/myUi/ClientLoading";
 import { Button } from "@/components/ui/button";
 import SuccessBreadCrumb from "@/components/website/CheckoutPageComponent/SuccessBreadCrumb";
 import { OrderItemType, OrderType } from "@/lib/types";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 import { PriceIntoCurrency } from "@/shared/helpers/help";
 import { Separator } from "@radix-ui/react-separator";
+import { useAtom } from "jotai";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +16,7 @@ import React, { useEffect, useState } from "react";
 const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [orderDetails, setOrderDetails] = useState<OrderType>();
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   useEffect(() => {
     const getOrderDetails = async () => {
       setLoading(true);
@@ -27,7 +30,7 @@ const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
       }
     };
     getOrderDetails();
-  }, []);
+  }, [id]);
 
   if (loading)
     return (
@@ -62,7 +65,7 @@ const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
                 fill="none"
                 stroke="#73AF55"
                 stroke-width="6"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-miterlimit="10"
                 points="100.2,40.2 51.5,88.8 29.8,67.5 "
               />
@@ -72,7 +75,7 @@ const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
           <h1 className="text-2xl font-semibold">Order Placed</h1>
           <p className="text-gray-600">
             Total price for {orderDetails?.orderItems.length} item is{" "}
-            {PriceIntoCurrency(orderDetails?.totalAmount || 0, "PKR")}
+            {PriceIntoCurrency(orderDetails?.totalAmount || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </p>
         </div>
 

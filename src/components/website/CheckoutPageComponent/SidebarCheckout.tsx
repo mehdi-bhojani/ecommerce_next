@@ -8,7 +8,7 @@ import { CartItemType } from "@/lib/types";
 type SidebarProps = {
   ProductCheckout: CartItemType;
   children: ReactNode;
-  sizes: { size: string }[]; // Assuming sizes is an array of objects with a "size" property
+  sizes: { size: string, _id:string }[]; // Assuming sizes is an array of objects with a "size" property
   quantity: number;
   selectedSize: string;
   handleSizeSelect: (size: string) => void;
@@ -37,7 +37,7 @@ const Sidebar3: React.FC<SidebarProps> = ({
   const handleDone = () => {
     updateQuantity(ProductCheckout._id!, quantity);
     const newVariantID = sizes.find((item) => item.size === selectedSize)?._id;
-    updateSize(ProductCheckout._id!, newVariantID, quantity);
+    updateSize(ProductCheckout._id!, newVariantID!, quantity);
     setSheetOpen(false);
   };
 

@@ -27,7 +27,7 @@ const ProductDetails = ({ params }: { params: { productId: string }}) => {
   }, [])
 
   return loading ? <Loader /> : (
-    <ProductForm initialData={productDetails} />
+    <ProductForm initialData={productDetails!} />
   )
 }
 

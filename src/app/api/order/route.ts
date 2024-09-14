@@ -32,9 +32,9 @@ export const POST = async (req: NextRequest) => {
   try {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-    if (!token) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
+    // if (!token) {
+    //   return new NextResponse('Unauthorized', { status: 401 });
+    // }
 
     await connectToDB();
 

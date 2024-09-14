@@ -14,6 +14,8 @@ import {
 import { OrderType } from "@/lib/types";
 import { PriceIntoCurrency } from "@/shared/helpers/help";
 import Link from "next/link";
+import { useAtom } from "jotai";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 interface myProps {
   ordersData: OrderType[];
@@ -55,7 +57,7 @@ const OrderSide: React.FC<myProps> = ({ ordersData }) => {
     { name: "Delivered", id: "delivered" },
     { name: "Cancelled", id: "cancelled" },
   ];
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   return (
     <div className=" pl-4">
       <div className="flex items-center mb-6">
@@ -109,7 +111,7 @@ const OrderSide: React.FC<myProps> = ({ ordersData }) => {
                 {Items.orderItems.length}
               </TableCell>
               <TableCell>
-                {PriceIntoCurrency(Items.totalAmount, "PKR")}
+                {PriceIntoCurrency(Items.totalAmount, myStoreAtom?.storeSettings.currency.default || "PKR")}
               </TableCell>
               <TableCell className="text-right">
                 {new Date(Items.orderDate).toLocaleDateString()}

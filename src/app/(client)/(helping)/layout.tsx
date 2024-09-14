@@ -2,6 +2,7 @@ import Header from "@/components/website/header/Header";
 import MinHeader from "@/components/website/header/MinHeader";
 import HelpFooter from "@/components/website/footer/HelpFooter";
 import HelpText from "@/components/website/HelpPageComponents/HelpText";
+import ResponsiveHeader from "@/components/website/header/ResponsiveHeader";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,7 +11,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-       <MinHeader/>
+      <Header />
+        <ResponsiveHeader />
        <HelpText />
        <div className="bg-gray-100 w-full">
        {children}

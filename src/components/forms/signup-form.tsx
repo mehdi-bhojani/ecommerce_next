@@ -148,7 +148,7 @@ const SignUpForm = ({
           />
         </div>
         <Button
-          className="w-full py-2 my-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold"
+          className="w-full py-2 my-4 bg-primary-gradient text-white font-semibold"
           type="submit"
           disabled={pending}
         >

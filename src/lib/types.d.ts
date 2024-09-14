@@ -182,7 +182,7 @@ interface CartItemType {
   name: string,
   price: number,
   mrp: number,
-  offer?: number,
+  offer?: string,
   SelectSize?: string,
   allSizes?: any[],
   slug?: string,
@@ -238,10 +238,17 @@ interface LegalType {
 
 // Main E-commerce Store Settings Type
 interface StoreType {
-  storeSettings: StoreSettings; // General store settings
-  paymentMethod: PaymentMethod; // Payment method settings
-  socialMediaLinks: SocialMediaLinks; // Social media links
-  legal: Legal; // Legal documents
+  storeSettings: StoreSettingsType; // General store settings
+  paymentMethod: PaymentMethodType; // Payment method settings
+  socialMediaLinks: SocialMediaLinksType; // Social media links
+  legal: LegalType; // Legal documents
 };
 
 
+interface navigationType {
+  id: number;
+  value: string;
+  href: string;
+  children: navigationType[];
+  _id: string;
+}

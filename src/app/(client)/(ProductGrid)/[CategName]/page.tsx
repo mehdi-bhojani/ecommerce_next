@@ -7,7 +7,6 @@ import BreadCrumb from "@/components/website/ProductGridComponent/BreadCrumb";
 import ProductHeading from "@/components/website/ProductGridComponent/ProductHeading";
 import Filtering from "@/components/website/ProductGridComponent/Filtering";
 import { useAtom } from "jotai";
-import { subCategoryAtom } from "@/lib/store"; // Adjust the path as needed
 import ProductItems from "@/shared/json/products.json";
 import {
   Pagination,

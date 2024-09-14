@@ -1,4 +1,4 @@
-import { CartItemType } from "@/lib/types";
+import { CartItemType, StoreType } from "@/lib/types";
 import { Children } from "react";
 import KeyValuePair from "../hooks/useKeyValuePair";
 
@@ -24,7 +24,7 @@ export const formatOrderItems = (cartItems: CartItemType[]) => {
       variantId: item?.variantId || null, // Correctly handle optional variantId
       quantity: item.quantity,
       unitPrice: item.price,
-      totalPrice: item.price*item.quantity,
+      totalPrice: item.price*(item.quantity || 1),
     };
   });
 };
@@ -42,18 +42,21 @@ export const createSlug = (name: string): string => {
 export const formatSlug = (slug: string): string => {
   return slug.replace(/-/g, " ");
 }
-
-export const convertToNavigation = (items: any, keyValue: Map<string,string>) => {
-  const navigation = items.map((item) => {
-    return {
-      id: item.id,
-      value:item.value,
-      href: keyValue.get(item.value),
-      children: item.children ? convertToNavigation(item.children, keyValue) : [],
-    };
-  });
-  return navigation;
+interface NavigationItem {
+  id: string;
+  value: string;
+  href?: string;
+  children?: NavigationItem[];
 }
+
+export const convertToNavigation = (items: any[], keyValue: Map<string, string>): NavigationItem[] => {
+  return items.map((item) => ({
+    id: item.id,
+    value: item.value,
+    href: keyValue.get(item.value),
+    children: item.children ? convertToNavigation(item.children, keyValue) : undefined,
+  }));
+};
 
 export const extractMapFromNavigation = (items: any) => {
   const { addKeyValuePair } = KeyValuePair();
@@ -64,3 +67,15 @@ export const extractMapFromNavigation = (items: any) => {
     }
   });
 }
+
+export const loadStoreSetting = async (): Promise<StoreType> => {
+  try {
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/store`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/store`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log("Error loading store items", error);
+    throw error;
+  }
+};

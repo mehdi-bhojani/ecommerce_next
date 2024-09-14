@@ -11,6 +11,55 @@ import {
 
 import HelpObj from "@/shared/json/help.json";
 export default function Page() {
+
+
+
+  const FAQ = [ 
+    
+      {
+        id: "item-1",
+        question: "How can I keep track of the status of my orders?",
+        answer: "The ‘My Account' section in your clicky App will help review the status of your orders, so that you can receive relevant information based on the respective ‘Order Number'."
+      },
+      {
+        id: "item-2",
+        question: "Will I get a confirmation call from Clicky after placing order?",
+        answer: "No we don't call customers for order confirmation. All new customers are logged in to clicky app via OTP(one time password) so we take this as order confirmation and ship you the order right away."
+      },
+      {
+        id: "item-3",
+        question: "How can I cancel my order?",
+        answer: "In order to cancel your order, please login to clicky app in your my account section. Open the order you want to cancel and you will see an option to cancel the order. Your order can only be cancelled before it reaches the ‘Dispatched' status in your my account on Clicky app."
+      },
+      {
+        id: "item-4",
+        question: "What is the procedure for Returns or Exchange?",
+        answer: <div>You can return your product easily through clicky app in few seconds. Just follow these steps:<ul className='ml-12 list-disc'><li>You can Sign in to your Clicky Account From Here.</li><li>Go to my order section.</li><li>Click on the View order for the specific order you want to place replacement/refund Request</li><li>Select refund/replace option from the top and then click one or all items that you want return or replaced.</li><li>Select the quantities and reason for replacement/refund</li><li>Click on the SAVE button to submit the request</li></ul></div>
+      },
+      {
+        id: "item-5",
+        question: "I wish to become a seller on Clicky",
+        answer: <span>Fill <a className='text-red-900' href='#'>this form</a> and our team will reach you as soon as possible.</span>
+      },
+      {
+        id: "item-6",
+        question: "I can't sign in to my account.",
+        answer: <span>Go to <a className='text-red-900' href='#'>Reset password page.</a> Fill in your registered phone or email id and tap Rest Password. An otp will be sent to your medium either phone or email. Enter the otp and set a new password.</span>
+      },
+      {
+        id: "item-7",
+        question: "What are the delivery charges?",
+        answer: "Delivery charge is the fee that has to be paid for the on-time delivery of a purchased product. Our standard shipping charges are Rs 150 but it keeps on changing based on the number of products purchased. For the best understanding please see the total shipping fee added to your order at checkout page."
+      }
+    
+    
+  ];
+
+
+
+
+
+
   return (
     <div>
       <div className="p-5 w-full">
@@ -48,98 +97,17 @@ export default function Page() {
       </div>
 
       <div className="w-full mx-auto mt-5 bg-white p-8 rounded-lg shadow">
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>
-              How can I keep track of the status of my orders?
-            </AccordionTrigger>
-            <AccordionContent>
-              The ‘My Account&apos section in your clicky App will help review
-              the status of your orders, so that you can receive relevant
-              information based on the respective ‘Order Number&apos.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>
-              Will I get a confirmation call from Clicky after placing order?
-            </AccordionTrigger>
-            <AccordionContent>
-              No we dont call customers for order confirmation. All new
-              customers are logged in to clicky app via OTP(one time password)
-              so we take this as order confirmation and ship you the order right
-              away.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>How can I cancel my order?</AccordionTrigger>
-            <AccordionContent>
-              In order to cancel your order, please login to clicky app in your
-              my account section. Open the order you want to cancel and you will
-              see an option to cancel the order. Your order can only be
-              cancelled before it reaches the ‘Dispatched&apos status in your my
-              account on Clicky app.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-4">
-            <AccordionTrigger>
-              What is the procedure for Returns or Exchange?
-            </AccordionTrigger>
-            <AccordionContent>
-              You can return your product easily through clicky app in few
-              seconds. Just follow these steps:
-              <ul className="ml-12  list-disc">
-                <li>You can Sign in to your Clicky Account From Here.</li>
-                <li>Go to my order section.</li>
-                <li>
-                  Click on the View order for the specific order you want to
-                  place replacement/refund Request
-                </li>
-                <li>
-                  Select refund/replace option from the top and then click one
-                  or all items that you want return or replaced.
-                </li>
-                <li>Select the quantities and reason for replacement/refund</li>
-                <li>Click on the SAVE button to submit the request</li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-5">
-            <AccordionTrigger>
-              I wish to become a seller on Clicky
-            </AccordionTrigger>
-            <AccordionContent>
-              Fill{" "}
-              <Link className="text-red-900" href="#">
-                this form
-              </Link>{" "}
-              and our team will reach you as soon as possible.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-6">
-            <AccordionTrigger>
-              I can&apost sign in to my account.
-            </AccordionTrigger>
-            <AccordionContent>
-              Go to{" "}
-              <Link className="text-red-900" href="#">
-                Reset password page.{" "}
-              </Link>{" "}
-              Fill in your registered phone or email id and tap Rest Password.
-              An otp will be sent to your medium either phone or email. Enter
-              the otp and set a new password.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-7">
-            <AccordionTrigger>What are the delivery charges?</AccordionTrigger>
-            <AccordionContent>
-              Delivery charge is the fee that has to be paid for the on-time
-              delivery of a purchased product. Our standard shipping charges are
-              Rs 150 but it keeps on changing based on the number of products
-              purchased. For the best understanding please see the total
-              shipping fee added to your order at checkout page.
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+      <Accordion type="single" collapsible className="w-full">
+    {FAQ.map((item) => (
+      <AccordionItem key={item.id} value={item.id}>
+        <AccordionTrigger>{item.question}</AccordionTrigger>
+        <AccordionContent>
+        <span>{item.answer}</span>
+        </AccordionContent>
+      </AccordionItem>
+    ))}
+  </Accordion>
+       
       </div>
     </div>
   );

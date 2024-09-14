@@ -4,6 +4,8 @@ import Image from "next/image";
 import SidebarCheckout from "./SidebarCheckout";
 import { CartItemType } from "@/lib/types";
 import { PriceIntoCurrency } from "@/shared/helpers/help";
+import { useAtom } from "jotai";
+import { storeAtom } from "@/shared/atoms/storeAtom";
 
 interface ProductCheck {
   id: number;
@@ -45,7 +47,7 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
 
   useEffect(() => {
     setSelectedSize(ProductCheckout.SelectSize!);
-    setQuantity(ProductCheckout.quantity);
+    setQuantity(ProductCheckout.quantity!);
   }, [ProductCheckout]);
 
   useEffect(() => {
@@ -57,7 +59,8 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
   
     // You can add any side effects here, e.g., update a database, notify other components, etc.
   }, [quantity]); // This effect runs whenever quantity changes
-
+  
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   return (
     <div className="flex items-start mb-6">
       <Image
@@ -70,10 +73,10 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
       <div className="flex-1">
         <div className="flex items-center gap-2 ">
           <span className="text-lg font-semibold">
-            {PriceIntoCurrency(ProductCheckout.price, "PKR")}
+            {PriceIntoCurrency(ProductCheckout.price, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </span>
           <span className="text-sm text-gray-500 line-through">
-            {PriceIntoCurrency(ProductCheckout.mrp, "PKR")}
+            {PriceIntoCurrency(ProductCheckout.mrp, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </span>
           <span className="text-sm text-pink-700">{`(${ProductCheckout.offer}%)`}</span>
         </div>
@@ -115,7 +118,7 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
         </div>
         <button
           onClick={() => {
-            onRemove(ProductCheckout._id!); // Call the onRemove function
+            onRemove(ProductCheckout._id!); 
           }}
           className="flex items-center mt-4 text-gray-500 font-bold"
         >

@@ -6,11 +6,11 @@ import Order from '@/lib/models/Order';
 // GET a single order by id (authorized)
 export const GET = async (req: NextRequest, { params }: { params: { orderId: string } }) => {
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-    if (!token) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
+    // if (!token) {
+    //   return new NextResponse('Unauthorized', { status: 401 });
+    // }
 
     await connectToDB();
 
@@ -39,11 +39,11 @@ export const GET = async (req: NextRequest, { params }: { params: { orderId: str
 
 export const PUT = async (req: NextRequest, { params }: { params: { orderId: string } }) => {
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-    if (!token) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
+    // if (!token) {
+    //   return new NextResponse('Unauthorized', { status: 401 });
+    // }
 
     await connectToDB();
 

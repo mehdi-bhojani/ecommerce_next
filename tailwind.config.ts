@@ -26,23 +26,18 @@ const config = {
       fontFamily: {
         outfit: ['Outfit', 'Arial', 'sans-serif'], // Add custom font family
       },
+      backgroundImage: {
+        'primary-gradient': 'linear-gradient(to right, #ef4444, #f5469a)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        colors: {
-          customGray: '#eee', // Add your custom color here
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
+        primary: 'var(--primary-color)',
+        secondary: 'var(--secondary-color)',
+       
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

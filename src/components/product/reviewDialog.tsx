@@ -199,7 +199,7 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
                     </FormItem>
                   )}
                 />
-                <button className="w-full py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-3xl hover:from-pink-500 hover:to-red-500">
+                <button className="w-full py-2 bg-primary-gradient text-white rounded-3xl hover:from-pink-500 hover:to-red-500">
                   Submit
                 </button>
               </form>

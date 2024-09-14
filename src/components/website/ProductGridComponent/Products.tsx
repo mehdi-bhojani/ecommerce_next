@@ -4,21 +4,16 @@ import { Heart } from "lucide-react";
 import { ProductType } from "@/lib/types";
 import { createSlug, PriceIntoCurrency } from "@/shared/helpers/help";
 import { useRouter } from "next/navigation";
+import { storeAtom } from "@/shared/atoms/storeAtom";
+import { useAtom } from "jotai";
 
 interface ProductCardProps {
-  product: {
-    _id: string;
-    name: string;
-    price: number;
-    mrp: number;
-    img: string[];
-    offer: number;
-  };
+  product: any;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product}) => {
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [activeHearts, setActiveHearts] = useState(new Set());
-
+  const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   const toggleHeart = () => {
     // setActiveHearts((prevActiveHearts) => {
     //   const newActiveHearts = new Set(prevActiveHearts);
@@ -64,10 +59,10 @@ const ProductCard: FC<ProductCardProps> = ({ product}) => {
         <p className="text-md capitalize truncate">{product?.name}</p>
         <div className="flex items-center space-x-2">
           <p className="text-gray-500 line-through text-sm">
-            {PriceIntoCurrency(product?.mrp, "PKR")}
+            {PriceIntoCurrency(product?.mrp!, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </p>
           <p className="text-red-500 font-bold text-sm">
-            {PriceIntoCurrency(product?.price, "PKR")}
+            {PriceIntoCurrency(product?.price, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </p>
         </div>
       </div>
