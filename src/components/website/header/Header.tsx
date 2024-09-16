@@ -130,7 +130,8 @@ function Header() {
   };
 
   
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (search) {
       router.push(`/search?q=${search}`);
     }
@@ -202,17 +203,19 @@ function Header() {
             </NavigationMenu>
           </ul>
         </div>
-        <div className="flex flex-1 bg-gray-100 mx-2">
+        <div className="flex flex-1">
+          <form className="flex flex-1 bg-gray-100 mx-2" onSubmit={handleSearch}>
           <Input
-            className="w-72 h-10 bg-gray-100 outline-none border-none flex-1"
+            className="w-72 h-10 bg-gray-100 outline-none border-none flex-grow"
             placeholder="search for items, brands and sinpirat"
             onChange={(e) => setSearch(e.target.value)}
           />
           <div>
-            <button className="bg-yellow-300 p-2">
-              <Search onClick={handleSearch} />
+            <button type="submit" className="bg-yellow-300 p-2 flex-grow-0">
+              <Search  />
             </button>
           </div>
+          </form>
         </div>
         <div>
           <nav>

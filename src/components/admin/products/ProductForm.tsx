@@ -20,7 +20,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../customUi/ImageUpload";
 import Delete from "../customUi/Delete";
-import MultiText from "../customUi/MultiText";
 import Loader from "../customUi/Loader";
 import MultiSelect from "./MultiSelect";
 import {
@@ -82,116 +81,210 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const getCategories = async () => {
+    if (initialData && initialData.categories.length > 0 && !initialData.categories[0]?.name) {
     try {
       const res = await fetch("/api/category", {
         method: "GET",
       });
       const data = await res.json();
       setCategories(data);
-      setLoading(false);
     } catch (err) {
       console.log("[categories_GET]", err);
       toast.error("Something went wrong! Please try again.");
     }
-  };
+  }else if (initialData && initialData.categories.length > 0) {
+    setCategories(initialData?.categories);
+  }
+  setLoading(false);
+};
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+useEffect(() => {
+  getCategories();
+}, []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: initialData
-      ? {
-          ...initialData,
-          categories: initialData.categories.map((category) => category._id),
-          similarProducts: initialData.similarProducts?.map((product) =>
-            typeof product === "string" ? product : product._id
-          ),
-          variants: initialData.variants.map((variant) => variant._id),
-        }
-      : {
-          name: "",
-          description: "",
-          shippingCost: 0,
-          offer: "",
-          sku: "",
-          img: [],
-          mrp: undefined,
-          price: 0,
-          // reviews: [],
-          seo: {
-            metaTitle: "",
-            metaDescription: "",
-            metaKeywords: "",
-            specialPrice: undefined,
-          },
-          sizeChart: [],
-          categories: [],
-          stock: 0,
-          remainingStock: 0,
-          similarProducts: [],
-          variants: [],
-          isActive: true,
-          isDelete: false,
-        },
-  });
-
-  const handleKeyPress = (
-    e:
-      | React.KeyboardEvent<HTMLInputElement>
-      | React.KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+const form = useForm<z.infer<typeof formSchema>>({
+  resolver: zodResolver(formSchema),
+  defaultValues: initialData
+    ? {
+      ...initialData,
+      categories: initialData.categories.map((category) => category._id),
+      similarProducts: initialData.similarProducts?.map((product) =>
+        typeof product === "string" ? product : product._id
+      ),
+      variants: initialData.variants.map((variant) => variant._id),
     }
-  };
+    : {
+      name: "",
+      description: "",
+      shippingCost: 0,
+      offer: "",
+      sku: "",
+      img: [],
+      mrp: undefined,
+      price: 0,
+      // reviews: [],
+      seo: {
+        metaTitle: "",
+        metaDescription: "",
+        metaKeywords: "",
+        specialPrice: undefined,
+      },
+      sizeChart: [],
+      categories: [],
+      stock: 0,
+      remainingStock: 0,
+      similarProducts: [],
+      variants: [],
+      isActive: true,
+      isDelete: false,
+    },
+});
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    try {
-      setLoading(true);
-      const url = initialData
-        ? `/api/product/${initialData._id}`
-        : "/api/product";
-      const res = await fetch(url, {
-        method: initialData ? "PUT" : "POST",
-        body: JSON.stringify(values),
-      });
-      if (res.ok) {
-        setLoading(false);
-        toast.success(`Product ${initialData ? "updated" : "created"}`);
-        router.push("/admin/products");
-      }
-    } catch (err) {
-      console.log("[products_POST]", err);
-      toast.error("Something went wrong! Please try again.");
+const handleKeyPress = (
+  e:
+    | React.KeyboardEvent<HTMLInputElement>
+    | React.KeyboardEvent<HTMLTextAreaElement>
+) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+};
+
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  console.log(values);
+  try {
+    setLoading(true);
+    const url = initialData
+      ? `/api/product/${initialData._id}`
+      : "/api/product";
+    const res = await fetch(url, {
+      method: initialData ? "PUT" : "POST",
+      body: JSON.stringify(values),
+    });
+    if (res.ok) {
+      setLoading(false);
+      toast.success(`Product ${initialData ? "updated" : "created"}`);
+      router.push("/admin/products");
     }
-  };
-  return loading ? (
-    <Loader />
-  ) : (
-    <div className="p-10">
-      {initialData ? (
-        <div className="flex items-center justify-between">
-          <p className="text-heading2-bold">Edit Product</p>
-          <Delete id={initialData._id} item="product" />
-        </div>
-      ) : (
-        <p className="text-heading2-bold">Create Product</p>
-      )}
-      <Separator className="bg-grey-1 mt-4 mb-7" />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+  } catch (err) {
+    console.log("[products_POST]", err);
+    toast.error("Something went wrong! Please try again.");
+  }
+};
+return loading ? (
+  <Loader />
+) : (
+  <div className="p-10">
+    {initialData ? (
+      <div className="flex items-center justify-between">
+        <p className="text-heading2-bold">Edit Product</p>
+        <Delete id={initialData._id} item="product" />
+      </div>
+    ) : (
+      <p className="text-heading2-bold">Create Product</p>
+    )}
+    <Separator className="bg-grey-1 mt-4 mb-7" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                className="border border-black"
+                  placeholder="Name"
+                  {...field}
+                  onKeyDown={handleKeyPress}
+                />
+              </FormControl>
+              <FormMessage className="text-red-1" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                className="border border-black"
+                  placeholder="Description"
+                  {...field}
+                  rows={5}
+                  onKeyDown={handleKeyPress}
+                />
+              </FormControl>
+              <FormMessage className="text-red-1" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="img"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Images</FormLabel>
+              <FormControl>
+                <ImageUpload
+                  value={field.value}
+                  onChange={(url) => field.onChange([...field.value, url])}
+                  onRemove={(url) =>
+                    field.onChange([
+                      ...field.value.filter((image) => image !== url),
+                    ])
+                  }
+                />
+              </FormControl>
+              <FormMessage className="text-red-1" />
+            </FormItem>
+          )}
+        />
+        <div className="md:grid md:grid-cols-3 gap-8">
           <FormField
             control={form.control}
-            name="name"
+            name="isActive"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value.toString()} // Ensure the value is a string
+                    onValueChange={(value) =>
+                      field.onChange(value === "true")
+                    }
+                  >
+                    <SelectTrigger className="border border-black rounded-none">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="true">Active</SelectItem>
+                        <SelectItem value="false">Inactive</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="offer"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Offer (%)</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Name"
+                  className="border border-black"
+                    type="number"
+                    placeholder="Offer"
                     {...field}
                     onKeyDown={handleKeyPress}
                   />
@@ -200,18 +293,43 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name="description"
+            name="mrp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Maximum Retail Price ($)</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Description"
+                  <Input
+                  className="border border-black"
+                    type="number"
+                    placeholder="MRP"
                     {...field}
-                    rows={5}
                     onKeyDown={handleKeyPress}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="md:grid md:grid-cols-3 gap-8">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price ($)</FormLabel>
+                <FormControl>
+                  <Input
+                  className="border border-black"
+                    type="number"
+                    placeholder="Price"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
                   />
                 </FormControl>
                 <FormMessage className="text-red-1" />
@@ -220,266 +338,160 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           />
           <FormField
             control={form.control}
-            name="img"
+            name="shippingCost"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Images</FormLabel>
+                <FormLabel>Shipping Cost ($)</FormLabel>
                 <FormControl>
-                  <ImageUpload
-                    value={field.value}
-                    onChange={(url) => field.onChange([...field.value, url])}
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((image) => image !== url),
-                      ])
+                  <Input
+                  className="border border-black"
+                    type="number"
+                    placeholder="Shipping Cost"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="sku"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>SKU</FormLabel>
+                <FormControl>
+                  <Input
+                  className="border border-black"
+                    placeholder="SKU"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="md:grid md:grid-cols-3 gap-8">
+          <FormField
+            control={form.control}
+            name="stock"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Stock ($)</FormLabel>
+                <FormControl>
+                  <Input
+                  className="border border-black"
+                    type="number"
+                    placeholder="stock"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="remainingStock"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Remaining Stock ($)</FormLabel>
+                <FormControl>
+                  <Input
+                  className="border border-black"
+                    type="number"
+                    placeholder="Remaining Stock"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-1" />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="categories"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Categories</FormLabel>
+              <FormControl>
+                <MultiSelect
+                  placeholder="Categories"
+                  categories={categories}
+                  value={field.value || []}
+                  onChange={(_id) => {
+                    const newValue = Array.isArray(field.value)
+                      ? field.value
+                      : [];
+                    if (!newValue.includes(_id)) {
+                      field.onChange([...newValue, _id]);
                     }
-                  />
-                </FormControl>
-                <FormMessage className="text-red-1" />
-              </FormItem>
-            )}
-          />
-          <div className="md:grid md:grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="isActive"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value.toString()} // Ensure the value is a string
-                      onValueChange={(value) =>
-                        field.onChange(value === "true")
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="true">Active</SelectItem>
-                          <SelectItem value="false">Inactive</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
+                  }}
+                  onRemove={(idToRemove) => {
+                    const newValue = Array.isArray(field.value)
+                      ? field.value
+                      : [];
+                    field.onChange(
+                      newValue.filter(
+                        (categoryId) => categoryId !== idToRemove
+                      )
+                    );
+                  }}
+                />
+              </FormControl>
+              <FormMessage className="text-red-1" />
+            </FormItem>
+          )}
+        />
 
-            <FormField
-              control={form.control}
-              name="offer"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Offer (%)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Offer"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="mrp"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Maximum Retail Price ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="MRP"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="md:grid md:grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Price"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="shippingCost"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Shipping Cost ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Shipping Cost"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="sku"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>SKU</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="SKU"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="md:grid md:grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="stock"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="remainingStock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Remaining Stock ($)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Remaining Stock"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="categories"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Categories</FormLabel>
-                <FormControl>
-                  <MultiSelect
-                    placeholder="Categories"
-                    categories={categories}
-                    value={field.value || []}
-                    onChange={(_id) => {
-                      const newValue = Array.isArray(field.value)
-                        ? field.value
-                        : [];
-                      if (!newValue.includes(_id)) {
-                        field.onChange([...newValue, _id]);
-                      }
-                    }}
-                    onRemove={(idToRemove) => {
-                      const newValue = Array.isArray(field.value)
-                        ? field.value
-                        : [];
-                      field.onChange(
-                        newValue.filter(
-                          (categoryId) => categoryId !== idToRemove
-                        )
-                      );
-                    }}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-1" />
-              </FormItem>
-            )}
-          />
-
-          <div className="flex gap-10">
-            <Button type="submit" className=" text-white">
-              Submit
+        <div className="flex gap-10">
+          <Button type="submit" variant={"default"} className="bg-black text-white">
+            Submit
+          </Button>
+          <Button
+            type="button"
+            onClick={() => router.push("/admin/products")}
+            className="text-black bg-transparent border-2 border-black hover:text-white hover:bg-black"
+          >
+            Discard
+          </Button>
+        </div>
+      </form>
+    </Form>
+    {initialData?._id && (
+      <>
+        <Separator className="my-5" />
+        <div>
+          <h1>Manage Variants</h1>
+          <Link href={`/admin/variants/new?productId=${initialData._id}`}>
+            <Button className="my-2 bg-black text-white">
+              <Plus /> Add New Variant
             </Button>
-            <Button
-              type="button"
-              onClick={() => router.push("/admin/products")}
-              className="text-black bg-transparent border-2 border-black hover:text-white hover:bg-black"
-            >
-              Discard
-            </Button>
-          </div>
-        </form>
-      </Form>
-      {initialData?._id && (
-        <>
-          <Separator className="my-5" />
+          </Link>
           <div>
-            <h1>Manage Variants</h1>
-            <Link href={`/admin/variants/new?productId=${initialData._id}`}>
-              <Button className="my-2">
-                <Plus /> Add New Variant
-              </Button>
-            </Link>
-            <div>
-              <Separator className="bg-grey-1 my-4" />
-              <DataTable
-                columns={columns}
-                data={initialData?.variants}
-                searchKey="title"
-              />
-            </div>
+            <Separator className="bg-grey-1 my-4" />
+            <DataTable
+              columns={columns}
+              data={initialData?.variants}
+              searchKey="title"
+            />
           </div>
-        </>
-      )}
-    </div>
-  );
+        </div>
+      </>
+    )}
+  </div>
+);
 };
 
 export default ProductForm;

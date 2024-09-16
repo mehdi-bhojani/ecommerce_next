@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/admin/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -138,7 +138,7 @@ export const PaymentMethodsForm: React.FC<myProps> = ({ initialData, onProceed }
         />
 
         {/* Submit Button */}
-        <Button type="submit">Save Stripe Settings</Button>
+        <Button type="submit" className="text-white bg-black">Save Stripe Settings</Button>
       </form>
     </Form>
   );

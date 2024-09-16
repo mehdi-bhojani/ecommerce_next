@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Badge } from "../ui/badge";
 import { X } from "lucide-react";
 import { CategoryType } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 
 interface MultiSelectProps {
   placeholder: string;
@@ -51,16 +52,16 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   return (
     <>
       <div className="flex gap-2">
-        {selected.map((category) => (
-          <Badge key={category._id}>
-            {category.name}
-            <button
+        {selected.map((category, index) => (
+          <Badge key={index}>
+            {category?.name || ""}
+            <Button
               type="button"
               className="ml-1 hover:text-red-1"
               onClick={() => onRemove(category._id)}
             >
               <X className="h-3 w-3" />
-            </button>
+            </Button>
           </Badge>
         ))}
       </div>
@@ -79,9 +80,9 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
           {open && (
             <CommandList>
               <CommandGroup className="absolute w-full z-30 top-0 overflow-auto rounded-md bg-slate-200 border border-gray-300 p-2 m-2 shadow-md ">
-                {selectables.map((category) => (
+                {selectables.map((category, index) => (
                   <CommandItem
-                    key={category._id}
+                    key={index}
                     onMouseDown={(e) => e.preventDefault()}
                     onSelect={() => {
                       onChange(category._id);
@@ -89,7 +90,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                     }}
                     className="hover:bg-slate-600 cursor-pointer"
                   >
-                    {category.name}
+                    {category?.name || ""}
                   </CommandItem>
                 ))}
               </CommandGroup>

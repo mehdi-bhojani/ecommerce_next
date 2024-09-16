@@ -120,7 +120,7 @@ export const SocialMediaLinksForm: React.FC<myProps> = ({ initialData, onProceed
         />
 
         {/* Submit Button */}
-        <Button type="submit">Save Social Media Links</Button>
+        <Button type="submit" className="text-white bg-black">Save Social Media Links</Button>
       </form>
     </Form>
   );

@@ -49,7 +49,7 @@ const ReviewDialog: React.FC<props> = ({ open, onClose, review }) => {
             </TableRow>
             <TableRow>
               <TableCell>Product</TableCell>
-              <TableCell>{review.productId.name}</TableCell>
+              <TableCell>{review?.productId?.name || ""}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Rating</TableCell>

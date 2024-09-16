@@ -90,8 +90,14 @@ const Page = ({ params }: { params: { CategName: string } }) => {
       </div>
 
       <div className="container mx-auto px-4">
+          {!products || products.length === 0 && (
+            <div className="w-full my-5 flex justify-center bg-slate-300 min-h-[300px] items-center">
+              <h1 className="text-2xl font-light uppercase">No Products Found</h1>
+            </div>
+          )}
         <div className="grid py-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.map((product, index) => (
+
+          {products && products.length > 0 && products.map((product, index) => (
             <div key={index}>
               <Link
                 // onClick={() => handleClick(product)}

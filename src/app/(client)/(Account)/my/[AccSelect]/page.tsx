@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
@@ -16,32 +16,12 @@ import Referral from "@/components/website/AccountPageComponents/Referral";
 
 import { CustomerType } from "@/lib/types";
 import ClientLoading from "@/components/myUi/ClientLoading";
+import UseCustomerData from "@/shared/hooks/useCustomerData";
 
 const Page = ({ params }: { params: { AccSelect: string } }) => {
   const { data: session } = useSession();
-  const [loading, setLoading] = useState(true);
-  const [customerData, setCustomerData] = useState<CustomerType | null>(null);
-
-  useEffect(() => {
-    const getCustomerByUser = async () => {
-      if (!session?.user?._id) return;
-
-      try {
-        const res = await fetch(`/api/customer/user/${session.user._id}`);
-        if (!res.ok) throw new Error("Failed to fetch customer data");
-
-        const data = await res.json();
-        setCustomerData(data);
-      } catch (error) {
-        console.error("Error fetching customer data:", error);
-        toast.error("Failed to load customer data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getCustomerByUser();
-  }, [session]);
+  const {loading, customerData, setCustomerData} = UseCustomerData();
+  const router = useRouter();
 
   const saveCustomer = async (values: CustomerType) => {
     if (!values?._id) return;
@@ -59,12 +39,19 @@ const Page = ({ params }: { params: { AccSelect: string } }) => {
 
       const data = await res.json();
       toast.success("Details updated successfully");
-      setCustomerData(data);
+      const orderHistory = customerData?.orderHistory;
+      const newData = { ...customerData, ...data, orderHistory };
+      setCustomerData(newData);
     } catch (error) {
-      console.error("Error updating customer details:", error);
+      // console.error("Error updating customer details:", error);
       toast.error("Error updating details");
     }
   };
+
+  if(!session) {
+    router.push("/signin");
+    return;
+  }
 
   if (loading) return <div><ClientLoading /></div>;
 

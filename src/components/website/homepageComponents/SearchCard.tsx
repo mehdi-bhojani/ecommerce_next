@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search as SearchIcon, Trash2, X } from "lucide-react"; // Rename import to avoid conflict
+import { set } from "mongoose";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -39,9 +40,10 @@ export default function SearchCard({ toggle }: SearchCardProps) {
     <div className="p-4">
       <div className="flex items-center space-x-2 mb-4">
         <Input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {setSearch(e.target.value); setPlaceholder(e.target.value);}}
           placeholder={placeholder === "" ? "Search For item" : placeholder}
           className="border bg-gray-100 font-medium border-gray-400 p-2 flex-grow focus:outline-none focus:ring focus:border-blue-300"
+          value={placeholder}
         />
         <Button className="rounded-none" onClick={handleSearch}>
           <SearchIcon />
@@ -58,7 +60,7 @@ export default function SearchCard({ toggle }: SearchCardProps) {
       </div>
 
       <div className="mb-6">
-        <div className="flex justify-between">
+        <div className="justify-between hidden">
           <span className="font-semibold mb-2">History:</span>
           <Trash2
             onClick={() => {
@@ -108,6 +110,7 @@ export default function SearchCard({ toggle }: SearchCardProps) {
             <span
               onClick={() => {
                 setPlaceholder(item);
+                setSearch(item);
                 if (!first.includes(item)) {
                   setFirst([...first, item]);
                   saveToLocalStorage(); // Save immediately after adding new item

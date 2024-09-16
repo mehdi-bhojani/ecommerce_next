@@ -9,7 +9,7 @@ import {
 } from "dnd-kit-sortable-tree";
 import sizeof from "object-sizeof";
 import TreeItem from "@/components/admin/Drag&Drop/treeItem";
-import { Button } from "@/components/admin/ui/button";
+import { Button } from "@/components/ui/button";
 import KeyValuePair from "@/shared/hooks/useKeyValuePair";
 import { convertToNavigation, extractMapFromNavigation } from "@/shared/helpers/help";
 import toast from "react-hot-toast";

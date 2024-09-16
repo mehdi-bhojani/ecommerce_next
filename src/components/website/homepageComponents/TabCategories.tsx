@@ -13,6 +13,7 @@ import { createSlug, PriceIntoCurrency } from "@/shared/helpers/help";
 import { useAtom } from "jotai";
 import { storeAtom } from "@/shared/atoms/storeAtom";
 import Link from "next/link";
+
 const TabCategories = () => {
   const [collection, setCollection] = useState<CollectionType[]>([]);
   const [Categ, setCateg] = useState<CategoryType[]>([]);
@@ -121,7 +122,7 @@ const TabCategories = () => {
               {collection.map((item) => (
                 <TabsTrigger
                   key={item._id}
-                  className="hover:text-black hover:underline focus:underline"
+                  className=" text-slate-600 capitalize text-sm md:text-lg underline-none leading-loose border-b border-slate-600 mx-1 rounded-none focus:text-black focus:border-black focus:no-underline overflow-hidden"
                   onClick={() => handleCollection(item.name)}
                   value={item.name}
                 >
@@ -136,7 +137,7 @@ const TabCategories = () => {
               />
             </div>
             {!categoryLoading && (
-              <div>
+              <div className="w-full md:p-5">
                 <InfiniteScroll
                   dataLength={items.length}
                   next={fetchMoreData}
@@ -144,7 +145,12 @@ const TabCategories = () => {
                   loader={<ProductLoading />}
                 >
                   <div className="md:flex  md:flex-wrap gap-1 justify-start grid grid-cols-3 ">
-                    {items.map((item, index) => (
+                    {items.length === 0 && (
+                      <div className="w-full flex justify-center bg-slate-300 min-h-[300px] items-center">
+                        <h1 className="text-2xl font-light uppercase">No Products Found</h1>
+                      </div>
+                    )}
+                    {items.length > 0 && items.map((item, index) => (
                       <div
                         key={index}
                         className=" flex flex-col items-center justify-center"

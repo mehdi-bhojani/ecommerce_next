@@ -51,12 +51,17 @@ export const getProductsFiltered = async (limit: number, offset: number, categor
   if (categoryId && categoryId.length > 0) {
     // Filter out invalid ObjectId values
     const validCategoryIds = categoryId.filter(id => mongoose.Types.ObjectId.isValid(id));
-
-    products = await Product.find({ categories: { $in: validCategoryIds } })
+    
+    products = await Product.find({
+      categories: { $in: validCategoryIds },
+      isDelete: false // Add this condition to check if isDeleted is false
+    })
       .skip(offset)
       .limit(limit);
   } else {
-    products = await Product.find()
+    products = await Product.find({
+      isDelete: false // Add this condition to check if isDeleted is false
+    })
       .skip(offset)
       .limit(limit);
   }

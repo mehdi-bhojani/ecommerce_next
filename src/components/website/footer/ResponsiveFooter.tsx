@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/accordion"
 import ClientLoading from '@/components/myUi/ClientLoading';
 import useNavigation from '@/shared/hooks/useNavigation';
+import { getRandomColor } from '@/shared/helpers/help';
 
 const ResponsiveFooter = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +65,8 @@ const ResponsiveFooter = () => {
             <AccordionItem key={index} value={category.value}>
               <div
                 key={index}
-                className={`flex justify-between items-center ${`bg-blue-600`} p-6 border-b-2`}
+                className={`flex justify-between items-center p-6 border-b-2`}
+                style={{ backgroundColor: getRandomColor() }}
               >
 
                 <AccordionTrigger >
@@ -72,13 +74,13 @@ const ResponsiveFooter = () => {
                 </AccordionTrigger>
               </div>
               <AccordionContent className='transition-all duration-300 ease-in-out'>
-                {category.children.length > 0 && category.children.map((subcategory,index) => (
+                {category.children.length > 0 && category.children.map((subcategory, index) => (
                   <div key={index} >
                     <div className='bg-gray-200 w-full font-bold text-xl p-2'>
                       <span>{subcategory.value}</span>
                     </div>
                     <div className='flex flex-col gap-1'>
-                      {subcategory.children.length > 0 && subcategory.children.map((subcategory2,index) => (
+                      {subcategory.children.length > 0 && subcategory.children.map((subcategory2, index) => (
                         <div key={index} >
                           <div className=' p-2 font-semibold gap-2 flex flex-row justify-start items-center'>
                             <Image className=' object-cover rounded-full w-10 h-10' alt='go' width={100} height={100} src='/assets/home/Men/CasualShoes1.png' />
@@ -126,7 +128,7 @@ const ResponsiveFooter = () => {
       name: 'Account',
       icon: <UserRound stroke='gray' />,
       alt: 'Account Icon',
-      link: 'my/account',
+      link: '/my/account',
     },
   ];
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -139,9 +141,11 @@ const ResponsiveFooter = () => {
             item.id === 2 ? (
               // <CategSidebar key={item.id} sheetOpen={sheetOpen} setSheetOpen={setSheetOpen}>
               <Link key={index} href={item.link} onClick={() => [setFlag(!Flag), setIsOpen(!isOpen)]}>
-                <div className="flex flex-col items-center">
-                  {item.icon}
-                  <span className="text-xs mt-1">{item.name}</span>
+                <div className={`flex flex-col items-center ${Flag && 'font-bold text-black'}`} >
+                  {React.cloneElement(item.icon, {
+                    stroke: Flag ? 'black' : 'gray', // Apply conditional stroke color
+                  })}
+                  <span className={`text-xs mt-1 ${Flag && 'font-bold text-black'}`}>{item.name}</span>
                 </div>
               </Link>
               // </CategSidebar>

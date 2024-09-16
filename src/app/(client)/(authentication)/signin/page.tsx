@@ -18,12 +18,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import GoogleSignInButton from "@/components/buttons/google-signin-button";
+import Image from "next/image";
+import { useStore } from "jotai";
+import UseMyStore from "@/shared/hooks/useStore";
 
 const SignIn = () => {
   const router = useRouter();
-
+  const { data: session } = useSession();
   const formMethods = useForm<z.infer<typeof signinFormSchema>>({
     resolver: zodResolver(signinFormSchema),
   });
@@ -43,10 +47,14 @@ const SignIn = () => {
       router.push("/");
     }
   };
+  if (session?.user._id) {
+    router.push("/my/account");
+  }
+  const store = UseMyStore();
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="text-xl font-semibold text-center">Sign In</h1>
+      <div>
+        <Image src={store.myStore?.storeSettings.logo || "/assets/logo.png"} alt="logo" width={350} height={350} className="mx-auto w-44" />
       </div>
       <Form {...formMethods}>
         <form
@@ -63,6 +71,7 @@ const SignIn = () => {
                   <Input
                     type="email"
                     placeholder="youremail@domain.com"
+                    className="border border-black"
                     {...field}
                   />
                 </FormControl>
@@ -77,23 +86,33 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input type="password" {...field} className="border border-black" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="flex flex-col gap-2">
-            <Button type="submit">Submit</Button>
-            <span>
-              Did&apos;nt have an account?{" "}
-              <Link className="font-semibold" href={"/signup"}>
-                Signup
-              </Link>{" "}
-            </span>
+            <Button type="submit" className="text-white font-bold bg-primary-gradient uppercase">Login With Email</Button>
           </div>
         </form>
       </Form>
+      <div>
+        <div className="flex items-center justify-center my-4">
+          <div className="border-b border-gray-400 w-full"></div>
+          <span className="px-2 text-gray-400">or</span>
+          <div className="border-b border-gray-400 w-full"></div>
+        </div>
+        <GoogleSignInButton callbackUrl="/" >
+          Sign in with Google
+        </GoogleSignInButton>
+        <span className="my-8">
+          Didn&apos;t have an account?{" "}
+          <Link className="font-semibold" href={"/signup"}>
+            Signup
+          </Link>{" "}
+        </span>
+      </div>
     </div>
   );
 };

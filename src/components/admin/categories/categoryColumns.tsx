@@ -60,7 +60,7 @@ export const columns: ColumnDef<CategoryType>[] = [
     id:"title",
     cell: ({ row }) => (
       <Link
-        href={`/categorys/${row.original._id}`}
+        href={`/categories/${row.original._id}`}
         className="hover:bg-slate-300"
       >
         {row.original.name}

@@ -36,8 +36,6 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
   const contentToPrint = useRef(null);
   const handlePrint = useReactToPrint({
     documentTitle: "Print This Document",
-    onBeforePrint: () => console.log("before printing..."),
-    onAfterPrint: () => console.log("after printing..."),
     removeAfterPrint: true,
   });
 
@@ -148,7 +146,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
               className="flex justify-center items-center bg-transparent text-black hover:bg-transparent hover:text-slate-500"
               onClick={() => setIsEditingCustomer(true)}
             >
-              <Pen />
+              <Pen className="hidden" />
             </Button>
           )}
         </div>
@@ -235,11 +233,11 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
           </div>
           {isEditingCustomer && (
             <div className="flex gap-5 items-center my-10">
-              <Button type="submit" className="w-full md:w-[200px]">
+              <Button type="submit" className="w-full md:w-[200px] bg-black text-white">
                 Save Changes
               </Button>
               <Button
-                className="w-full md:w-[200px]"
+                className="w-full md:w-[200px] bg-black text-white"
                 type="button"
                 variant="outline"
                 onClick={() => setIsEditingCustomer(false)}
@@ -262,7 +260,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
               className="flex justify-center items-center bg-transparent text-black hover:bg-transparent hover:text-slate-500"
               onClick={() => setIsEditingOrder(true)}
             >
-              <Pen />
+              <Pen className="hidden" />
             </Button>
           )}
         </div>
@@ -372,7 +370,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
               className="flex justify-center items-center bg-transparent text-black hover:bg-transparent hover:text-slate-500"
               onClick={() => setIsEditingPayment(true)}
             >
-              <Pen />
+              <Pen className="hidden" />
             </Button>
           )}
         </div>
@@ -490,6 +488,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
       </div>
       <div className="my-4 flex justify-end">
         <Button
+          className="bg-black text-white"
           onClick={() => {
             handlePrint(null, () => contentToPrint.current);
           }}

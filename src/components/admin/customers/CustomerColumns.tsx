@@ -34,7 +34,7 @@ export const columns: ColumnDef<CustomerType>[] = [
     cell: ({ row }) => (
       <div className="flex items-center justify-center space-x-2">
         <CustomerDetails customer={row.original} />
-        <Delete item="customer" id={row.original.userId} />
+        {/* <Delete item="customer" id={row.original.userId} /> */}
       </div>
     ),
   },

@@ -351,3 +351,7 @@
   size: auto;
   margin: 5mm;
 }
+
+.data-\[state\=active\]\:underline[data-state=active]{
+ text-decoration-line: none !important; 
+}

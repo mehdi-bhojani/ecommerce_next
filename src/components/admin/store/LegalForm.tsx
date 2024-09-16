@@ -158,7 +158,7 @@ export const LegalForm: React.FC<myProps> = ({ initialData, onProceed }) => {
         />
 
         {/* Submit Button */}
-        <Button type="submit">Save Legal Documents</Button>
+        <Button type="submit" className="text-white bg-black">Save Legal Documents</Button>
       </form>
     </Form>
   );

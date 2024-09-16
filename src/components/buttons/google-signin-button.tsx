@@ -16,7 +16,7 @@ const GoogleSignInButton = ({
   }
 
   return (
-    <Button onClick={loginWithGoogle} className="bg-gray-100 rounded-lg gap-2 w-full flex justify-center h-14 items-center text-slate-700 hover:text-white">
+    <Button onClick={loginWithGoogle} className="text-white font-bold bg-primary-gradient uppercase w-full flex gap-5 p-3">
         <GoogleIcon />
       {children}
     </Button>

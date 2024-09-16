@@ -18,12 +18,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import UseMyStore from "@/shared/hooks/useStore";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const formMethods = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
   });
-
+  const router = useRouter();
   // Handle form submission
   const onSubmit = async (data: any) => {
     const signup = {
@@ -43,6 +46,9 @@ const SignIn = () => {
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message);
+        setTimeout(() => {
+          router.push("/signin");
+        }, 2000);
       } else {
         toast.error(data.message || "An error occured");
       }
@@ -50,10 +56,11 @@ const SignIn = () => {
       console.log(error);
     }
   };
+  const store = UseMyStore();
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="text-xl font-semibold text-center">Sign Up</h1>
+      <div>
+        <Image src={store.myStore?.storeSettings.logo || "/assets/logo.png"} alt="logo" width={350} height={350} className="mx-auto w-44" />
       </div>
       <Form {...formMethods}>
         <form
@@ -67,7 +74,7 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
+                  <Input className="border border-black"
                     type="email"
                     placeholder="youremail@domain.com"
                     {...field}
@@ -84,7 +91,7 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Mehdi Bhojani" {...field} />
+                  <Input className="border border-black" placeholder="Muhammad" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
@@ -100,15 +107,15 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <Input className="border border-black" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="flex flex-col gap-2">
-            <Button type="submit">Submit</Button>
-            <span>
+            <Button className="text-white font-bold bg-primary-gradient uppercase" type="submit">Signup To DFK Collection</Button>
+            <span className="my-4">
               Already had an account?{" "}
               <Link className="font-semibold" href={"/signin"}>
                 Signin

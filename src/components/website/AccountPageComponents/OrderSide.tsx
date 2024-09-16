@@ -22,14 +22,6 @@ interface myProps {
 }
 
 const OrderSide: React.FC<myProps> = ({ ordersData }) => {
-  interface Order {
-    id: string;
-    status: string;
-    item: string;
-    quantity: number;
-    price: number;
-    date: string;
-  }
 
   const [data, setdata] = useState<OrderType[]>(ordersData);
   const [Flag, setFlag] = useState<Boolean>(
@@ -48,6 +40,7 @@ const OrderSide: React.FC<myProps> = ({ ordersData }) => {
 
   useEffect(() => {
     GetData();
+    // console.log("ordersData", ordersData);
   }, [data, selectedTab]);
 
   const tabs = [
@@ -64,7 +57,7 @@ const OrderSide: React.FC<myProps> = ({ ordersData }) => {
         <h1 className="text-2xl font-semibold">Order</h1>
       </div>
 
-      <div className="flex space-x-2 mb-4">
+      <div className="flex flex-wrap m-3 md:flex-row space-x-2 mb-4">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -108,7 +101,7 @@ const OrderSide: React.FC<myProps> = ({ ordersData }) => {
               <TableCell className="font-medium"><Link href={`/order-success?id=${Items._id}`}>{Items.orderNumber}</Link></TableCell>
               <TableCell>{Items.orderStatus}</TableCell>
               <TableCell className="text-center">
-                {Items.orderItems.length}
+                {Items?.orderItems?.length || 0}
               </TableCell>
               <TableCell>
                 {PriceIntoCurrency(Items.totalAmount, myStoreAtom?.storeSettings.currency.default || "PKR")}

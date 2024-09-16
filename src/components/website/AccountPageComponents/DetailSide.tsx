@@ -75,7 +75,8 @@ const DetailSide: React.FC<MyProps> = ({ customerData, saveCustomer }) => {
         },
       ],
     };
-    await saveCustomer(newValues);
+    // console.log("newValues", newValues);
+   saveCustomer(newValues);
     setLoading(false);
   }
 

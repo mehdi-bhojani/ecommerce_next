@@ -54,7 +54,7 @@ const Grids = () => {
 
   return (
     <div className="grid md:grid-cols-3   mt-4 gap-6 text-nowrap">
-      <div className="bg-white cursor-pointer shadow-md p-8 md:hidden">
+      <div className="bg-white cursor-pointer shadow-md p-8 hidden">
         <Link href={"/my/referrals"}>
           <span className="text-lg text-gray-400 font-semibold mb-2">
             REFERRALS

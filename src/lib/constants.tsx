@@ -41,11 +41,11 @@ export const navLinks = [
     icon: <UsersRound />,
     label: "Customers",
   },
-  {
-    url: "/admin/reviews",
-    icon: <Star />,
-    label: "Reviews",
-  },
+  // {
+  //   url: "/admin/reviews",
+  //   icon: <Star />,
+  //   label: "Reviews",
+  // },
   {
     url: "/admin/store",
     icon: <Store />,

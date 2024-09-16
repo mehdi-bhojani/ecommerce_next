@@ -7,9 +7,9 @@ const nextConfig = {
       "d30fs77zq6vq2v.cloudfront.net",
     ],
   },
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true,
+  // },
 };
 
 export default nextConfig;

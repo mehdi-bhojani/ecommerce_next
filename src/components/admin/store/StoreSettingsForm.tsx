@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/admin/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -29,7 +29,7 @@ const storeSettingsSchema = z.object({
   }),
   logo: z.string().url("Logo must be a valid URL."),
   mobileLogo: z.string().url("Mobile logo must be a valid URL."),
-  favicon: z.string().url("Favicon must be a valid URL."),
+  // favicon: z.string().url("Favicon must be a valid URL."),
   currency: z.object({
     default: z.string().min(1, {
       message: "Currency is required.",
@@ -55,7 +55,7 @@ export const StoreSettingsForm: React.FC<myProps> = ({initialData, onProceed}) =
       description: initialData.description ||"Best place to buy awesome products",
       logo: initialData.logo ||"/assets/home/logo.png",
       mobileLogo:  initialData.mobileLogo ||"/assets/home/logo.png",
-      favicon: initialData.favicon || "/assets/home/logo.png",
+      // favicon: initialData.favicon || "/assets/home/logo.png",
       currency: {
         default:  initialData.currency.default || "USD",
       },
@@ -143,7 +143,7 @@ export const StoreSettingsForm: React.FC<myProps> = ({initialData, onProceed}) =
           )}
         />
         {/* Favicon Field */}
-        <FormField
+        {/* <FormField
           control={form.control}
           name="favicon"
           render={({ field }) => (
@@ -160,7 +160,7 @@ export const StoreSettingsForm: React.FC<myProps> = ({initialData, onProceed}) =
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         {/* Currency Default Field */}
         <FormField
           control={form.control}
@@ -179,7 +179,7 @@ export const StoreSettingsForm: React.FC<myProps> = ({initialData, onProceed}) =
           )}
         />
         {/* Submit Button */}
-        <Button type="submit">Save Settings</Button>
+        <Button type="submit" className="text-white bg-black">Save Settings</Button>
       </form>
     </Form>
   );

@@ -3,14 +3,14 @@ import { Children } from "react";
 import KeyValuePair from "../hooks/useKeyValuePair";
 
 
-export const PriceIntoCurrency = (price: number, currency:string) => {
-    const Price = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: currency,
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(price);
-      return Price;
+export const PriceIntoCurrency = (price: number, currency: string) => {
+  const Price = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
+  return Price;
 }
 
 export function convertToSubcurrency(amount: number, factor = 100) {
@@ -24,7 +24,7 @@ export const formatOrderItems = (cartItems: CartItemType[]) => {
       variantId: item?.variantId || null, // Correctly handle optional variantId
       quantity: item.quantity,
       unitPrice: item.price,
-      totalPrice: item.price*(item.quantity || 1),
+      totalPrice: item.price * (item.quantity || 1),
     };
   });
 };
@@ -62,7 +62,7 @@ export const extractMapFromNavigation = (items: any) => {
   const { addKeyValuePair } = KeyValuePair();
   items.map((item: any) => {
     addKeyValuePair(item.value, item.href);
-    if(item.children.length>1){
+    if (item.children.length > 1) {
       extractMapFromNavigation(item.children);
     }
   });
@@ -71,11 +71,33 @@ export const extractMapFromNavigation = (items: any) => {
 export const loadStoreSetting = async (): Promise<StoreType> => {
   try {
     // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/store`, { next: { revalidate: 3600 } });
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/store`);
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/store`);
+    const res = await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/store`);
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log("Error loading store items", error);
+    // console.log("Error loading store items", error);
+    console.log("Error loading store items at https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/store");
     throw error;
   }
+};
+
+// Define a color palette based on your extracted colors
+
+
+
+// Function to get the next color from the palette
+export const getRandomColor = () => {
+  // Select the color from the palette
+  const colorPalette = [
+    '#edd7cf',
+    '#c9e1f8',
+    '#f8e7c9',
+    '#feb2bc',
+    '#feb2bc'
+  ];
+  const randomIndex = Math.floor(Math.random() * colorPalette.length);
+  const color = colorPalette[randomIndex];
+
+  return color;
 };

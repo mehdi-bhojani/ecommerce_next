@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import ClientLoading from "@/components/myUi/ClientLoading";
 import EmptyCard from "@/components/website/CheckoutPageComponent/EmptyCard"
 import { storeAtom } from "@/shared/atoms/storeAtom";
+import SignInToContinue from "@/components/website/global/SignInToContinue";
 
 const Page = () => {
   const [value, setValue] = React.useState("");
@@ -50,7 +51,7 @@ const Page = () => {
     setSubTotal(getTotalPrice());
   }, [cartItems, getTotalPrice]);
 
-  
+    
   const onProceed = async (values: any) => {
     // Format the order data
     const newValues = {
@@ -126,6 +127,10 @@ const Page = () => {
 
   if (cartItems.length === 0) {
     return <div><EmptyCard/></div>;
+  }
+
+  if(!session?.user._id){
+    return <SignInToContinue/>;
   }
 
   return (
