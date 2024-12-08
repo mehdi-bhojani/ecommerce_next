@@ -192,7 +192,7 @@ interface myProps {
 
 const CategoryGrid: React.FC<myProps> = ({ categories }) => (
   <div className="grid grid-cols-3 items-center md:grid-cols-5">
-    {categories.map((category) => (
+    {categories && categories.map((category) => (
       <Link key={category._id} href={`/search?q=${category.name}`}>
         <CategoryItem name={category.name} image={category.image} />
       </Link>
@@ -209,7 +209,7 @@ interface CategoryApiResponse {
 const TopCategories: React.FC = () => {
   // Using SWR to fetch and cache the data
   const { data, error } = useSWR<CategoryApiResponse>(
-    "/api/collection/66e8298ea2e71f263f9c1ead",
+    "/api/collection/6751c86caaf7d179a3cd9c4b",
     fetcher
   );
 

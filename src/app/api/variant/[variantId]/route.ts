@@ -9,18 +9,20 @@ export const GET = async (req: NextRequest, { params }: { params: { variantId: s
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
     if (!token) {
-      return new NextResponse('Unauthorized', { status: 401 });
+      // return new NextResponse('Unauthorized', { status: 401 });
     }
 
     await connectToDB();
 
-    const variant = await Variant.findById(params.variantId);
+    const variant = await Variant.findById(params.variantId)
+    .populate('sizes')
 
     if (!variant) {
       return new NextResponse('Variant not found', { status: 404 });
     }
 
     return NextResponse.json(variant, { status: 200 });
+
   } catch (err) {
     console.log('[GET_VARIANT_BY_ID]', err);
     return new NextResponse('Internal error', { status: 500 });
@@ -37,18 +39,18 @@ export const PUT = async (req: NextRequest, { params }: { params: { variantId: s
 
     await connectToDB();
 
-    const { isActive, sort, name, sku, size, stock, enableUnitPrice, mrp, price, img } = await req.json();
+    const { isActive, sort, name, sku, sizes, stock, enableUnitPrice, mrp, price, img } = await req.json();
 
-    if (!name || !sku || !size || !stock || !mrp || !price || !img) {
+    if (!name || !sku || !stock || !mrp || !price || !img) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
 
     const updatedVariant = await Variant.findByIdAndUpdate(
       params.variantId,
-      { isActive, sort, name, sku, size, stock, enableUnitPrice, mrp, price, img },
+      { isActive, sort, name, sku, sizes, stock, enableUnitPrice, mrp, price, img },
       { new: true }
     );
-
+    console.log(updatedVariant)
     if (!updatedVariant) {
       return new NextResponse('Variant not found', { status: 404 });
     }

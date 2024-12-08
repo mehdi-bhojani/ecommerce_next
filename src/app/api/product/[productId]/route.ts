@@ -9,11 +9,21 @@ export const GET = async (req: NextRequest, { params }: { params: { productId: s
     await connectToDB();
 
     const product = await Product.findById(params.productId)
-    .populate('categories')
-    .populate('variants')
-    .populate('similarProducts')
-    .populate('reviews');
-    
+      .populate('categories')
+      .populate({
+        path: 'variants',
+        populate: { path: 'sizes' }
+      })
+      .populate('similarProducts')
+      .populate({
+        path: 'reviews', // Populate reviews
+        populate: {
+          path: 'customerId', // Populate customerId within reviews
+          select: 'username email', // Optional: Select specific fields
+        },
+      });
+
+
     if (!product) {
       return new NextResponse('Product not found', { status: 404 });
     }
@@ -53,7 +63,8 @@ export const PUT = async (req: NextRequest, { params }: { params: { productId: s
       similarProducts,
       variants,
       isDelete,
-      stock,
+      enableStock,
+      brand,
       remainingStock,
     } = await req.json();
 
@@ -80,7 +91,8 @@ export const PUT = async (req: NextRequest, { params }: { params: { productId: s
         similarProducts,
         variants,
         isDelete,
-        stock,
+        enableStock,
+        brand,
         remainingStock,
       },
       { new: true }

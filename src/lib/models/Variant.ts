@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import Product from './Product';
+import Size from './Size';
 
 // Define Variant Interface
 interface IVariant extends Document {
@@ -8,10 +8,9 @@ interface IVariant extends Document {
   sort: number;
   name: string;
   sku: string;
-  size: string;
+  sizes: string[];
   enableStock: boolean;
   enableUnitPrice: boolean;
-  stock: number;
   remainingStock: number;
   mrp: number;
   price: number;
@@ -25,9 +24,8 @@ const variantSchema: Schema = new Schema({
   sort: { type: Number, required: true },
   name: { type: String, required: true },
   sku: { type: String, required: true },
-  size: { type: String, required: true },
+  sizes: [{ type: Schema.Types.ObjectId, ref: Size }],
   enableStock: { type: Boolean, required: true },
-  stock: { type: Number, required: true },
   remainingStock: { type: Number, required: true },
   enableUnitPrice: { type: Boolean, required: true },
   mrp: { type: Number, required: true },

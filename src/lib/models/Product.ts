@@ -30,8 +30,9 @@ const productSchema = new Schema({
   similarProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   variants: [{ type: Schema.Types.ObjectId, ref: Variant }],
   isDelete: { type: Boolean, default: false },
-  stock: { type: Number, default: 0 },
   remainingStock: { type: Number, default: 0 },
+  enableStock: {type: Boolean, default: false},
+  brand: {type: String, default: ''}
 }, { timestamps: true });
 
 const Product = models.Product || model('Product', productSchema);

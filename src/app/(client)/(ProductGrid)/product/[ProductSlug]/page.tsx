@@ -35,7 +35,7 @@ import {
 import { Button } from "@nextui-org/react";
 import ProductCard from "@/components/website/ProductGridComponent/Products";
 import Loader from "@/components/admin/customUi/Loader";
-import { ProductType, VariantType } from "@/lib/types";
+import { ProductType, SizeType, VariantType } from "@/lib/types";
 import ReviewDialog from "@/components/product/reviewDialog";
 import ShowReview from "@/components/product/showReview";
 import { CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -45,8 +45,12 @@ import ClientLoading from "@/components/myUi/ClientLoading";
 import useWishList from "@/shared/hooks/useWishList";
 import { useAtom } from "jotai";
 import { storeAtom } from "@/shared/atoms/storeAtom";
+import { useSession } from "next-auth/react";
+import { notFound } from "next/navigation";
 
 const Page = () => {
+
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const param = useParams();
   const { CategName, ProductDetail } = param;
@@ -57,10 +61,15 @@ const Page = () => {
   const [tempProduct, setTempProduct] = useState<ProductType>();
   const [colors, setColors] = useState<VariantType[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("");
-  const [sizes, setSizes] = useState<VariantType[]>([]);
+  const [sizes, setSizes] = useState<SizeType[]>([]);
   const { addToCart } = useCart();
   const { addToWishList, removeFromWishList } = useWishList();
   const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
+  const [currImage, setCurrImage] = useState<string[]>([]);
+  const [selectedVariant, setSelectedVariant] = useState<VariantType>();
+  
+
+
   const getSizes = (currentColor: string, currentProduct: ProductType) => {
     // Filter the variants based on the currentColor
     const sizes = currentProduct?.variants
@@ -68,7 +77,7 @@ const Page = () => {
       .map((variant) => variant); // Map to extract sizes from filtered variants
 
     // Set sizes state
-    setSizes(sizes);
+    // setSizes();
 
     // Log sizes to the console
   };
@@ -78,7 +87,6 @@ const Page = () => {
       (item, index, self) =>
         index === self.findIndex((t) => t.name === item.name)
     );
-
     setColors(colors);
     setSelectedColor(colors[0].name);
     getSizes(colors[0].name, tempProduct);
@@ -86,7 +94,7 @@ const Page = () => {
 
   const [loading, setLoading] = useState(true);
 
-  
+
   // SetSelectedHeart(SelectedHeart);
 
   useEffect(() => {
@@ -97,6 +105,11 @@ const Page = () => {
         const data = await res.json();
         setTempProduct(data);
         getColors(data);
+        if(data?.variants.length > 0){
+          setSelectedVariant(data?.variants[0]);
+          setSizes(data?.variants[0].sizes);
+        }
+        // setCurrImage(data?.img);
         // setSelectedColor(data?.variants[0].name);
         // getSizes(data?.variants[0].name, data);
       } catch (error) {
@@ -109,6 +122,10 @@ const Page = () => {
   }, []);
 
   const handleAction = async () => {
+    if (!session?.user?._id) {
+      toast.error("Please login to add product in wishlist");
+      return;
+    }
     if (SelectedHeart == false) {
       await addToWishList({
         imgSrc: tempProduct!.img[0],
@@ -126,10 +143,14 @@ const Page = () => {
     }
   };
 
-  const handleChangeColor = (color: string) => {
-    setSelectedColor(color);
-    SetSelectSize("");
-    getSizes(color, tempProduct!);
+  const handleChangeColor = (id: string,) => {
+    // getSizes(color, tempProduct!);
+    const selected = tempProduct?.variants?.filter((item) => item._id === id) || []
+    console.log(selected[0]);
+    setSelectedVariant(selected[0]);
+    setCurrImage(selected[0].img);
+    setSelectedColor(selected[0].name);
+    setSizes(selected[0].sizes);
   };
 
   const plugin = React.useRef(
@@ -137,6 +158,10 @@ const Page = () => {
   );
 
   const handleAddtoBag = () => {
+    if (!session?.user?._id) {
+      toast.error("Please login to add product in cart");
+      return;
+    }
     if (SelectSize != null && SelectSize === "") {
       toast.error("Please select a size");
     } else {
@@ -150,17 +175,21 @@ const Page = () => {
         allSizes: sizes,
         slug: createSlug(tempProduct!.name),
         productId: tempProduct!._id,
-        variantId: getSelectedVariant?._id,
+        variantId: selectedVariant?._id,
         quantity: 1,
       };
       addToCart(cartItem);
       toast.success("Added to Bag");
     }
   };
-  const getSelectedVariant = tempProduct?.variants.find(
-    (variant) => variant.size === SelectSize && variant.name === selectedColor
-  );
+  // const getSelectedVariant = tempProduct?.variants.find(
+  //   (variant) => variant.size === SelectSize && variant.name === selectedColor
+  // );
 
+  if (tempProduct && !tempProduct?.isActive || tempProduct?.isDelete) {
+    notFound();
+    return null;
+  }
   return loading ? (
     <ClientLoading />
   ) : (
@@ -173,7 +202,7 @@ const Page = () => {
           onMouseLeave={plugin.current.reset}
         >
           <CarouselContent>
-            {tempProduct?.img.map((item, index) => (
+            {currImage?.map((item, index) => (
               <CarouselItem key={index + 1}>
                 <div className="p-1">
                   <Card>
@@ -251,16 +280,18 @@ const Page = () => {
           {
             <div className=" mx-auto py-4 md:px-6">
               <div className="flex flex-col gap-2 ">
-                <span className="text-2xl font-bold">{tempProduct?.brand}</span>
+                <span className="text-2xl font-bold capitalize">{tempProduct?.brand}</span>
                 <span className="text-lg text-gray-500">
                   {tempProduct?.name}
                 </span>
                 <p className="text-sm text-gray-500">
                   SKU : {tempProduct?.sku}
                 </p>
-                <p className="text-red-600 font-bold">
-                  Be the first one to review
-                </p>
+                {(!tempProduct?.reviews || tempProduct?.reviews?.length === 0) ?
+                  (<p className="text-red-600 font-bold">
+                    Be the first one to review
+                  </p>) : ""
+                }
               </div>
               <div className="my-4 flex flex-row gap-2">
                 <span className="line-through text-2xl text-gray-500">
@@ -271,105 +302,117 @@ const Page = () => {
                   <span className="text-sm">(-{tempProduct?.offer}%)</span>
                 </span>
               </div>
-              <div className="my-4">
-                <p className="font-bold my-2">MORE COLORS</p>
-                <div className="flex gap-2">
-                  {colors.length > 0 &&
-                    colors.map((color, index) => (
-                      <div key={index}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Image
-                                onClick={() => handleChangeColor(color?.name)}
-                                src={color?.img[0] || tempProduct?.img[0] || ""}
-                                alt="Product Image"
-                                width={50}
-                                height={75}
-                                className={`object-cover ${color?.name === selectedColor
-                                  ? "border border-red-600"
-                                  : ""
-                                  }`}
-                              />
-                            </TooltipTrigger>
-                            <TooltipContent className="bg-slate-900 text-white">
-                              <span>{color?.name}</span>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                    ))}
-                </div>
-              </div>
-
-              <div className="my-4">
-                <p className="font-bold my-2">SELECT SIZE</p>
-                <div className="flex flex-wrap gap-2">
-                  {sizes?.map((size, index) => {
-                    // Define button classes based on stock and selected size
-                    const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize === size?.size
-                      ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
-                      : ""
-                      }`;
-
-                    return (
-                      <div className="relative" key={index}>
-                        {size?.remainingStock <= 0 && (
-                          <div className="absolute top-0 left-0 z-10 text-red-500 w-full h-full flex justify-center items-center">
-                            <span className="text-lg">
-                              <X size={50} />
-                            </span>
-                          </div>
-                        )}
-                        <Button
-                          onClick={() =>
-                            size?.remainingStock > 0 &&
-                            SetSelectSize(size?.size)
-                          }
-                          className={`${buttonClasses} ${size?.remainingStock > 0
-                            ? "hover:text-white hover-gradient"
-                            : ""
-                            }`}
-                          disabled={size?.remainingStock <= 0}
-                        >
-                          {size?.size}
-                        </Button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <ReviewDialog
-                tempProduct={tempProduct!}
-                SelectSize={SelectSize}
-              />
-
-              <div className="flex flex-row gap-2 ">
-                <button
-                  onClick={handleAddtoBag}
-                  className="w-1/2 bg-primary-gradient text-white py-3  transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold  "
-                >
-                  ADD TO BAG
-                </button>
-                <button
-                  onClick={() => {
-                    SetSelectedHeart(!SelectedHeart), handleAction();
-                  }}
-                  className="w-1/2 py-3  flex flex-row border-2  justify-center items-center gap-3"
-                >
-                  <div className="relative w-10 h-10 flex items-center justify-center   cursor-pointer">
-                    <Heart
-                      onClick={() => {
-                        SetSelectedHeart(!SelectedHeart), handleAction();
-                      }}
-                      className={`text-gray-500 icon ${SelectedHeart ? "active" : "text-gray-500"
-                        }  `}
-                    />
+              {
+                colors.length > 0 && (
+                  <div className="my-4">
+                    <p className="font-bold my-2 uppercase">Select Variants</p>
+                    <div className="flex gap-2">
+                      {colors.map((color, index) => (
+                        <div key={index}>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Image
+                                  onClick={() => handleChangeColor(color?._id)}
+                                  src={color?.img[0] || tempProduct?.img[0] || ""}
+                                  alt="Product Image"
+                                  width={50}
+                                  height={75}
+                                  className={`object-cover ${color?.name === selectedColor
+                                    ? "border border-red-600"
+                                    : ""
+                                    }`}
+                                />
+                              </TooltipTrigger>
+                              <TooltipContent className="bg-slate-900 text-white">
+                                <span>{color?.name}</span>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div>WISHLIST</div>
-                </button>
-              </div>
+                )}
+
+              {sizes.length > 0 &&
+                (<div className="my-4">
+                  <p className="font-bold my-2">SELECT SIZE</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedVariant?.sizes?.map((size, index) => {
+                      // Define button classes based on stock and selected size
+                      const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize === size?.name
+                        ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
+                        : ""
+                        }`;
+
+                      return (
+                        <div className="relative" key={index}>
+                          {size.remainingStock! <= 0 && (
+                            <div className="absolute top-0 left-0 z-10 text-red-500 w-full h-full flex justify-center items-center">
+                              <span className="text-lg">
+                                <X size={50} />
+                              </span>
+                            </div>
+                          )}
+                          <Button
+                            onClick={() =>
+                              size?.remainingStock! > 0 &&
+                              SetSelectSize(size?._id)
+                            }
+                            className={`${buttonClasses} ${size?.remainingStock! > 0
+                              ? "hover:text-white hover-gradient"
+                              : ""
+                              }`}
+                            disabled={size?.remainingStock! <= 0}
+                          >
+                            {size?.name}
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>)
+              }
+
+              {tempProduct?.remainingStock! <= 0 ? (
+                <div className="my-4">
+                  <span className="text-red-600 font-bold text-3xl">Out of Stock</span>
+                </div>
+              ) : (
+                <>
+                  {session && (
+                    <ReviewDialog tempProduct={tempProduct!} SelectSize={SelectSize} />
+                  )}
+                  <div className="flex flex-row gap-2">
+                    <button
+                      onClick={handleAddtoBag}
+                      className="w-1/2 bg-primary-gradient text-white py-3 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold"
+                    >
+                      ADD TO BAG
+                    </button>
+                    <button
+                      onClick={() => {
+                        SetSelectedHeart(!SelectedHeart);
+                        handleAction();
+                      }}
+                      className="w-1/2 py-3 flex flex-row border-2 justify-center items-center gap-3"
+                    >
+                      <div className="relative w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <Heart
+                          onClick={() => {
+                            SetSelectedHeart(!SelectedHeart);
+                            handleAction();
+                          }}
+                          className={`text-gray-500 icon ${SelectedHeart ? "active" : "text-gray-500"}`}
+                        />
+                      </div>
+                      <div>WISHLIST</div>
+                    </button>
+                  </div>
+                </>
+              )}
+
               <Separator className="my-4" />
 
               <div className="my-4">
@@ -410,7 +453,7 @@ const Page = () => {
                     <span className="font-bold">PRODUCT DESCRIPTION</span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {tempProduct?.description}
+                    <div dangerouslySetInnerHTML={{ __html: tempProduct?.description || "" }} />
                   </AccordionContent>
                 </AccordionItem>
                 {tempProduct?.reviews!.length! > 0 && (

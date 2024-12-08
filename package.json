@@ -66,6 +66,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-loading": "^2.0.3",
     "react-medium-image-zoom": "^5.2.8",
+    "react-quill": "^2.0.0",
     "react-range": "^1.9.2",
     "react-sortable-tree": "^2.8.0",
     "react-to-print": "2.15.1",

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import Variant from '@/lib/models/Variant'; // Adjust the import path as needed
+import Size from '@/lib/models/Size'; // Adjust the import path as needed
 import Product from '@/lib/models/Product'; // Adjust the import path as needed
 import mongoose from 'mongoose';
 import { connectToDB } from '@/lib/mongoDB';
+import Variant from '@/lib/models/Variant';
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -16,22 +17,19 @@ export const POST = async (req: NextRequest) => {
     await connectToDB();
 
     const { 
-      productId, 
-      isActive, 
-      sort, 
+      variantId, 
+      isActive,
       name, 
       sku, 
-      sizes, 
       enableStock, 
-      stock, 
       remainingStock, 
       enableUnitPrice, 
       mrp, 
-      price, 
-      img 
+      price 
     } = await req.json();
 
-    if (!productId || !name || !sku ) {
+    // Validate required fields
+    if (!variantId || !name || !sku) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
 
@@ -40,37 +38,34 @@ export const POST = async (req: NextRequest) => {
     session.startTransaction();
 
     try {
-      // Create the new variant
-      const newVariant = new Variant({
-        productId,
+      // Create the new size
+      const newSize = new Size({
+        variantId,
         isActive,
-        sort,
         name,
         sku,
-        sizes,
         enableStock,
-        stock,
         remainingStock,
         enableUnitPrice,
         mrp,
         price,
-        img
       });
 
-      // Save the new variant
-      await newVariant.save({ session });
+      // Save the new size
+      await newSize.save({ session });
 
-      // Update the product to include the new variant's ID
-      await Product.findByIdAndUpdate(
-        productId,
-        { $push: { variants: newVariant._id } },
+      // Update the associated variant or product to include the new size's ID
+      await Variant.findByIdAndUpdate(
+        variantId, // Assuming variantId maps to a field in the Product model
+        { $push: { sizes: newSize._id } }, // Adjust the path based on your schema
         { session }
       );
 
       // Commit the transaction
       await session.commitTransaction();
 
-      return NextResponse.json(newVariant, { status: 201 });
+      return NextResponse.json(newSize, { status: 201 });
+      
     } catch (error) {
       // If an error occurred, abort the transaction
       await session.abortTransaction();
@@ -80,7 +75,7 @@ export const POST = async (req: NextRequest) => {
       session.endSession();
     }
   } catch (err) {
-    console.log('[POST_VARIANT]', err);
+    console.error('[POST_SIZE]', err);
     return new NextResponse('Internal error', { status: 500 });
   }
 };

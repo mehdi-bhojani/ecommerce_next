@@ -14,7 +14,7 @@ const ShowReview: React.FC<myProps> = ({ reviews }) => {
       {reviews.map((review, index) => (
         <div key={index} className="flex flex-col gap-2 mb-4 p-2 border">
           <div className="flex items-center justify-between ">
-            <h4>Anonymous</h4>
+            <h4 className="font-bold">{review?.customerId?.username || "Anonymous"}</h4>
             <span>
               {review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ""}
             </span>

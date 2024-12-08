@@ -49,7 +49,7 @@ type ProductType = {
   categories: CategoryType[];
   similarProducts?: ProductType[];
   variants: VariantType[];
-  stock: number;
+  enableStock: boolean;
   remainingStock: number;
   isDelete: boolean;
   createdAt: Date;
@@ -66,7 +66,7 @@ type VariantType = {
   sort: number;
   name: string;
   sku: string;
-  size: string;
+  sizes: SizeType[];
   enableStock: boolean;
   enableUnitPrice: boolean;
   stock: number;
@@ -76,6 +76,19 @@ type VariantType = {
   img: string[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+type SizeType = {
+  _id: string;
+  variantId: string;
+  isActive: boolean;
+  name: string;
+  sku: string;
+  enableStock: boolean;
+  remainingStock?: number;
+  enableUnitPrice: boolean;
+  mrp?: number;
+  price?: number;
 }
 
 

@@ -5,6 +5,7 @@ import Review from '@/lib/models/Review';
 import { getCustomerId } from '@/lib/actions/auth.actions';
 import mongoose from 'mongoose';
 import Product from '@/lib/models/Product';
+import Customer from '@/lib/models/Customer';
 
 // GET all reviews (authorized)
 export const GET = async (req: NextRequest) => {
@@ -18,7 +19,8 @@ export const GET = async (req: NextRequest) => {
     await connectToDB();
 
     const reviews = await Review.find()
-      .populate('customerId').populate('productId');
+      // .populate('customerId').populate('productId');
+      .populate('customerId');
 
     return NextResponse.json(reviews, { status: 200 });
   } catch (err) {
@@ -41,8 +43,10 @@ export const POST = async (req: NextRequest) => {
     await connectToDB(); // Ensure database connection
 
     const { userId, rating, reviewText, productId, images } = await req.json();
-    const customerId = await getCustomerId(userId);
 
+    // const customerId = await getCustomerId(userId);
+    const customerId = await Customer.findOne({ userId: userId }).select('customerId');
+    // console.log("Customer Id is: "+customerId);
     if (!customerId || !rating || !reviewText || !productId ) {
       return new NextResponse('All fields are required', { status: 400 });
     }
