@@ -15,7 +15,7 @@ export const GET = async (req: NextRequest, { params }: { params: { variantId: s
     await connectToDB();
 
     const variant = await Variant.findById(params.variantId)
-    .populate('sizes')
+      .populate('sizes')
 
     if (!variant) {
       return new NextResponse('Variant not found', { status: 404 });
@@ -39,15 +39,15 @@ export const PUT = async (req: NextRequest, { params }: { params: { variantId: s
 
     await connectToDB();
 
-    const { isActive, sort, name, sku, sizes, stock, enableUnitPrice, mrp, price, img } = await req.json();
+    const { isActive, sort,enableStock, name, sku, remainingStock ,sizes, enableUnitPrice, mrp, price, img } = await req.json();
 
-    if (!name || !sku || !stock || !mrp || !price || !img) {
+    if (!name || !sku || !enableStock || !enableUnitPrice || !img) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
 
     const updatedVariant = await Variant.findByIdAndUpdate(
       params.variantId,
-      { isActive, sort, name, sku, sizes, stock, enableUnitPrice, mrp, price, img },
+      { isActive, sort, name, sku, sizes, remainingStock,enableStock, enableUnitPrice, mrp, price, img },
       { new: true }
     );
     console.log(updatedVariant)
