@@ -36,7 +36,7 @@ const Customers = () => {
 
   return loading ? <Loader /> : (
     <div className="px-10 ">
-      <p className="text-heading2-bold">Customers</p>
+      <p className="text-5xl font-bold">Customers</p>
       <Separator className="bg-grey-1 my-5" />
       <DataTable columns={columns} data={customers} searchKey="firstName" />
     </div>

@@ -135,7 +135,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
                     placeholder="Title"
                     {...field}
                     onKeyDown={handleKeyPress}
-                    className="bg-gray-100 border border-gray-300 p-2 m-2 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-gray-100 border border-gray-300 p-2 m-2 shadow-md "
                   />
                 </FormControl>
                 <FormMessage />
@@ -212,13 +212,13 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
             />
           )}
           <div className="flex gap-5">
-            <Button type="submit" className="bg-slate-600 text-white w-[200px] ">
+            <Button type="submit" className="bg-black text-white w-[200px] ">
               Submit
             </Button>
             <Button
               type="button"
               onClick={() => router.push("/admin/collections")}
-              className="bg-transparent border border-slate-600 text-slate-600  hover:bg-slate-600 hover:text-white w-[200px]"
+              className="bg-transparent border border-slate-600 text-slate-600  hover:bg-black hover:text-white w-[200px]"
             >
               Discard
             </Button>

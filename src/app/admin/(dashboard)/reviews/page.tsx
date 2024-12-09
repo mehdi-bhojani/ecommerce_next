@@ -36,7 +36,7 @@ const Page = () => {
 
   return  (loading)? <Loader /> : (
     <div className="px-10 py-5">
-      <p className="text-heading2-bold">Reviews</p>
+      <p className="text-5xl font-bold">Reviews</p>
       <Separator className="bg-grey-1 my-5" />
       <DataTable columns={columns} data={reviews} searchKey="reviewText" />
     </div>

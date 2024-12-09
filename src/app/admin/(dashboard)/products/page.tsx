@@ -40,7 +40,7 @@ const Products = () => {
   ) : (
     <div className="px-10 py-5">
       <div className="flex items-center justify-between">
-        <p className="text-heading2-bold">Products</p>
+        <p className="text-5xl font-bold">Products</p>
         <Button
           className="bg-black text-white"
           onClick={() => router.push("/admin/products/new")}

@@ -18,13 +18,13 @@ export default async function Home() {
 
   return (
     <div className="px-8 py-10">
-      <p className="text-heading2-bold">Dashboard</p>
+      <p className="text-5xl font-bold">Dashboard</p>
       <Separator className="bg-grey-1 my-5" />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
-        <Card>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-10 ">
+        <Card className="bg-slate-100">
           <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Total Revenue</CardTitle>
+            <CardTitle className="">Total Revenue</CardTitle>
             <CircleDollarSign className="max-sm:hidden" />
           </CardHeader>
           <CardContent>
@@ -32,7 +32,7 @@ export default async function Home() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-slate-100">
           <CardHeader className="flex flex-row justify-between items-center">
             <CardTitle>Total Orders</CardTitle>
             <ShoppingBag className="max-sm:hidden" />
@@ -42,7 +42,7 @@ export default async function Home() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-slate-100">
           <CardHeader className="flex flex-row justify-between items-center">
             <CardTitle>Total Customer</CardTitle>
             <UserRound className="max-sm:hidden" />
@@ -53,7 +53,7 @@ export default async function Home() {
         </Card>
       </div>
 
-      <Card className="mt-10">
+      <Card className="mt-10 bg-slate-100">
         <CardHeader>
           <CardTitle>Sales Chart ($)</CardTitle>
         </CardHeader>

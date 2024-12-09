@@ -86,7 +86,7 @@ export const LegalForm: React.FC<myProps> = ({ initialData, onProceed }) => {
                 onUpload={(result) => handleUpload(result, "privacyPolicy")}
               >
                 {({ open }) => (
-                  <Button type="button" onClick={() => open()} className="bg-slate-600 text-white mt-2">
+                  <Button type="button" onClick={() => open()} className="bg-black text-white mt-2">
                     Upload Privacy Policy
                   </Button>
                 )}
@@ -117,7 +117,7 @@ export const LegalForm: React.FC<myProps> = ({ initialData, onProceed }) => {
                 onUpload={(result) => handleUpload(result, "termsAndConditions")}
               >
                 {({ open }) => (
-                  <Button type="button" onClick={() => open()} className="bg-slate-600 text-white mt-2">
+                  <Button type="button" onClick={() => open()} className="bg-black text-white mt-2">
                     Upload Terms and Conditions
                   </Button>
                 )}
@@ -148,7 +148,7 @@ export const LegalForm: React.FC<myProps> = ({ initialData, onProceed }) => {
                 onUpload={(result) => handleUpload(result, "refundPolicy")}
               >
                 {({ open }) => (
-                  <Button type="button" onClick={() => open()} className="bg-slate-600 text-white mt-2">
+                  <Button type="button" onClick={() => open()} className="bg-black text-white mt-2">
                     Upload Refund Policy
                   </Button>
                 )}

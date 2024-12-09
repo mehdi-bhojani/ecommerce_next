@@ -88,7 +88,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                       onChange(category._id);
                       setInputValue("");
                     }}
-                    className="hover:bg-slate-600 cursor-pointer"
+                    className="hover:bg-black cursor-pointer"
                   >
                     {category?.name || ""}
                   </CommandItem>

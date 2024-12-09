@@ -39,7 +39,7 @@ const Sizes = () => {
   ) : (
     <div className="px-10 py-5">
       <div className="flex items-center justify-between">
-        <p className="text-heading2-bold">Sizes</p>
+        <p className="text-5xl font-bold">Sizes</p>
         <Button
           className="bg-black text-white"
           onClick={() => router.push("/admin/sizes/new")} // Adjusted route for creating sizes

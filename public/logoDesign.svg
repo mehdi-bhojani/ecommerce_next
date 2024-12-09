@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2510.72 1000">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: CopperplateGothicStd-31AB, 'Copperplate Gothic Std';
+        font-size: 250px;
+      }
+
+      .cls-2 {
+        letter-spacing: .23em;
+      }
+
+      .cls-3 {
+        letter-spacing: .13em;
+      }
+
+      .cls-4 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g>
+    <path d="m157.32,317.93v422.85c0,12.86,10.43,23.28,23.28,23.28h0c12.86,0,23.28-10.43,23.28-23.28v-422.85c0-19.95-23.46-30.66-38.54-17.6h0c-5.1,4.42-8.03,10.84-8.03,17.6Z"/>
+    <path d="m277.03,230.2v510.58c0,12.86,10.43,23.28,23.28,23.28h0c12.86,0,23.28-10.43,23.28-23.28V230.2c0-20.92-25.44-31.23-40-16.21h0c-4.21,4.34-6.57,10.16-6.57,16.21Z"/>
+    <path d="m384.67,159.7v581.07c0,12.86,10.43,23.28,23.28,23.28h0c12.86,0,23.28-10.43,23.28-23.28V159.7c0-21.6-26.86-31.56-40.94-15.18h0c-3.63,4.22-5.63,9.61-5.63,15.18Z"/>
+    <path d="m542.34,764.06h250c11.05,0,20.02-8.96,20.02-20.02v-441.96c0-6.57-3.22-12.71-8.62-16.45l-250-173.18c-13.27-9.2-31.41.31-31.41,16.45v15.08c0,6.75,3.4,13.05,9.05,16.75l228.44,149.53c5.72,3.74,9.13,10.14,9.05,16.97l-4.15,373.25c-.12,10.82-8.82,19.59-19.64,19.79l-203.11,3.76c-10.91.2-19.65,9.1-19.65,20.01h0c0,11.05,8.96,20.02,20.02,20.02Z"/>
+  </g>
+  <g>
+    <text class="cls-1" transform="translate(902.47 418.24) scale(1 1.3)"><tspan class="cls-2"><tspan x="0" y="0">DESIGN</tspan></tspan><tspan class="cls-3"><tspan x="0" y="269.23">CORNER</tspan></tspan></text>
+    <text class="cls-1" transform="translate(902.47 418.24) scale(1 1.3)"><tspan class="cls-2"><tspan x="0" y="0">DESIGN</tspan></tspan><tspan class="cls-3"><tspan x="0" y="269.23">CORNER</tspan></tspan></text>
+  </g>
+  <rect class="cls-4" x="902.47" y="82.3" width="1262.3" height="782.3"/>
+</svg>
