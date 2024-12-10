@@ -232,20 +232,21 @@ const VariantForm: React.FC<VariantFormProps> = (props) => {
               name="enableStock"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>Enable Stock?</FormLabel>
-                    <FormDescription>
-                      Check this if you want to enable stock management for this
-                      product.
-                    </FormDescription>
-                  </div>
-                </FormItem>
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Enable Stock?</FormLabel>
+                  <FormDescription>
+                  Check this if you want to enable stock management for this
+                           product.
+                  </FormDescription>
+                </div>
+              </FormItem>
+          
               )}
             />
             {
@@ -358,7 +359,7 @@ const VariantForm: React.FC<VariantFormProps> = (props) => {
             )}
           />
 
-          <div className="flex gap-10">
+          <div className="flex gap-5">
             <Button type="submit" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-10 px-4 py-2 bg-black text-white">
               Submit
             </Button>

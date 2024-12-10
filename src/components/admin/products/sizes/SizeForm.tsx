@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -92,7 +93,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
     <Loader />
   ) : (
     <div className="w-full p-10">
-      <h1 className="text-heading2-bold">
+      <h1 className="font-bold text-5xl">
         {props.initialData ? `Edit Size - ${props.initialData.name}` : "Create Size"}
       </h1>
 
@@ -160,16 +161,21 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
             control={form.control}
             name="enableStock"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0  rounded-none p-4">
-                <FormLabel>Enable Stock</FormLabel>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Enable Stock?</FormLabel>
+                <FormDescription>
+                Check this if you want to enable stock management for this
+                         product.
+                </FormDescription>
+              </div>
+            </FormItem>
             )}
           />
 
@@ -193,16 +199,21 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
             control={form.control}
             name="enableUnitPrice"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 border p-4 border-black rounded-none">
-                <FormLabel>Enable Unit Price</FormLabel>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Enable Unit Price?</FormLabel>
+                <FormDescription>
+                Check this if you want to enable Unit Price for this
+                         product.
+                </FormDescription>
+              </div>
+            </FormItem>
             )}
           />
 
