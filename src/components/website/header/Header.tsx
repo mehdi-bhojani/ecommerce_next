@@ -145,7 +145,7 @@ function Header() {
   
   return (
     <div>
-      <div className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex object-cover ">        
+      <div style={{backgroundColor:"#4D6859"}} className=" items-center flex-1 px-2 min-h-[80px] hidden md:flex object-cover text-slate-200 py-0 ">        
         <div>
           <Link href="/">
             <Image
@@ -206,12 +206,12 @@ function Header() {
         <div className="flex flex-1">
           <form className="flex flex-1 bg-gray-100 mx-2" onSubmit={handleSearch}>
           <Input
-            className="w-72 h-10 bg-gray-100 outline-none border-none flex-grow"
+            className="w-72 h-10 bg-gray-100 outline-none border-none flex-grow text-black"
             placeholder="search for items, brands and sinpirat"
             onChange={(e) => setSearch(e.target.value)}
           />
           <div>
-            <button type="submit" className="bg-yellow-300 p-2 flex-grow-0">
+            <button style={{backgroundColor:"#6C9286"}} type="submit" className="bg-yellow-300 p-2 flex-grow-0">
               <Search  />
             </button>
           </div>
