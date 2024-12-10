@@ -150,12 +150,12 @@ const VariantForm: React.FC<VariantFormProps> = (props) => {
   return loading ? (
     <Loader />
   ) : (
-    <div className="w-full p-10">
+    <div className="w-full p-10 ">
       {
         props.initialData ? (
-          <h1 className="text-heading2-bold">Edit Product Variant</h1>
+          <h1 className="font-bold text-5xl">Edit Product Variant</h1>
         ) : (
-          <h1 className="text-heading2-bold">Create Product Variant</h1>
+          <h1 className="font-bold text-5xl">Create Product Variant</h1>
         )
       }
       <Form {...form}>

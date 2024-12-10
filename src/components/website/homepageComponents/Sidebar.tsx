@@ -70,7 +70,7 @@ import {
 
             <div className="max-w-sm mx-auto p-4">
 
-              <Input type="email" placeholder="Email" className="w-full p-2 mb-4 border border-black" />
+              <Input type="email" placeholder="Email" className="w-full p-2 mb-4 " />
 
 
               <Input type="password" placeholder="Password" className="w-full p-2 mb-2 border border-gray-300" />
@@ -103,9 +103,9 @@ import {
 
         ) : CreateAccount ? (
           <div>
-            <Input type="email" placeholder="Email" className="w-full p-2 mt-8 mb-2 border border-black" />
-            <Input type="phone" placeholder="Phone" className="w-full p-2 my-2 border border-black" />
-            <Input type="password" placeholder="Password" className="w-full p-2 my-2 border border-black" />
+            <Input type="email" placeholder="Email" className="w-full p-2 mt-8 mb-2 " />
+            <Input type="phone" placeholder="Phone" className="w-full p-2 my-2 " />
+            <Input type="password" placeholder="Password" className="w-full p-2 my-2 " />
             <button className="w-full py-2 mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold">
               SIGN UP WITH EMAIL
             </button>
@@ -116,7 +116,7 @@ import {
 
         ) : isResetPassword ? (
           <div>
-            <Input type="email" placeholder="Email" className="w-full p-2 my-8 border border-black" />
+            <Input type="email" placeholder="Email" className="w-full p-2 my-8 " />
             <button className="w-full py-2 mb-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold">
               RESET PASSWORD
             </button>

@@ -53,14 +53,14 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
     <>
       <div className="flex gap-2">
         {selected.map((category, index) => (
-          <Badge key={index}>
-            {category?.name || ""}
+          <Badge key={index} className="bg-slate-100 " >
+           <h1>{category?.name || ""}</h1> 
             <Button
               type="button"
-              className="ml-1 hover:text-red-1"
+              className=" hover:text-red-1"
               onClick={() => onRemove(category._id)}
             >
-              <X className="h-3 w-3" />
+              <X className="h-3 w-3 p-0 m-0" />
             </Button>
           </Badge>
         ))}

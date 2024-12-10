@@ -132,11 +132,11 @@ const CategoryForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">
-          <h1 className="text-heading2-bold">Edit Collection</h1>
+          <h1 className="text-5xl font-bold">Edit Collection</h1>
           <Delete id={initialData._id} item="collection" />
         </div>
       ) : (
-        <h1 className="text-heading2-bold">Create Category</h1>
+        <h1 className="text-5xl font-bold">Create Category</h1>
       )}
       <Separator className="bg-grey-1 mt-4 mb-7" />
       <Form {...form}>

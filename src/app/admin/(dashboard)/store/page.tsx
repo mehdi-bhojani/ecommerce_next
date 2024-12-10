@@ -70,11 +70,11 @@ function Page() {
   return (
     <div className='p-10'>
       <StoreSettingsForm onProceed={onProceed} initialData={myStore?.storeSettings!} />
-      <Separator className='my-10  border border-black' />
+      <Separator className='my-10  ' />
       <PaymentMethodsForm onProceed={onProceed} initialData={myStore?.paymentMethod!} />
-      <Separator className='my-10  border border-black' />
+      <Separator className='my-10  ' />
       <SocialMediaLinksForm onProceed={onProceed} initialData={myStore?.socialMediaLinks!} />
-      <Separator  className='my-10  border border-black' />
+      <Separator  className='my-10  ' />
       <LegalForm onProceed={onProceed} initialData={myStore?.legal!} />
     </div>
   )

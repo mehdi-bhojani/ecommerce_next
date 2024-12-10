@@ -105,7 +105,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
               <FormItem>
                 <FormLabel>Size Name</FormLabel>
                 <FormControl>
-                  <Input className="border border-black rounded-none" placeholder="e.g., Medium, Large" {...field} />
+                  <Input className=" rounded-none" placeholder="e.g., Medium, Large" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -120,7 +120,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
                 <FormItem>
                   <FormLabel>SKU</FormLabel>
                   <FormControl>
-                    <Input className="border border-black rounded-none" placeholder="e.g., SKU12345" {...field} />
+                    <Input className=" rounded-none" placeholder="e.g., SKU12345" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -139,7 +139,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
                         field.onChange(value === "true")
                       }
                     >
-                      <SelectTrigger className="border border-black rounded-none">
+                      <SelectTrigger className=" rounded-none">
                         <SelectValue placeholder="Select Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -160,7 +160,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
             control={form.control}
             name="enableStock"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 border border-black rounded-none p-4">
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0  rounded-none p-4">
                 <FormLabel>Enable Stock</FormLabel>
                 <FormControl>
                   <Checkbox
@@ -181,7 +181,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
                 <FormItem>
                   <FormLabel>Remaining Stock</FormLabel>
                   <FormControl>
-                    <Input className="border border-black rounded-none" type="number" placeholder="e.g., 50" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                    <Input className=" rounded-none" type="number" placeholder="e.g., 50" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -215,7 +215,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
                   <FormItem>
                     <FormLabel>Maximum Price</FormLabel>
                     <FormControl>
-                      <Input className="border border-black rounded-none" type="number" placeholder="e.g., 1000" {...field}
+                      <Input className=" rounded-none" type="number" placeholder="e.g., 1000" {...field}
                         onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                     </FormControl>
                     <FormMessage />
@@ -230,7 +230,7 @@ const SizeForm: React.FC<SizeFormProps> = (props) => {
                   <FormItem>
                     <FormLabel>Price</FormLabel>
                     <FormControl>
-                      <Input className="border border-black rounded-none" type="number" placeholder="e.g., 900" {...field}
+                      <Input className=" rounded-none" type="number" placeholder="e.g., 900" {...field}
                         onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                     </FormControl>
                     <FormMessage />

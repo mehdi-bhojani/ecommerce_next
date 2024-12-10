@@ -225,11 +225,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     <div className="p-10">
       {initialData?._id ? (
         <div className="flex items-center justify-between">
-          <p className="text-heading2-bold">Edit Product</p>
+          <p className="text-5xl font-bold">Edit Product</p>
           <Delete id={initialData._id} item="product" />
         </div>
       ) : (
-        <p className="text-heading2-bold">Create Product</p>
+        <p className="text-5xl font-bold">Create Product</p>
       )}
       <Separator className="bg-grey-1 mt-4 mb-7" />
       <Form {...form}>
@@ -242,7 +242,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
-                    className="border border-black"
+                    className="border border-gray-300"
                     placeholder="Name"
                     {...field}
                     onKeyDown={handleKeyPress}
@@ -260,7 +260,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 <FormLabel>Brand</FormLabel>
                 <FormControl>
                   <Input
-                    className="border border-black"
+                    className=""
                     placeholder="Brand"
                     {...field}
                     onKeyDown={handleKeyPress}
@@ -278,7 +278,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    className="border border-black"
+                    className=""
                     placeholder="Description"
                     {...field}
                     rows={5}
@@ -352,7 +352,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                         field.onChange(value === "true")
                       }
                     >
-                      <SelectTrigger className="border border-black rounded-none">
+                      <SelectTrigger className=" rounded-none">
                         <SelectValue placeholder="Select Status" />
                       </SelectTrigger>
                       <SelectContent>
@@ -376,7 +376,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>Offer <small>(Automatically calculated if left empty)</small></FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black "
+                      className=" "
                       type="number"
                       placeholder="Offer"
                       {...field}
@@ -396,7 +396,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>Maximum Price ($)</FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black"
+                      className=""
                       type="number"
                       placeholder="MRP"
                       {...field}
@@ -418,7 +418,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>Original Price ($)</FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black"
+                      className=""
                       type="number"
                       placeholder="Price"
                       {...field}
@@ -438,7 +438,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>Shipping Cost ($)</FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black"
+                      className=""
                       type="number"
                       placeholder="Shipping Cost"
                       {...field}
@@ -458,7 +458,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>SKU</FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black"
+                      className=""
                       placeholder="SKU"
                       {...field}
                       onKeyDown={handleKeyPress}
@@ -499,7 +499,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormLabel>Remaining Stock</FormLabel>
                   <FormControl>
                     <Input
-                      className="border border-black"
+                      className=""
                       type="number"
                       placeholder="Remaining Stock"
                       {...field}
@@ -551,7 +551,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             )}
           />
 
-          <div className="flex gap-10">
+          <div className="flex gap-1">
             <Button type="submit" variant={"default"} className="bg-black text-white">
               Submit
             </Button>

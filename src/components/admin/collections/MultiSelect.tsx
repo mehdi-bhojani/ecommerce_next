@@ -39,16 +39,16 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
   return (
     <>
-      <div className="flex gap-1 flex-wrap my-3">
+      <div className="flex gap-1 flex-wrap my-3 ">
         {selected.map((category) => (
-          <Badge key={category._id}>
+          <Badge className="bg-slate-100 mx-1 py-1" key={category._id}>
             {category.name}
             <button
               type="button"
-              className="ml-1 hover:text-red-1"
+              className="ml-1 hover:text-red-1 "
               onClick={() => onRemove(category._id)}
             >
-              <X className="h-3 w-3" />
+              <X className="h-3 w-3 " />
             </button>
           </Badge>
         ))}
@@ -64,7 +64,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
         />
         <div className="relative ">
           {open && (
-            <CommandList className="absolute w-full z-30 left-0 top-0 overflow-auto bg-white border border-gray-300 p-2 m-2 shadow-md focus:outline-none " >
+            <CommandList className="absolute w-full z-30 left-0 top-0 overflow-auto bg-slate-400 border border-gray-300 p-2 m-2 shadow-md focus:outline-none " >
               <CommandGroup >
                 {selectables.map((category) => (
                   <CommandItem
@@ -74,7 +74,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                       onChange(category._id);
                       setInputValue("");
                     }}
-                    className="text-black hover:bg-grey-500"
+                    className="text-black hover:bg-grey-500 "
                   >
                     {category.name}
                   </CommandItem>

@@ -70,7 +70,7 @@ export const StoreSettingsForm: React.FC<myProps> = ({initialData, onProceed}) =
 
   return (
     <Form {...form}>
-      <h1 className="text-2xl font-semibold my-5">Store Settings</h1>
+      <h1 className="text-5xl font-bold my-5">Store Settings</h1>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {/* Store Name Field */}
         <FormField

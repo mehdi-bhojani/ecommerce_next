@@ -35,7 +35,7 @@ const Collections = () => {
   return loading ? <Loader /> : (
     <div className="px-10 py-5">
       <div className="flex items-center justify-between">
-        <p className="text-2xl font-bold">Collections</p>
+        <p className="text-5xl font-bold">Collections</p>
         <Button className="bg-black text-white" onClick={() => router.push("/admin/collections/new")}>
           <Plus className="h-4 w-4 mr-2" />
           Create Collection

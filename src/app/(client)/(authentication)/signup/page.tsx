@@ -74,7 +74,7 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input className="border border-black"
+                  <Input className=""
                     type="email"
                     placeholder="youremail@domain.com"
                     {...field}
@@ -91,7 +91,7 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input className="border border-black" placeholder="Muhammad" {...field} />
+                  <Input className="" placeholder="Muhammad" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.
@@ -107,7 +107,7 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input className="border border-black" type="password" {...field} />
+                  <Input className="" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

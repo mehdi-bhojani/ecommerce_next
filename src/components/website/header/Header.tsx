@@ -340,7 +340,7 @@ function Header() {
                 <input
                   type="email"
                   placeholder="Email"
-                  className="w-full p-2 my-8 border border-black"
+                  className="w-full p-2 my-8 "
                 />
                 <button className="w-full py-2 mb-4 bg-primary-gradient text-white font-semibold">
                   RESET PASSWORD
