@@ -49,7 +49,7 @@ const CouponDialog: React.FC<SidebarProps> =({children}) => {
 
         <button
           onClick={handleApplyCoupon}
-          className="w-full py-3 bg-pink-500 text-white font-semibold rounded-md hover:bg-pink-600 focus:outline-none"
+          className="w-full py-3 bg-primary-gradient text-white font-semibold rounded-md  focus:outline-none"
         >
           Apply Coupon
         </button>

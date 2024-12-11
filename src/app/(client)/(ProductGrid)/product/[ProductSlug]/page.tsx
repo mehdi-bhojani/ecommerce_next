@@ -344,7 +344,7 @@ const Page = () => {
                     {selectedVariant?.sizes != undefined && selectedVariant?.sizes.map((size, index) => {
                       // Define button classes based on stock and selected size
                       const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize && (SelectSize!._id === size!._id)
-                        ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
+                        ? "text-white bg-primary-gradient"
                         : ""
                         }`;
 
@@ -389,7 +389,7 @@ const Page = () => {
                   <div className="flex flex-row gap-2">
                     <button
                       onClick={handleAddtoBag}
-                      className="w-1/2 bg-primary-gradient text-white py-3 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold"
+                      className="w-1/2 bg-primary-gradient text-white py-3 transition-all duration-300 ease-in-out  hover:font-semibold"
                     >
                       ADD TO BAG
                     </button>
@@ -419,7 +419,14 @@ const Page = () => {
 
               <div className="my-4">
                 <div className="flex items-start space-x-2 justify-start">
-                  <Truck className="w-[50px] h-[50px] " />
+                  {/* <Truck className="w-[50px] h-[50px] " /> */}
+                  <Image 
+                                  src="/assets/ProdDetail/Del.png"
+                                  alt="Delivery"
+                                  width={50}
+                                  height={50}
+                                  className=""
+                                />
 
                   <div className="flex flex-col">
                     <span className="font-bold">Delivery Time</span>
@@ -435,7 +442,14 @@ const Page = () => {
 
               <div className="my-4">
                 <div className="flex items-start space-x-2 justify-start">
-                  <RefreshCw className="w-[100px] h-[100px] " />
+                  {/* <RefreshCw className="w-[100px] h-[100px] " /> */}
+                  <Image 
+                                  src="/assets/ProdDetail/exc.png"
+                                  alt="Exchange"
+                                  width={50}
+                                  height={50}
+                                  className=""
+                                />
                   <div className="flex flex-col">
                     <span className="font-bold">7 Days Return & Exchange</span>
                     <span className="text-sm text-gray-500">
