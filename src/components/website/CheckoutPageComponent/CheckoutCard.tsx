@@ -78,13 +78,19 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
           <span className="text-sm text-gray-500 line-through">
             {PriceIntoCurrency(ProductCheckout.mrp, myStoreAtom?.storeSettings.currency.default || "PKR")}
           </span>
-          <span className="text-sm text-pink-700">{`(${ProductCheckout.offer}%)`}</span>
+          {/* <span className="text-sm text-pink-700">{`(${ProductCheckout.offer}%)`}</span> */}
         </div>
         <p className="text-sm font-medium  text-gray-700 max-w-[200px] truncate">
           {ProductCheckout.name}
         </p>
+        <p className="text-sm font-medium  text-gray-700 max-w-[200px] truncate">
+          {ProductCheckout.variantName +" " +ProductCheckout.SelectSize}
+        </p>
+        <p className="text-sm font-medium  text-gray-700 max-w-[200px] truncate">
+        QTY: {ProductCheckout.quantity}
+        </p>
         <div className="flex items-center mt-2">
-          <SidebarCheckout
+          {/* <SidebarCheckout
             ProductCheckout={ProductCheckout}
             sizes={ProductCheckout.allSizes!}
             handleSizeSelect={handleallSizeselect}
@@ -114,7 +120,7 @@ const CheckoutCard: React.FC<CheckoutCardProps> = ({
               <span className="font-bold">{quantity}</span>
               <ChevronDown size={15} />
             </div>
-          </SidebarCheckout>
+          </SidebarCheckout> */}
         </div>
         <button
           onClick={() => {

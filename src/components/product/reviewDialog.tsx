@@ -25,7 +25,6 @@ import Autoplay from "embla-carousel-autoplay";
 interface myProps {
   // define props here
   tempProduct: ProductType;
-  SelectSize: string;
 }
 const formSchema = z.object({
   rating: z.number(),
@@ -35,7 +34,7 @@ const formSchema = z.object({
   images: z.string(),
 });
 
-const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
+const ReviewDialog: React.FC<myProps> = ({ tempProduct}) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState<number>(0);
   const [imgrc, setimgrc] = useState(null);
@@ -120,8 +119,8 @@ const ReviewDialog: React.FC<myProps> = ({ tempProduct, SelectSize }) => {
                 className="border  border-1 border-black p-1 object-cover"
               />
               <div>
-                <h2 className="text-xl font-bold">ThriveTempo Hoodie</h2>
-                <p className="text-gray-600">Size: {SelectSize}</p>
+                <h2 className="text-xl font-bold">{tempProduct.name}</h2>
+                {/* <p className="text-gray-600">Size: {SelectSize}</p> */}
               </div>
             </div>
             <hr className="my-1" />

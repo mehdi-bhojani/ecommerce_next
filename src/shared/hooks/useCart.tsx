@@ -36,13 +36,13 @@ const useCart = () => {
   const addToCart = async (item: any) => {
     setCartItems((prev) => {
       const isItemExist = prev.some(
-        (i) => i.productId === item.productId && i.variantId === item.variantId
+        (i) => i.productId === item.productId && i.variantId === item.variantId && i.sizeId === item.sizeId
       );
 
       let updatedCart;
       if (isItemExist) {
         updatedCart = prev.map((i) =>
-          i.productId === item.productId && i.variantId === item.variantId
+          i.productId === item.productId && i.variantId === item.variantId && i.sizeId === item.sizeId
             ? { ...i, quantity: i.quantity + item.quantity }
             : i
         );

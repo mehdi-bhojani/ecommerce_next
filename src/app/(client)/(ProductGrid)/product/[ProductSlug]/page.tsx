@@ -32,7 +32,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@nextui-org/react";
+import { Button, select } from "@nextui-org/react";
 import ProductCard from "@/components/website/ProductGridComponent/Products";
 import Loader from "@/components/admin/customUi/Loader";
 import { ProductType, SizeType, VariantType } from "@/lib/types";
@@ -47,6 +47,8 @@ import { useAtom } from "jotai";
 import { storeAtom } from "@/shared/atoms/storeAtom";
 import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
+import { off } from "process";
+import { Console } from "console";
 
 const Page = () => {
 
@@ -55,7 +57,7 @@ const Page = () => {
   const param = useParams();
   const { CategName, ProductDetail } = param;
   const [selectedImage, setSelectedImage] = useState<string>("");
-  const [SelectSize, SetSelectSize] = useState<string>("");
+  const [SelectSize, SetSelectSize] = useState<SizeType | null>(null);
   const [SelectedHeart, SetSelectedHeart] = useState<boolean>(false);
   const selectedHeartRef = useRef(SelectedHeart);
   const [tempProduct, setTempProduct] = useState<ProductType>();
@@ -67,7 +69,7 @@ const Page = () => {
   const [myStoreAtom, setStoreAtom] = useAtom(storeAtom);
   const [currImage, setCurrImage] = useState<string[]>([]);
   const [selectedVariant, setSelectedVariant] = useState<VariantType>();
-  
+
 
 
   const getSizes = (currentColor: string, currentProduct: ProductType) => {
@@ -105,13 +107,10 @@ const Page = () => {
         const data = await res.json();
         setTempProduct(data);
         getColors(data);
-        if(data?.variants.length > 0){
+        if (data?.variants.length > 0) {
           setSelectedVariant(data?.variants[0]);
           setSizes(data?.variants[0].sizes);
         }
-        // setCurrImage(data?.img);
-        // setSelectedColor(data?.variants[0].name);
-        // getSizes(data?.variants[0].name, data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -128,7 +127,7 @@ const Page = () => {
     }
     if (SelectedHeart == false) {
       await addToWishList({
-        imgSrc: tempProduct!.img[0],
+        imgSrc: selectedVariant?.img[0] || tempProduct!.img[0],
         name: tempProduct!.name,
         price: tempProduct!.price,
         mrp: tempProduct!.mrp!,
@@ -146,11 +145,12 @@ const Page = () => {
   const handleChangeColor = (id: string,) => {
     // getSizes(color, tempProduct!);
     const selected = tempProduct?.variants?.filter((item) => item._id === id) || []
-    console.log(selected[0]);
+    // console.log(selected[0]);
     setSelectedVariant(selected[0]);
     setCurrImage(selected[0].img);
     setSelectedColor(selected[0].name);
     setSizes(selected[0].sizes);
+    SetSelectSize(null);
   };
 
   const plugin = React.useRef(
@@ -162,29 +162,30 @@ const Page = () => {
       toast.error("Please login to add product in cart");
       return;
     }
-    if (SelectSize != null && SelectSize === "") {
+    if (SelectSize == null && selectedVariant?.sizes?.length! > 0) {
       toast.error("Please select a size");
-    } else {
-      const cartItem = {
-        imgSrc: tempProduct!.img[0],
-        name: tempProduct!.name,
-        price: tempProduct!.price,
-        mrp: tempProduct!.mrp || 0,
-        offer: tempProduct!.offer || '0',
-        SelectSize: SelectSize,
-        allSizes: sizes,
-        slug: createSlug(tempProduct!.name),
-        productId: tempProduct!._id,
-        variantId: selectedVariant?._id,
-        quantity: 1,
-      };
-      addToCart(cartItem);
-      toast.success("Added to Bag");
+      return;
     }
+    const cartItem = {
+      imgSrc: tempProduct!.img[0],
+      name: tempProduct!.name,
+      price: SelectSize?.price || selectedVariant?.price || tempProduct!.price,
+      mrp: SelectSize?.mrp || selectedVariant?.mrp || tempProduct!.mrp,
+      offer: tempProduct!.offer,
+      SelectSize: SelectSize?.name || "",
+      slug: createSlug(tempProduct!.name),
+      variantName: selectedVariant?.name || "",
+      productId: tempProduct!._id,
+      variantId: selectedVariant?._id,
+      // select: SelectSize?.name || "",
+      sizeId: SelectSize?._id,
+      quantity: 1,
+    };
+    console.log(cartItem);
+    addToCart(cartItem);
+    toast.success("Added to Bag");
+
   };
-  // const getSelectedVariant = tempProduct?.variants.find(
-  //   (variant) => variant.size === SelectSize && variant.name === selectedColor
-  // );
 
   if (tempProduct && !tempProduct?.isActive || tempProduct?.isDelete) {
     notFound();
@@ -223,7 +224,8 @@ const Page = () => {
         </Carousel>
 
         <div className="md:flex md:flex-row md:flex-wrap md:gap-4 md:h-1/2 md:w-1/2 md:justify-end  hidden">
-          {tempProduct?.img.map((item, index) => (
+          {/* {tempProduct?.img.map((item, index) => ( */}
+          {selectedVariant?.img.map((item, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
                 <div className="w-5/12 ">
@@ -295,10 +297,10 @@ const Page = () => {
               </div>
               <div className="my-4 flex flex-row gap-2">
                 <span className="line-through text-2xl text-gray-500">
-                  {PriceIntoCurrency(tempProduct?.mrp || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
+                  {PriceIntoCurrency(SelectSize?.mrp || selectedVariant?.mrp || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
                 </span>
                 <span className="text-2xl text-red-600 font-bold">
-                  {PriceIntoCurrency(tempProduct?.price || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
+                  {PriceIntoCurrency(SelectSize?.price || selectedVariant?.price || 0, myStoreAtom?.storeSettings.currency.default || "PKR")}
                   <span className="text-sm">(-{tempProduct?.offer}%)</span>
                 </span>
               </div>
@@ -339,10 +341,10 @@ const Page = () => {
                 (<div className="my-4">
                   <p className="font-bold my-2">SELECT SIZE</p>
                   <div className="flex flex-wrap gap-2">
-                    {selectedVariant?.sizes?.map((size, index) => {
+                    {selectedVariant?.sizes != undefined && selectedVariant?.sizes.map((size, index) => {
                       // Define button classes based on stock and selected size
-                      const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize === size?.name
-                        ? "text-white "
+                      const buttonClasses = `bg-white border border-gray-300 rounded-lg p-5 text-sm text-black font-medium transition duration-300 ease-in-out ${SelectSize && (SelectSize!._id === size!._id)
+                        ? "text-white bg-gradient-to-r to-pink-500 from-orange-500"
                         : ""
                         }`;
 
@@ -358,7 +360,7 @@ const Page = () => {
                           <Button
                             onClick={() =>
                               size?.remainingStock! > 0 &&
-                              SetSelectSize(size?._id)
+                              SetSelectSize(size)
                             }
                             className={`${buttonClasses} ${size?.remainingStock! > 0
                               ? "hover:text-white hover-gradient"
@@ -382,12 +384,12 @@ const Page = () => {
               ) : (
                 <>
                   {session && (
-                    <ReviewDialog tempProduct={tempProduct!} SelectSize={SelectSize} />
+                    <ReviewDialog tempProduct={tempProduct!} />
                   )}
                   <div className="flex flex-row gap-2">
                     <button
                       onClick={handleAddtoBag}
-                      className="w-1/2 bg-primary-gradient text-white py-3 transition-all duration-300 ease-in-out   hover:font-semibold"
+                      className="w-1/2 bg-primary-gradient text-white py-3 transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-pink-600 hover:to-red-600 hover:font-semibold"
                     >
                       ADD TO BAG
                     </button>
@@ -400,10 +402,10 @@ const Page = () => {
                     >
                       <div className="relative w-10 h-10 flex items-center justify-center cursor-pointer">
                         <Heart
-                          onClick={() => {
-                            SetSelectedHeart(!SelectedHeart);
-                            handleAction();
-                          }}
+                          // onClick={() => {
+                          //   SetSelectedHeart(!SelectedHeart);
+                          //   handleAction();
+                          // }}
                           className={`text-gray-500 icon ${SelectedHeart ? "active" : "text-gray-500"}`}
                         />
                       </div>
@@ -417,8 +419,7 @@ const Page = () => {
 
               <div className="my-4">
                 <div className="flex items-start space-x-2 justify-start">
-                  {/* <Truck className="w-[50px] h-[50px] " /> */}
-                  <Image className="" width={50} height={50} alt="truck delivery" src="/assets/ProdDetail/Del.png"/>
+                  <Truck className="w-[50px] h-[50px] " />
 
                   <div className="flex flex-col">
                     <span className="font-bold">Delivery Time</span>
@@ -434,8 +435,7 @@ const Page = () => {
 
               <div className="my-4">
                 <div className="flex items-start space-x-2 justify-start">
-                  {/* <RefreshCw className="w-[100px] h-[100px] " /> */}
-                  <Image className="" width={50} height={50} alt="Exchange product" src="/assets/ProdDetail/exc.png"/>
+                  <RefreshCw className="w-[100px] h-[100px] " />
                   <div className="flex flex-col">
                     <span className="font-bold">7 Days Return & Exchange</span>
                     <span className="text-sm text-gray-500">
