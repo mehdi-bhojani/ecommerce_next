@@ -36,7 +36,7 @@ const Footer = () => {
         ))}
 
         <div className="flex flex-col gap-3 font-outfit font-bold">
-          <span className="tracking-wide">ABOUT CLICKY</span> {/* Adjust letter spacing */}
+          <span className="tracking-wide">ABOUT Design Corner</span> {/* Adjust letter spacing */}
           <div className="text-stone-600 flex flex-col gap-2 font-outfit text-sm tracking-wider">
 
             <a href={""} className="hover:underline tracking-wide">

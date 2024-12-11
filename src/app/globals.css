@@ -186,10 +186,10 @@
 
 
   :root {
-    --hover-bg-gradient-from: #f97316; /* Equivalent to orange-500 */
-    --hover-bg-gradient-to: #ec4899;   /* Equivalent to pink-500 */
-    --primary-gradient: linear-gradient(to right, #ef4444, #f5469a); /* equivalent to bg-gradient-to-r from-red-500 to-pink-500 */
-      --secondary-color: #ef4444; /* Default Secondary Color */
+    --hover-bg-gradient-from: #8DB2A7; /* Equivalent to orange-500 */
+    --hover-bg-gradient-to: #6C9286;   /* Equivalent to pink-500 */
+    --primary-gradient: linear-gradient(to right, #8DB2A7, #6C9286); /* equivalent to bg-gradient-to-r from-red-500 to-pink-500 */
+      --secondary-color: #6C9286; /* Default Secondary Color */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;

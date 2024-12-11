@@ -23,7 +23,7 @@ const HelpFooter = () => {
 
 
       <div className='flex flex-col gap-3 font-outfit font-bold'>
-        <span>ABOUT CLICKY</span>
+        <span>ABOUT Design Corner</span>
         <div className='flex flex-col gap-2 font-outfit  text-sm text-stone-600 '>
           <span>About Us</span>
           <span>Privacy Statement</span>
@@ -64,18 +64,13 @@ const HelpFooter = () => {
       </div>
 
 
-      <div className='flex flex-col gap-3 font-outfit font-bold'>
-        <span>MORE FROM CLICKY</span>
-        <div className='flex flex-col gap-2 font-outfit text-sm text-stone-600 '>
-          <span>Sell On Clicky</span>
-        </div>
-      </div>
+      
 
 
       <div className='flex flex-col gap-3 font-outfit font-bold'>
         <span>SHOPPING FROM</span>
         <div className='flex flex-col gap-2 font-outfit  text-sm text-stone-600 '>
-          <span>You&aposre in Pakistan</span>
+          <span>Pakistan</span>
         </div>
       </div>
 

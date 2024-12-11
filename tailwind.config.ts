@@ -27,7 +27,7 @@ const config = {
         outfit: ['Outfit', 'Arial', 'sans-serif'], // Add custom font family
       },
       backgroundImage: {
-        'primary-gradient': 'linear-gradient(to right, #ef4444, #f5469a)',
+        'primary-gradient': 'linear-gradient(to right, #8DB2A7, #6C9286)',
       },
       colors: {
         border: "hsl(var(--border))",

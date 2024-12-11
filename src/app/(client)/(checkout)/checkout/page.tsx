@@ -148,7 +148,7 @@ const Page = () => {
               <h2 className="text-lg font-semibold">Apply Coupons</h2>
             </div>
             <CouponDialog>
-              <button className="px-4 py-2 text-pink-600 border border-pink-600 rounded-md hover:bg-pink-50">
+              <button className="px-4 py-2 text-slate-500 border border-green-600 rounded-md hover:bg-green-50">
                 APPLY
               </button>
             </CouponDialog>
