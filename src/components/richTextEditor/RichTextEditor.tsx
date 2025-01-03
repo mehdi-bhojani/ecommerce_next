@@ -10,7 +10,12 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import ImageResize from "tiptap-extension-resize-image";
 
-export default function RichTextEditor({ content, onChange }) {
+interface RichTextEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+}
+
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ content, onChange }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure(),
@@ -41,16 +46,18 @@ export default function RichTextEditor({ content, onChange }) {
       },
     },
     onUpdate: ({ editor }) => {
-      // console.log(editor.getHTML());
       onChange(editor.getHTML());
     },
+    // Disable immediate rendering if needed (Tiptap compatibility)
     immediatelyRender: false, 
   });
 
   return (
     <div>
-      <ToolBar editor={editor} />
+      {editor && <ToolBar editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   );
-}
+};
+
+export default RichTextEditor;

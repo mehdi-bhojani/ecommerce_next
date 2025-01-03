@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import { ListOrdered } from "lucide-react";
 
-export default function ToolBar({ editor }) {
+import { Editor } from '@tiptap/react';
+
+export default function ToolBar({ editor }: { editor: Editor }) {
   if (!editor) return null;
   const addImage = () => {
     const url = window.prompt("URL");

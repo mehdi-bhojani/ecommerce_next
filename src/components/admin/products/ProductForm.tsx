@@ -1,6 +1,5 @@
 "use client";
-import RichTextEditor from "@/components/RichTextEditor";
-import 'react-quill/dist/quill.snow.css';
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { number, z } from "zod";
@@ -41,8 +40,7 @@ import Link from "next/link";
 import { CategoryType, ProductType } from "@/lib/types";
 // import ReactQuill from "react-quill";
 import { Checkbox } from '@/components/ui/checkbox';
-import dynamic from 'next/dynamic';
-import QuillEditor from '@/components/myUi/QuillEditor';
+import RichTextEditor from "@/components/richTextEditor/RichTextEditor";
 
 function extractTextFromHTML(html: string): string {
   const parser = new DOMParser();
@@ -120,45 +118,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  // const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-
-
-  // const getCategories = async () => {
-  //   // if (initialData && initialData.categories.length > 0 && !initialData.categories[0]?.name) {
-  //   // if (!initialData) {
-  //   //   try {
-  //   //     const res = await fetch("/api/category");
-  //   //     if (!res.ok) {
-  //   //       throw new Error(`HTTP error! status: ${res.status}`);
-  //   //     }
-  //   //     const data = await res.json();
-  //   //     setCategories(data);
-  //   //   } catch (err) {
-  //   //     console.log("[categories_GET]", err);
-  //   //     toast.error("Something went wrong! Please try again.");
-  //   //   }
-  //   // } else if (initialData && initialData.categories.length > 0) {
-  //   //   setCategories(initialData?.categories);
-  //   // }
-  //   // setLoading(false);
-  //   // console.log(categories);
-  //   // if (initialData) {
-  //     try {
-  //       const res = await fetch("/api/category");
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error! status: ${res.status}`);
-  //       }
-  //       const data = await res.json();
-  //       setCategories(data);
-  //     } catch (err) {
-  //       console.log("[categories_GET]", err);
-  //       toast.error("Something went wrong! Please try again.");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //     console.log(categories);
-  // // }
-  // };
 
   const getCategories = async () => {
     try {
