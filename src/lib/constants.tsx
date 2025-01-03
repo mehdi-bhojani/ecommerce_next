@@ -46,15 +46,15 @@ export const navLinks = [
   //   icon: <Star />,
   //   label: "Reviews",
   // },
-  {
-    url: "/admin/store",
-    icon: <Store />,
-    label: "Store",
-  },
-  {
-    url: "/admin/appearence",
-    icon: <Palette /> ,
-    label: "Appearence",
-  },
+  // {
+  //   url: "/admin/store",
+  //   icon: <Store />,
+  //   label: "Store",
+  // },
+  // {
+  //   url: "/admin/appearence",
+  //   icon: <Palette /> ,
+  //   label: "Appearence",
+  // },
 ];
 

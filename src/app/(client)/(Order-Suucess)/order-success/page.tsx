@@ -119,7 +119,7 @@ const Page = ({ searchParams: { id } }: { searchParams: { id: string } }) => {
                     <p className="text-gray-500">Qty: {item.quantity}</p>
                     {item.variantId && (
                       <div className="text-gray-500">
-                        <p>Size: {item.variantId.size}</p>
+                        <p>Size: {item?.sizeId?.name}</p>
                         <p>Variant: {item.variantId.name}</p>
                       </div>
                     )}

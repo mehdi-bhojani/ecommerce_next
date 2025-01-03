@@ -17,9 +17,6 @@ const LeftSideBar = () => {
 
       <div className="flex flex-col gap-5">
   {navLinks.map((link) => {
-    console.log(link.url+" is the link url");
-    console.log(link.label);
-    console.log(pathname+"is the pathname");
     return (
       <Link
         href={link.url}

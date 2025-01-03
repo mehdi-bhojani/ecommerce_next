@@ -86,7 +86,7 @@ const Page = () => {
       isDeleted: false,
     };
 
-    // console.log("newValues", newValues);
+    console.log("newValues", newValues);
 
     try {
       setLoading(true);
@@ -139,8 +139,8 @@ const Page = () => {
         <CheckoutDetails onProceed={onProceed} />
       </div>
       {/* those devices which are not mobile put sm  */}
-      <div className="flex flex-col gap-1 w-full sm:w-2/5">
-        <div className="bg-white sm:m-2 sm:p-2">
+      <div className="flex flex-col gap-1 w-full sm:w-2/5 my-2">
+        <div className="bg-white sm:m-2 sm:p-2 hidden">
           <span className="font-semibold"> Coupons</span>
           <div className="flex items-center justify-between p-4  border-gray-200 ">
             <div className="flex items-center gap-1">
@@ -156,7 +156,7 @@ const Page = () => {
         </div>
 
         <div>
-          <div className="p-6 bg-white rounded-lg shadow-lg  sm:max-w-md mx-auto ">
+          <div className="p-6 bg-white shadow-lg  sm:max-w-md mx-auto ">
             {cartItems.map((product, index) => (
               <CheckoutCard
                 key={index}

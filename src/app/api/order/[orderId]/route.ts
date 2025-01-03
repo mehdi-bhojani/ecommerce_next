@@ -22,8 +22,13 @@ export const GET = async (req: NextRequest, { params }: { params: { orderId: str
       .populate({
         path: 'orderItems.variantId',
         match: { $ne: null }, // Optionally match documents
-        select: 'name size', // Fields to include from the Variant model
-      });
+        select: 'name', // Fields to include from the Variant model
+      })
+      .populate({
+        path: 'orderItems.sizeId',
+        match: { $ne: null }, // Optionally match documents
+        select: 'name', // Fields to include from the Variant model
+      })
 
 
     if (!order) {

@@ -18,10 +18,12 @@ export function convertToSubcurrency(amount: number, factor = 100) {
 }
 
 export const formatOrderItems = (cartItems: CartItemType[]) => {
+  console.log(cartItems);
   return cartItems.map((item) => {
     return {
       productId: item.productId,
       variantId: item?.variantId || null, // Correctly handle optional variantId
+      sizeId: item?.sizeId || null,
       quantity: item.quantity,
       unitPrice: item.price,
       totalPrice: item.price * (item.quantity || 1),

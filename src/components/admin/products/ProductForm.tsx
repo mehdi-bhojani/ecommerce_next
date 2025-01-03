@@ -1,10 +1,11 @@
 "use client";
-import 'react-quill/dist/quill.snow.css'; // Import styles for React Quill
+import RichTextEditor from "@/components/RichTextEditor";
+import 'react-quill/dist/quill.snow.css';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { number, z } from "zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -38,13 +39,28 @@ import { columns } from "./variants/variantColumns";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { CategoryType, ProductType } from "@/lib/types";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import { Checkbox } from '@/components/ui/checkbox';
+import dynamic from 'next/dynamic';
+import QuillEditor from '@/components/myUi/QuillEditor';
+
+function extractTextFromHTML(html: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return doc.body.textContent?.trim() || "";
+}
 
 const formSchema = z
   .object({
     name: z.string().min(2).max(50),
-    description: z.string().min(2).max(500).optional(),
+    // description: z.string().min(2).max(500).optional(),
+    description: z.string().refine(
+      (value) => {
+        return extractTextFromHTML(value).trim().length >= 5;
+      }, {
+      message: "The text must be at least 5 characters long after trimming",
+    }
+    ),
     shippingCost: z.number().min(0).default(0),
     offer: z.string().optional(),
     sku: z.string().min(1),
@@ -104,46 +120,59 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  // const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
 
+  // const getCategories = async () => {
+  //   // if (initialData && initialData.categories.length > 0 && !initialData.categories[0]?.name) {
+  //   // if (!initialData) {
+  //   //   try {
+  //   //     const res = await fetch("/api/category");
+  //   //     if (!res.ok) {
+  //   //       throw new Error(`HTTP error! status: ${res.status}`);
+  //   //     }
+  //   //     const data = await res.json();
+  //   //     setCategories(data);
+  //   //   } catch (err) {
+  //   //     console.log("[categories_GET]", err);
+  //   //     toast.error("Something went wrong! Please try again.");
+  //   //   }
+  //   // } else if (initialData && initialData.categories.length > 0) {
+  //   //   setCategories(initialData?.categories);
+  //   // }
+  //   // setLoading(false);
+  //   // console.log(categories);
+  //   // if (initialData) {
+  //     try {
+  //       const res = await fetch("/api/category");
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! status: ${res.status}`);
+  //       }
+  //       const data = await res.json();
+  //       setCategories(data);
+  //     } catch (err) {
+  //       console.log("[categories_GET]", err);
+  //       toast.error("Something went wrong! Please try again.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //     console.log(categories);
+  // // }
+  // };
 
   const getCategories = async () => {
-    // if (initialData && initialData.categories.length > 0 && !initialData.categories[0]?.name) {
-    // if (!initialData) {
-    //   try {
-    //     const res = await fetch("/api/category");
-    //     if (!res.ok) {
-    //       throw new Error(`HTTP error! status: ${res.status}`);
-    //     }
-    //     const data = await res.json();
-    //     setCategories(data);
-    //   } catch (err) {
-    //     console.log("[categories_GET]", err);
-    //     toast.error("Something went wrong! Please try again.");
-    //   }
-    // } else if (initialData && initialData.categories.length > 0) {
-    //   setCategories(initialData?.categories);
-    // }
-    // setLoading(false);
-    // console.log(categories);
-    // if (initialData) {
-      try {
-        const res = await fetch("/api/category");
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.log("[categories_GET]", err);
-        toast.error("Something went wrong! Please try again.");
-      }
-  // }
-    setLoading(false);
-    console.log(categories);
+    try {
+      setLoading(true);
+      const response = await fetch("/api/category");
+      if (!response.ok) throw new Error("Failed to fetch categories");
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   };
-
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -194,27 +223,47 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     }
   };
 
+  // const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  //   // console.log(values);
+  //   try {
+  //     setLoading(true);
+  //     const url = initialData
+  //       ? `/api/product/${initialData._id}`
+  //       : "/api/product";
+  //     const res = await fetch(url, {
+  //       method: initialData ? "PUT" : "POST",
+  //       body: JSON.stringify(values),
+  //     });
+  //     if (res.ok) {
+  //       setLoading(false);
+  //       toast.success(`Product ${initialData ? "updated" : "created"}`);
+  //       // router.push("/admin/products");
+  //     }
+  //   } catch (err) {
+  //     console.log("[products_POST]", err);
+  //     toast.error("Something went wrong! Please try again.");
+  //   }
+  // };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log(values);
     try {
       setLoading(true);
-      const url = initialData
-        ? `/api/product/${initialData._id}`
-        : "/api/product";
-      const res = await fetch(url, {
-        method: initialData ? "PUT" : "POST",
+      const endpoint = initialData ? `/api/product/${initialData._id}` : "/api/product";
+      const method = initialData ? "PUT" : "POST";
+      const response = await fetch(endpoint, {
+        method,
         body: JSON.stringify(values),
       });
-      if (res.ok) {
-        setLoading(false);
-        toast.success(`Product ${initialData ? "updated" : "created"}`);
-        // router.push("/admin/products");
-      }
-    } catch (err) {
-      console.log("[products_POST]", err);
-      toast.error("Something went wrong! Please try again.");
+      if (!response.ok) throw new Error("Failed to save product");
+      toast.success(`Product ${initialData ? "updated" : "created"} successfully.`);
+      router.push("/admin/products");
+    } catch (error) {
+      toast.error("Failed to save product. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -270,25 +319,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className=""
-                    placeholder="Description"
-                    {...field}
-                    rows={5}
-                    onKeyDown={handleKeyPress}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-1" />
-              </FormItem>
-            )}
-          /> */}
+          {/* QuillEditor Field */}
           <FormField
             control={form.control}
             name="description"
@@ -296,23 +327,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  {/* React Quill component */}
-                  <ReactQuill
-                    value={field.value || ""}
-                    onChange={(value) => field.onChange(value)}  // Update form value with rich text content
-                    modules={{
-                      toolbar: [
-                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        ['bold', 'italic', 'underline'],
-                        [{ 'align': [] }],
-                        ['link'],
-                        ['image'],
-                      ],
-                    }}
+                  <RichTextEditor
+                    content={field.value}
+                    onChange={(value: string) => field.onChange(value)}
                   />
                 </FormControl>
-                <FormMessage className="text-red-1" />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -490,27 +510,27 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               )}
             />
             {
-            form.watch('enableStock') &&
-            <FormField
-              control={form.control}
-              name="remainingStock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Remaining Stock</FormLabel>
-                  <FormControl>
-                    <Input
-                      className=""
-                      type="number"
-                      placeholder="Remaining Stock"
-                      {...field}
-                      onKeyDown={handleKeyPress}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-1" />
-                </FormItem>
-              )}  
-            />
+              form.watch('enableStock') &&
+              <FormField
+                control={form.control}
+                name="remainingStock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Remaining Stock</FormLabel>
+                    <FormControl>
+                      <Input
+                        className=""
+                        type="number"
+                        placeholder="Remaining Stock"
+                        {...field}
+                        onKeyDown={handleKeyPress}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-1" />
+                  </FormItem>
+                )}
+              />
             }
 
           </div>
@@ -564,7 +584,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             </Button>
           </div>
         </form>
-      </Form>
+      </Form >
       {initialData?._id && (
         <>
           <Separator className="my-5" />
@@ -586,7 +606,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           </div>
         </>
       )}
-    </div>
+    </div >
   );
 };
 

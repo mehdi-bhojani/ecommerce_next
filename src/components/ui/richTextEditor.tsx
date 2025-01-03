@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // import styles
 
-const RichTextEditor = ({ value, onChange }: { value: string, onChange: (value: string) => void }) => {
+const oldRichTextEditor = ({ value, onChange }: { value: string, onChange: (value: string) => void }) => {
   return (
     <ReactQuill
       value={value}
@@ -24,4 +24,4 @@ const RichTextEditor = ({ value, onChange }: { value: string, onChange: (value: 
   );
 };
 
-export default RichTextEditor;
+export default oldRichTextEditor;

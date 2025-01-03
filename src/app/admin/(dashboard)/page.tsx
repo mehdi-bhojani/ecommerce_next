@@ -10,10 +10,11 @@ import {
 import { CircleDollarSign, ShoppingBag, UserRound } from "lucide-react";
 
 export default async function Home() {
-  const totalRevenue = await getTotalSales().then((data) => data.totalRevenue);
-  const totalOrders = await getTotalSales().then((data) => data.totalOrders);
+  // const totalRevenue = await getTotalSales().then((data) => data.totalRevenue);
+  const {totalRevenue,totalOrders} = await getTotalSales();
+  // const totalOrders = await getTotalSales().then((data) => data.totalOrders);
+  // const  = await getTotalSales().then((data) => data.totalOrders);
   const totalCustomers = await getTotalCustomers();
-
   const graphData = await getSalesPerMonth();
 
   return (

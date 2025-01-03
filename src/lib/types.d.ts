@@ -130,6 +130,7 @@ type OrderType = {
 type OrderItemType = {
   productId: ProductType;
   variantId?: VariantType;
+  sizeId?: SizeType;
   quantity: number;
   unitPrice: number;
   totalPrice: number;
